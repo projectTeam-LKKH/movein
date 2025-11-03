@@ -2,77 +2,240 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입</title>
+<link rel="stylesheet" href="/movein/css/root.css">
 <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    label { display: block; margin: 10px 0 5px; }
-    input, button { padding: 5px; margin-bottom: 10px; }
-    .toggle-btn { display: inline-block; padding: 5px 10px; margin: 2px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; }
-    .selected { background-color: #5cb85c; color: white; }
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+    }
+
+    /* 상단 문구 */
+    .header-text {
+        position: absolute;
+        top: 200px;
+        left: 10%;
+        width: 80%;
+        text-align: left;
+        font-size: 28.8px;
+        line-height: 1.5;
+        transition: opacity 0.3s ease;
+    }
+
+    .header-text .highlight {
+        color: var(--c-main);
+    }
+
+    /* 폼 */
+    .register-form {
+        position: absolute;
+        top: 350px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    input {
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background-color: #333;
+        color: #ccc;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input::placeholder {
+        color: #888;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .input-group input {
+        flex: 1;
+    }
+
+    .check-btn {
+        background-color: #555;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    button.next-btn {
+        align-self: flex-end;
+        background-color: var(--c-main);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    /* 스텝 */
+    .step {
+        display: none;
+    }
+
+    .step.active {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* 토글 */
+    .toggle-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .toggle-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        border: 1px solid #666;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #ccc;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .toggle-btn.selected {
+        background-color: var(--c-main);
+        color: #fff;
+        border-color: var(--c-main);
+    }
+
+    .submit-btn {
+        background-color: var(--c-main);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
 
-<h2>회원가입</h2>
-<form id="registerForm" method="POST" action="register_process.php">
-    <label>아이디</label>
-    <input type="text" name="userid" id="userid" required>
-    <button type="button" onclick="checkId()">중복확인</button>
-    
-    <label>비밀번호</label>
-    <input type="password" name="password" id="password" required>
-    
-    <label>비밀번호 확인</label>
-    <input type="password" name="password_confirm" id="password_confirm" required>
-    
-    <label>닉네임</label>
-    <input type="text" name="username" id="username" required>
-    <button type="button" onclick="checkNickname()">중복확인</button>
-    
-    <label>이메일</label>
-    <input type="email" name="email" id="email" required>
-    
-    <label>좋아하는 장르</label>
-    <div id="genres">
-        <span class="toggle-btn" onclick="toggleSelection(this)">영화</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">드라마</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">예능</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">다큐</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">애니</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">시트콤</span>
+<div class="container">
+    <div id="headerText" class="header-text">
+        <span class="highlight">무브오너</span>가 되어<br>나만의 취향을 확장해 보세요.
     </div>
 
-    <label>주로 사용하는 OTT</label>
-    <div id="ott">
-        <span class="toggle-btn" onclick="toggleSelection(this)">Netflix</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">Disney+</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">Wavve</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">Coupang Play</span>
-    </div>
+    <form id="registerForm" class="register-form" method="POST" action="register_process.php">
 
-    <label>선호 콘텐츠 지역</label>
-    <div id="region">
-        <span class="toggle-btn" onclick="toggleSelection(this)">한국</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">미국</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">일본</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">중국</span>
-        <span class="toggle-btn" onclick="toggleSelection(this)">유럽</span>
-    </div>
+        <!-- STEP 1 -->
+        <div id="step1" class="step active">
+            <div class="input-group">
+                <input type="text" name="userid" id="userid" placeholder="아이디 입력" required>
+                <button type="button" class="check-btn" onclick="checkId()">중복확인</button>
+            </div>
+            <input type="password" name="password" id="password" placeholder="비밀번호 입력" required>
+            <input type="password" name="password_confirm" id="password_confirm" placeholder="비밀번호 확인" required>
+            <button type="button" class="next-btn" onclick="nextStep(2)">다음 ></button>
+        </div>
 
-    <input type="hidden" name="favorite_genres" id="favorite_genres">
-    <input type="hidden" name="preferred_ott" id="preferred_ott">
-    <input type="hidden" name="preferred_regions" id="preferred_regions">
+        <!-- STEP 2 -->
+        <div id="step2" class="step">
+            <div class="input-group">
+                <input type="text" name="username" id="username" placeholder="닉네임 입력" required>
+                <button type="button" class="check-btn" onclick="checkNickname()">중복확인</button>
+            </div>
+            <input type="email" name="email" id="email" placeholder="이메일 입력" required>
+            <button type="button" class="next-btn" onclick="nextStep(3)">다음 ></button>
+        </div>
 
-    <button type="submit">가입하기</button>
-</form>
+        <!-- STEP 3 -->
+        <div id="step3" class="step">
+            <label style="color:#ccc;">좋아하는 장르</label>
+            <div id="genres" class="toggle-section">
+                <span class="toggle-btn" onclick="toggleSelection(this)">영화</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">드라마</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">예능</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">다큐</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">애니</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">시트콤</span>
+            </div>
+
+            <label style="color:#ccc;">주로 사용하는 OTT</label>
+            <div id="ott" class="toggle-section">
+                <span class="toggle-btn" onclick="toggleSelection(this)">Netflix</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">Disney+</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">Wavve</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">Coupang Play</span>
+            </div>
+
+            <label style="color:#ccc;">선호 콘텐츠 지역</label>
+            <div id="region" class="toggle-section">
+                <span class="toggle-btn" onclick="toggleSelection(this)">한국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">미국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">일본</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">중국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">유럽</span>
+            </div>
+
+            <input type="hidden" name="favorite_genres" id="favorite_genres">
+            <input type="hidden" name="preferred_ott" id="preferred_ott">
+            <input type="hidden" name="preferred_regions" id="preferred_regions">
+
+            <button type="submit" class="submit-btn">가입하기</button>
+        </div>
+    </form>
+</div>
 
 <script>
-// 토글 버튼 선택
+const header = document.getElementById("headerText");
+
+function nextStep(step) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    // 단계별 문구 변경
+    if (step === 1) {
+        header.innerHTML = `<span class="highlight">무브오너</span>가 되어<br>나만의 취향을 확장해 보세요.`;
+    } else if (step === 2) {
+        header.innerHTML = `<span class="highlight">무브인</span> 계정을 만들고<br>새로운 탐험을 시작하세요.`;
+    } else if (step === 3) {
+        header.innerHTML = `<span class="highlight">당신의 취향</span>을 알고 싶어요<br>장르, 플랫폼 등을 선택해주세요.`;
+    }
+}
+
 function toggleSelection(el) {
     el.classList.toggle('selected');
 }
 
-// 폼 제출 전에 JSON 배열로 변환
 document.getElementById('registerForm').onsubmit = function() {
     const genres = [...document.querySelectorAll('#genres .selected')].map(e => e.textContent);
     const ott = [...document.querySelectorAll('#ott .selected')].map(e => e.textContent);
@@ -84,28 +247,35 @@ document.getElementById('registerForm').onsubmit = function() {
 
     const password = document.getElementById('password').value;
     const confirm = document.getElementById('password_confirm').value;
-    if(password !== confirm){
+    if (password !== confirm) {
         alert('비밀번호가 일치하지 않습니다.');
+        nextStep(1);
         return false;
     }
 
     return true;
-}
+};
 
-// AJAX 중복 확인 예시
 function checkId() {
     const userid = document.getElementById('userid').value;
+    if (!userid) return alert('아이디를 입력하세요.');
     fetch('check_id.php?userid=' + encodeURIComponent(userid))
-    .then(res => res.text())
-    .then(data => alert(data));
+        .then(res => res.text())
+        .then(data => alert(data));
 }
 
 function checkNickname() {
     const username = document.getElementById('username').value;
+    if (!username) return alert('닉네임을 입력하세요.');
     fetch('check_nickname.php?username=' + encodeURIComponent(username))
-    .then(res => res.text())
-    .then(data => alert(data));
+        .then(res => res.text())
+        .then(data => alert(data));
 }
+
+// 새로고침 방지
+document.addEventListener("keydown", function(e) {
+    if (e.key === "F5" || (e.ctrlKey && e.key === "r")) e.preventDefault();
+});
 </script>
 
 </body>
