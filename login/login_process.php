@@ -17,9 +17,15 @@ if(mysqli_num_rows($result) == 1){
                 window.location.href = '../index.html';
             </script>";
     } else {
-        echo "비밀번호가 틀렸습니다.";
+        echo "<script>
+            alert('비밀번호가 틀렸습니다.');
+            history.back(); // 이전 페이지(아이디 찾기 페이지)로 돌아감
+        </script>";
     }
 } else {
-    echo "아이디가 존재하지 않습니다.";
+    echo "<script>
+        alert('아이디가 존재하지 않습니다.');
+        history.back(); // 이전 페이지(아이디 찾기 페이지)로 돌아감
+    </script>";
 }
 ?>
