@@ -1,4 +1,8 @@
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@latest/nanumsquare.css");
+
 :root {
+  --font-main: "NanumSquare", sans-serif;
+
   /* ========================
      Typography Scale
   ======================== */
@@ -11,15 +15,15 @@
   /* ========================
      Brand Colors
   ======================== */
-  --c-bg: #0B0B0B;
-  --c-font: #FAF5F5;
-  --c-main: #8670FF;
-  --c-main2: #C4B9FF;
-  --c-point: #49E99C;
+  --c-bg: #0b0b0b;
+  --c-font: #faf5f5;
+  --c-main: #8670ff;
+  --c-main2: #c4b9ff;
+  --c-point: #49e99c;
   --c-gray: #252426;
-  --c-gray2: #6F6C76;
-  --c-gray3: #8E8E9F;
-  --c-danger: #F66060;
+  --c-gray2: #6f6c76;
+  --c-gray3: #8e8e9f;
+  --c-danger: #f66060;
 
   /* Transparency */
   --c-point-50: rgba(73, 233, 156, 0.5);
@@ -28,24 +32,15 @@
   /* ========================
      Gradients
   ======================== */
-  --gr-ra-pur-dark: radial-gradient(circle,
-    #8670FF 0%,
-    #0B0B0B 100%
-  );
+  --gr-ra-pur-dark: radial-gradient(circle, #8670ff 0%, #0b0b0b 100%);
 
-  --gr-li-gray: linear-gradient(90deg,
-    #252426 0%,
-    #6F6C76 100%
-  );
+  --gr-li-gray: linear-gradient(90deg, #252426 0%, #6f6c76 100%);
 
-  --gr-li-purple: linear-gradient(90deg,
-    #504399 0%,
-    #8670FF 50%
-  );
+  --gr-li-purple: linear-gradient(90deg, #504399 0%, #8670ff 50%);
 
   /* ========================
      Shadows
   ======================== */
-  --shadow80: 0 0 5px rgba(11, 11, 11, 0.8);  /* Drop shadow blur 5, 80% */
-  --shadow50: 0 0 4px rgba(11, 11, 11, 0.5);  /* Drop shadow blur 4, 50% */
+  --shadow80: 0 0 5px rgba(11, 11, 11, 0.8); /* Drop shadow blur 5, 80% */
+  --shadow50: 0 0 4px rgba(11, 11, 11, 0.5); /* Drop shadow blur 4, 50% */
 }
