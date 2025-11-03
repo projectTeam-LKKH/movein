@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>아이디 찾기</title>
+<title>비밀번호 재설정</title>
+<link rel="stylesheet" href="/movein/css/root.css">
 <style>
     html, body {
         margin: 0;
@@ -29,16 +30,16 @@
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: 28.8px; /* 로그인 페이지와 동일한 1.2배 확대 */
+        font-size: 28.8px; /* 로그인 페이지 대비 1.2배 */
         line-height: 1.5;
     }
 
     .header-text .highlight {
-        color: #a64ca6; /* 무브인 보라색 */
+        color: var(--c-main);
     }
 
     /* 입력 폼 */
-    .findid-form {
+    .reset-form {
         position: absolute;
         top: 350px;
         left: 50%;
@@ -49,28 +50,28 @@
         gap: 15px;
     }
 
-    .findid-form input {
+    .reset-form input {
         padding: 15px;
         border: none;
         border-radius: 10px;
         background-color: #333;
-        color: #ccc; /* 약간 어두운 글씨색 */
+        color: #ccc; /* 조금 어두운 글씨색 */
         font-size: 16px;
     }
 
-    .findid-form input::placeholder {
+    .reset-form input::placeholder {
         color: #888; /* placeholder 회색 */
     }
 
-    .findid-form button {
+    .reset-form button {
         padding: 15px;
         border: none;
         border-radius: 10px;
-        background-color: #a64ca6;
+        background-color: var(--c-main);
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        width: 100%; /* 입력창과 동일 */
+        width: 100%; /* 입력창과 동일한 길이 */
     }
 
     /* 하단 링크 */
@@ -87,7 +88,7 @@
     }
 
     .bottom-links a.register {
-        color: #a64ca6; /* 회원가입 보라색 */
+        color: var(--c-main);
     }
 
     .bottom-links a:not(.register) {
@@ -99,17 +100,18 @@
 
 <div class="container">
     <div class="header-text">
-        <span class="highlight">무브인</span>에서 아이디를 찾아보세요
+        <span class="highlight">무브인</span>에서<br>비밀번호를 재설정하세요
     </div>
 
-    <form class="findid-form" method="POST" action="find_id_process.php">
-        <input type="text" name="username" placeholder="이름 입력" required>
+    <form class="reset-form" method="POST" action="reset_password_process.php">
+        <input type="text" name="userid" placeholder="아이디 입력" required>
         <input type="email" name="email" placeholder="이메일 입력" required>
-        <button type="submit">아이디 찾기</button>
+        <input type="password" name="new_password" placeholder="새 비밀번호 입력" required>
+        <button type="submit">비밀번호 재설정</button>
 
         <div class="bottom-links">
             <a href="login.php">로그인</a>
-            <a href="reset_password.php">비밀번호 찾기</a>
+            <a href="find_id.php">아이디 찾기</a>
             <a class="register" href="register.php">회원가입</a>
         </div>
     </form>

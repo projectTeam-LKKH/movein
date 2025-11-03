@@ -1,4 +1,3 @@
-// reset_password_process.php
 <?php
 include 'db_connect.php';
 
@@ -11,8 +10,16 @@ $result = mysqli_query($connect, $sql);
 
 if(mysqli_num_rows($result) == 1){
     mysqli_query($connect, "UPDATE User SET password='$new_password' WHERE userid='$userid'");
-    echo "비밀번호가 재설정되었습니다.";
+    echo "<script>
+        alert('비밀번호가 재설정되었습니다.');
+        window.location.href = 'login.php';
+    </script>";
 } else {
-    echo "아이디와 이메일이 일치하지 않습니다.";
+    echo "<script>
+        alert('일치하는 정보가 없습니다.');
+        history.back(); // 이전 페이지(아이디 찾기 페이지)로 돌아감
+    </script>";
 }
 ?>
+
+

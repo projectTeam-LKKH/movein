@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인</title>
+<title>아이디 찾기</title>
+<link rel="stylesheet" href="/movein/css/root.css">
 <style>
     html, body {
         margin: 0;
@@ -29,16 +30,16 @@
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: 28.8px; /* 기존 대비 1.2배 */
+        font-size: 28.8px; /* 로그인 페이지와 동일한 1.2배 확대 */
         line-height: 1.5;
     }
 
     .header-text .highlight {
-        color: #a64ca6; /* 무브인 보라색 */
+        color: var(--c-main);
     }
 
     /* 입력 폼 */
-    .login-form {
+    .findid-form {
         position: absolute;
         top: 350px;
         left: 50%;
@@ -49,31 +50,31 @@
         gap: 15px;
     }
 
-    .login-form input {
+    .findid-form input {
         padding: 15px;
         border: none;
         border-radius: 10px;
         background-color: #333;
-        color: #ccc; /* 조금 더 어두운 글씨색 */
+        color: #ccc; /* 약간 어두운 글씨색 */
         font-size: 16px;
     }
 
-    .login-form input::placeholder {
+    .findid-form input::placeholder {
         color: #888; /* placeholder 회색 */
     }
 
-    .login-form button {
+    .findid-form button {
         padding: 15px;
         border: none;
         border-radius: 10px;
-        background-color: #a64ca6;
+        background-color: var(--c-main);
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        width: 100%; /* 입력창과 동일 길이 */
+        width: 100%; /* 입력창과 동일 */
     }
 
-    /* 하단 링크 - 로그인 바로 아래 */
+    /* 하단 링크 */
     .bottom-links {
         margin-top: 15px;
         display: flex;
@@ -87,7 +88,7 @@
     }
 
     .bottom-links a.register {
-        color: #a64ca6; /* 회원가입 보라색 */
+        color: var(--c-main);
     }
 
     .bottom-links a:not(.register) {
@@ -99,17 +100,16 @@
 
 <div class="container">
     <div class="header-text">
-        <span class="highlight">무브인</span>에 로그인하고<br>
-        당신의 다음 취향을 만나보세요
+        <span class="highlight">무브인</span>에서 아이디를 찾아보세요
     </div>
 
-    <form class="login-form" method="POST" action="login_process.php">
-        <input type="text" name="userid" placeholder="아이디 입력" required>
-        <input type="password" name="password" placeholder="비밀번호 입력" required>
-        <button type="submit">로그인</button>
+    <form class="findid-form" method="POST" action="find_id_process.php">
+        <input type="text" name="username" placeholder="이름 입력" required>
+        <input type="email" name="email" placeholder="이메일 입력" required>
+        <button type="submit">아이디 찾기</button>
 
         <div class="bottom-links">
-            <a href="find_id.php">아이디 찾기</a>
+            <a href="login.php">로그인</a>
             <a href="reset_password.php">비밀번호 찾기</a>
             <a class="register" href="register.php">회원가입</a>
         </div>
@@ -117,7 +117,7 @@
 </div>
 
 <script>
-    // F5 새로고침 방지
+    // 새로고침 방지
     document.addEventListener("keydown", function(e) {
         if (e.key === "F5" || (e.ctrlKey && e.key === "r")) {
             e.preventDefault();
