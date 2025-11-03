@@ -1,12 +1,222 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoveIn</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/root.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    
+  <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+        <div class="logo"><img src="img/logo.png" alt=""></div>
+        <div class="icons">
+            <i class="fas fa-bell"></i>
+            <a href="login/login.php">
+              <i class="fas fa-cog"></i>
+            </a>
+        </div>
+        </header>
+
+        <!-- 검색창 -->
+        <div class="search-box">
+            <input type="text" placeholder="🔍당신의 마음을 뒤흔들 작품을 검색해보세요.">
+        </div>
+
+        <!-- 인사말 -->
+        <div class="txt1">
+            <span class="nick">닉네임</span>님,
+            <br>취향을 탐험할 준비 되셨나요?
+        </div>
+
+        <!-- 네모 박스 -->
+        <div class="bubble-panel">
+            <div id="genre-bubble-container"></div>
+        </div>
+
+        <!-- 장르 추천 -->
+        <div class="txt1">
+            [장르명] 장르를 좋아하신다면, 이건 어때요?
+        </div>
+        
+        <!-- 가로 스크롤 가능한 박스들 -->
+        <div class="genre-section">
+            <div class="genre-box">1<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">2<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">3<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">4<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">5<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">6<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">7<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">8<i class="fa-solid fa-heart heart-icon"></i></div>
+            <div class="genre-box">9<i class="fa-solid fa-heart heart-icon"></i></div>
+        </div>
+
+        <br>
+        <br>
+        <!-- 대세 추천 -->
+        <div class="txt1">
+            요즘 대세 작품은?
+        </div>
+        
+        <div class="trending-section">
+            <div class="circle">All</div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <!-- 가로 스크롤 가능한 박스들 -->
+        <div class="genre-section2">
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">영화 제목</div>
+                <div class="release">개봉일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">영화 제목</div>
+                <div class="release">개봉일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">영화 제목</div>
+                <div class="release">개봉일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">영화 제목</div>
+                <div class="release">개봉일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">영화 제목</div>
+                <div class="release">개봉일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+          </div>
+
+          
+        <br>
+        <br>
+        <!-- 대세 추천 -->
+        <div class="txt1">
+            요즘 대세 드라마는?
+        </div>
+        
+        <div class="trending-section">
+            <div class="circle">All</div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <!-- 가로 스크롤 가능한 박스들 -->
+        <div class="genre-section2">
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">드라마 제목</div>
+                <div class="release">방영일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">드라마 제목</div>
+                <div class="release">방영일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">드라마 제목</div>
+                <div class="release">방영일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">드라마 제목</div>
+                <div class="release">방영일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+            <div class="genre-box2">
+              <div class="genre-content">
+                <div class="img">img</div>
+                <div class="title">드라마 제목</div>
+                <div class="release">방영일 : 2025.10.25</div>
+                <div class="rating">별점 : <span class="rating2">★★★★★</span></div>
+              </div>
+            </div>
+          </div>
+
+  </div>
+  <nav class="bottom-menu">
+    <button class="menu-btn active" aria-label="홈">
+      <i class="fas fa-home"></i>
+    </button>
+    <button class="menu-btn" aria-label="원">
+      <i class="fas fa-circle"></i>
+    </button>
+    <button class="menu-btn" aria-label="돋보기">
+      <i class="fas fa-search"></i>
+    </button>
+    <button class="menu-btn" aria-label="메시지">
+      <i class="fas fa-comment-alt"></i>
+    </button>
+    <button class="menu-btn" aria-label="마이페이지">
+      <i class="fas fa-user"></i>
+    </button>
+  </nav>
+  
+
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script defer src="genre-bubbles.js"></script>
+
+<script>
+  // 페이지 로딩 완료 후 버블 자동 생성
+  window.addEventListener('DOMContentLoaded', () => {
+    const bubbleApp = window.genreBubbleApp.init('genre-bubble-container');
+
+    // 버블 5개 자동 생성
+    if (bubbleApp) {
+      bubbleApp.createGenreBubble("공포", "#ff6b6b", 50);
+      bubbleApp.createGenreBubble("코미디", "#6bc5ff", 75);
+      bubbleApp.createGenreBubble("로맨스", "#ffd93b", 35);
+      bubbleApp.createGenreBubble("액션", "#8aff6b", 25);
+      bubbleApp.createGenreBubble("판타지", "#d36bff", 40);
+    }
+  });
+</script>
+
 </body>
 </html>

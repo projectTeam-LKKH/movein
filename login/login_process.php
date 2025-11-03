@@ -12,7 +12,10 @@ if(mysqli_num_rows($result) == 1){
     if(password_verify($password, $row['password'])){
         // 로그인 성공
         mysqli_query($connect, "UPDATE User SET lastdate=NOW() WHERE userid='$userid'");
-        echo "로그인 성공!";
+        echo "<script>
+                alert('로그인 성공!');
+                window.location.href = '../index.html';
+            </script>";
     } else {
         echo "비밀번호가 틀렸습니다.";
     }

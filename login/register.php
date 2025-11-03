@@ -26,11 +26,11 @@
     /* 상단 문구 */
     .header-text {
         position: absolute;
-        top: 200px;
+        top: 50px;
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: 28.8px;
+        font-size: 20px;
         line-height: 1.5;
         transition: opacity 0.3s ease;
     }
@@ -42,7 +42,7 @@
     /* 폼 */
     .register-form {
         position: absolute;
-        top: 350px;
+        top: 120px;
         left: 50%;
         transform: translateX(-50%);
         width: 80%;
@@ -62,6 +62,11 @@
         box-sizing: border-box;
     }
 
+    #smallText {
+        color: #888;
+        font-size: 12px;
+    }
+
     input::placeholder {
         color: #888;
     }
@@ -78,7 +83,7 @@
 
     .check-btn {
         background-color: #555;
-        color: #fff;
+        color: #000;
         border: none;
         border-radius: 8px;
         padding: 12px 15px;
@@ -159,21 +164,25 @@
         <!-- STEP 1 -->
         <div id="step1" class="step active">
             <div class="input-group">
-                <input type="text" name="userid" id="userid" placeholder="아이디 입력" required>
+                <input type="text" name="userid" id="userid" placeholder="사용하실 아이디를 입력해주세요" required>
                 <button type="button" class="check-btn" onclick="checkId()">중복확인</button>
             </div>
-            <input type="password" name="password" id="password" placeholder="비밀번호 입력" required>
+            <div id="smallText"> 영문·숫자 조합, 5~15자 이내로 입력해주세요.</div>
+            <input type="password" name="password" id="password" placeholder="사용하실 비밀번호를 입력해 주세요" required>
             <input type="password" name="password_confirm" id="password_confirm" placeholder="비밀번호 확인" required>
+            <div id="smallText"> 비밀번호는 8자 이상, 영문자 숫자, 특수문자를 섞어주세요.</div>
             <button type="button" class="next-btn" onclick="nextStep(2)">다음 ></button>
         </div>
 
         <!-- STEP 2 -->
         <div id="step2" class="step">
             <div class="input-group">
-                <input type="text" name="username" id="username" placeholder="닉네임 입력" required>
+                <input type="text" name="username" id="username" placeholder="사용하실 닉네임을 입력해 주세요" required>
                 <button type="button" class="check-btn" onclick="checkNickname()">중복확인</button>
             </div>
-            <input type="email" name="email" id="email" placeholder="이메일 입력" required>
+            <div id="smallText"> 한글과 영문만 사용 가능하며, 최대 10자까지 입력할 수 있어요</div>
+            <input type="email" name="email" id="email" placeholder="이메일을 입력해 주세요" required>
+            <div id="smallText"> 추후 잃어버린 아이디나 비밀번호를 찾아야 할때 필요한 정보에요</div>
             <button type="button" class="next-btn" onclick="nextStep(3)">다음 ></button>
         </div>
 
@@ -184,26 +193,35 @@
                 <span class="toggle-btn" onclick="toggleSelection(this)">영화</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">드라마</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">예능</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">다큐</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">애니</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">다큐멘터리</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">애니메이션</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">시트콤</span>
             </div>
 
             <label style="color:#ccc;">주로 사용하는 OTT</label>
             <div id="ott" class="toggle-section">
-                <span class="toggle-btn" onclick="toggleSelection(this)">Netflix</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">Disney+</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">Wavve</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">Coupang Play</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">넷플릭스</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">쿠팡플레이</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">티빙</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">웨이브</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">디즈니+</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">왓챠</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">기타</span>
             </div>
 
             <label style="color:#ccc;">선호 콘텐츠 지역</label>
             <div id="region" class="toggle-section">
-                <span class="toggle-btn" onclick="toggleSelection(this)">한국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">독일</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">대만</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">미국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">영국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">인도</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">일본</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">중국</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">유럽</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">캐나다</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">한국</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">기타</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">잘 모르겠어요</span>
             </div>
 
             <input type="hidden" name="favorite_genres" id="favorite_genres">

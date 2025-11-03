@@ -21,7 +21,10 @@ $sql = "INSERT INTO User (userid, password, username, email, favorite_genres, pr
         VALUES ('$userid', '$password', '$username', '$email', '$favorite_genres', '$preferred_ott', '$preferred_regions')";
 
 if(mysqli_query($connect, $sql)){
-    echo "회원가입 완료!";
+    echo "<script>
+        alert('회원가입 완료!');
+        window.location.href = 'login.php';
+    </script>";
 } else {
     echo "오류: " . mysqli_error($connect);
 }
