@@ -30,7 +30,7 @@
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: 20px;
+        font-size: var(--fs26);
         line-height: 1.5;
         transition: opacity 0.3s ease;
     }
@@ -57,14 +57,14 @@
         border-radius: 10px;
         background-color: #333;
         color: #ccc;
-        font-size: 16px;
+        font-size: var(--fs14);
         width: 100%;
         box-sizing: border-box;
     }
 
     #smallText {
         color: #888;
-        font-size: 12px;
+        font-size: var(--fs12);
     }
 
     input::placeholder {
@@ -87,21 +87,21 @@
         border: none;
         border-radius: 8px;
         padding: 12px 15px;
-        font-size: 14px;
+        font-size: var(--fs14);
         cursor: pointer;
         white-space: nowrap;
     }
 
     button.next-btn {
         align-self: flex-end;
-        background-color: var(--c-main);
-        color: #fff;
+        background-color: black;
+        color: gray;
         border: none;
-        border-radius: 8px;
-        padding: 12px 20px;
-        font-size: 16px;
+        /* border-radius: 8px; */
+        /* padding: 12px 20px; */
+        font-size: var(--fs16);
         cursor: pointer;
-        margin-top: 10px;
+        margin-top: 15px;
     }
 
     /* 스텝 */
@@ -129,7 +129,7 @@
         border-radius: 10px;
         cursor: pointer;
         color: #ccc;
-        font-size: 14px;
+        font-size: var(--fs14);
         transition: all 0.2s;
     }
 
@@ -145,11 +145,54 @@
         border: none;
         border-radius: 10px;
         padding: 15px;
-        font-size: 16px;
+        font-size: var(--fs16);
         cursor: pointer;
         width: 100%;
         margin-top: 10px;
     }
+    /* STEP 4 완료 화면 */
+    .complete-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 100px);
+        text-align: center;
+        gap: 30px;
+    }
+
+    .complete-img {
+        width: 180px;
+        height: auto;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .button-group button {
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: var(--fs16);
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .login-btn {
+        background-color: var(--c-main);
+        color: #fff;
+    }
+
+    .home-btn {
+        background-color: #333;
+        color: #ccc;
+    }
+
 </style>
 </head>
 <body>
@@ -230,49 +273,23 @@
 
             <button type="submit" class="submit-btn">가입하기</button>
         </div>
+
+        <!-- STEP 4 -->
+        <div id="step4" class="step">
+            <div class="complete-container">
+                <img src="../img/movein_character.png" alt="완료 이미지" class="complete-img">
+                <div class="button-group">
+                    <button type="button" class="login-btn" onclick="location.href='login.php'">로그인 페이지 바로가기</button>
+                    <button type="button" class="home-btn" onclick="location.href='../index.html'">홈으로 돌아가기</button>
+                </div>
+            </div>
+        </div>
+
     </form>
 </div>
 
 <script>
 const header = document.getElementById("headerText");
-
-function nextStep(step) {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step' + step).classList.add('active');
-
-    // 단계별 문구 변경
-    if (step === 1) {
-        header.innerHTML = `<span class="highlight">무브오너</span>가 되어<br>나만의 취향을 확장해 보세요.`;
-    } else if (step === 2) {
-        header.innerHTML = `<span class="highlight">무브인</span> 계정을 만들고<br>새로운 탐험을 시작하세요.`;
-    } else if (step === 3) {
-        header.innerHTML = `<span class="highlight">당신의 취향</span>을 알고 싶어요<br>장르, 플랫폼 등을 선택해주세요.`;
-    }
-}
-
-function toggleSelection(el) {
-    el.classList.toggle('selected');
-}
-
-document.getElementById('registerForm').onsubmit = function() {
-    const genres = [...document.querySelectorAll('#genres .selected')].map(e => e.textContent);
-    const ott = [...document.querySelectorAll('#ott .selected')].map(e => e.textContent);
-    const region = [...document.querySelectorAll('#region .selected')].map(e => e.textContent);
-
-    document.getElementById('favorite_genres').value = JSON.stringify(genres);
-    document.getElementById('preferred_ott').value = JSON.stringify(ott);
-    document.getElementById('preferred_regions').value = JSON.stringify(region);
-
-    const password = document.getElementById('password').value;
-    const confirm = document.getElementById('password_confirm').value;
-    if (password !== confirm) {
-        alert('비밀번호가 일치하지 않습니다.');
-        nextStep(1);
-        return false;
-    }
-
-    return true;
-};
 
 function checkId() {
     const userid = document.getElementById('userid').value;
@@ -289,6 +306,120 @@ function checkNickname() {
         .then(res => res.text())
         .then(data => alert(data));
 }
+
+function nextStep(step) {
+    // 현재 단계 찾기
+    const currentStep = document.querySelector('.step.active');
+    const currentStepId = currentStep.id;
+    
+    // 스텝별 입력값 검사
+    if (currentStepId === 'step1') {
+        const userid = document.getElementById('userid').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const confirm = document.getElementById('password_confirm').value.trim();
+
+        if (!userid) return alert('아이디를 입력해주세요.');
+        if (!validateUserId(userid)) 
+            return alert('아이디는 영문과 숫자 조합의 5~15자 이내여야 합니다.');
+        if (!password) return alert('비밀번호를 입력해주세요.');
+        if (!validatePassword(password)) 
+            return alert('비밀번호는 8자 이상, 영문, 숫자, 특수문자를 모두 포함해야 합니다.');
+        if (!confirm) return alert('비밀번호 확인을 입력해주세요.');
+        if (password !== confirm) 
+            return alert('비밀번호가 일치하지 않습니다.');
+    }
+    
+    if (currentStepId === 'step2') {
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        if (!username) return alert('닉네임을 입력해주세요.');
+        if (!validateNickname(username))
+            return alert('닉네임은 한글 또는 영문만 사용 가능하며, 최대 10자까지 입력할 수 있습니다.');
+        if (!email) return alert('이메일을 입력해주세요.');
+        if (!validateEmail(email))
+            return alert('올바른 이메일 형식이 아닙니다.');
+    }
+
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    // 단계별 문구 변경
+    if (step === 1) {
+        header.innerHTML = `<span class="highlight">무브오너</span>가 되어<br>나만의 취향을 확장해 보세요.`;
+    } else if (step === 2) {
+        header.innerHTML = `<span class="highlight">무브인</span> 계정을 만들고<br>새로운 탐험을 시작하세요.`;
+    } else if (step === 3) {
+        header.innerHTML = `<span class="highlight">당신의 취향</span>을 알고 싶어요<br>장르, 플랫폼 등을 선택해주세요.`;
+    } else if (step === 4) {
+        header.innerHTML = `회원가입이 완료되었습니다.<br><span class="highlight">무브인</span>에 오신것을 환영합니다.`;
+    }
+}
+
+
+document.getElementById('registerForm').onsubmit = async function(e) {
+    e.preventDefault(); // 실제 전송 막기
+    const genres = [...document.querySelectorAll('#genres .selected')].map(e => e.textContent);
+    const ott = [...document.querySelectorAll('#ott .selected')].map(e => e.textContent);
+    const region = [...document.querySelectorAll('#region .selected')].map(e => e.textContent);
+
+    // ✅ 빈 배열이라도 JSON 형태로 넣기
+    document.getElementById('favorite_genres').value = JSON.stringify(genres.length ? genres : []);
+    document.getElementById('preferred_ott').value = JSON.stringify(ott.length ? ott : []);
+    document.getElementById('preferred_regions').value = JSON.stringify(region.length ? region : []);
+
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('password_confirm').value;
+    if (password !== confirm) {
+        alert('비밀번호가 일치하지 않습니다.');
+        nextStep(1);
+        return false;
+    }
+
+    const formData = new FormData(this);
+
+    try {
+        const res = await fetch('register_process.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const text = await res.text();
+
+        // PHP에서 성공했다면 step4로 전환
+        if (text.includes('success') || res.ok) {
+            nextStep(4);
+        } else {
+            alert('회원가입 중 오류가 발생했습니다.\n\n' + text);
+        }
+
+    } catch (err) {
+        alert('서버 통신 오류: ' + err.message);
+    }
+};
+
+function toggleSelection(el) {
+    el.classList.toggle('selected');
+}
+
+function validateUserId(userid) {
+    const regex = /^[a-zA-Z0-9]{5,15}$/; // 영문, 숫자만 허용
+    return regex.test(userid);
+}
+function validatePassword(password) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;"'<>,.?/~`-]).{8,}$/;
+    return regex.test(password);
+}
+function validateNickname(username) {
+    const regex = /^[가-힣a-zA-Z]{1,10}$/;
+    return regex.test(username);
+}
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+
 
 // 새로고침 방지
 document.addEventListener("keydown", function(e) {
