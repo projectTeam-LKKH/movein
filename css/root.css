@@ -1,51 +1,61 @@
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@latest/nanumsquare.css");
 :root {
+  /* ================================
+   🎨 ROOT VARIABLES (폰트 & 공통 색상 & 효과)
+   :root는 전역 CSS 변수(전역 상수) 설정 영역입니다.
+   변수명은 '—' 2개로 시작해야 하며,
+   어디서든 var(--변수명) 으로 호출 가능합니다.
+
+   ※ 모든 CSS 파일에서 공통 참조됨
+   ※ 수정 시 팀원들과 상의 필수!
+
+   💡 사용 예시 (팀 공용 안내)
+  - 색상: color: var(--color-main);
+  - 배경: background-color: var(--color-bg);
+  - 폰트: font-family: var(--font-main);
+  - 크기: font-size: var(--font-size-lg);
+================================ */
+
+  /* Text */
+  --font-main: "NanumSquare", sans-serif;
+
   /* ========================
      Typography Scale
+     폰트 사이즈 단위는 rem 기반으로 관리합니다.
   ======================== */
-  --fs10: 10px;
-  --fs12: 12px;
-  --fs14: 14px;
-  --fs16: 16px;
-  --fs18: 18px;
+  --fs1: 0.625rem; /* 10px */
+  --fs2: 0.75rem; /* 12px */
+  --fs3: 0.875rem; /* 14px */
+  --fs4: 1rem; /* 16px */
+  --fs5: 1.125rem; /* 18px */
 
   /* ========================
      Brand Colors
   ======================== */
-  --c-bg: #0B0B0B;
-  --c-font: #FAF5F5;
-  --c-main: #8670FF;
-  --c-main2: #C4B9FF;
-  --c-point: #49E99C;
+  --c-bg: #0b0b0b; /* 전체 배경색 */
+  --c-font: #faf5f5; /* 폰트색(화이트톤) */
+  --c-main: #8670ff; /* 메인색 */
+  --c-main2: #c4b9ff;
+  --c-point: #49e99c; /* 포인트색 */
   --c-gray: #252426;
-  --c-gray2: #6F6C76;
-  --c-gray3: #8E8E9F;
-  --c-danger: #F66060;
+  --c-gray2: #6f6c76;
+  --c-gray3: #8e8e9f;
+  --c-danger: #f66060;
 
-  /* Transparency */
+  /* Transparency 투명도 */
   --c-point-50: rgba(73, 233, 156, 0.5);
   --c-main-50: rgba(134, 112, 255, 0.5);
 
   /* ========================
      Gradients
   ======================== */
-  --gr-ra-pur-dark: radial-gradient(circle,
-    #8670FF 0%,
-    #0B0B0B 100%
-  );
-
-  --gr-li-gray: linear-gradient(90deg,
-    #252426 0%,
-    #6F6C76 100%
-  );
-
-  --gr-li-purple: linear-gradient(90deg,
-    #504399 0%,
-    #8670FF 50%
-  );
+  --gr-ra-pur-dark: radial-gradient(circle, #8670ff 0%, #0b0b0b 100%);
+  --gr-li-gray: linear-gradient(90deg, #252426 0%, #6f6c76 100%);
+  --gr-li-purple: linear-gradient(90deg, #504399 0%, #8670ff 50%);
 
   /* ========================
      Shadows
   ======================== */
-  --shadow80: 0 0 5px rgba(11, 11, 11, 0.8);  /* Drop shadow blur 5, 80% */
-  --shadow50: 0 0 4px rgba(11, 11, 11, 0.5);  /* Drop shadow blur 4, 50% */
+  --shadow80: 0 0 5px rgba(11, 11, 11, 0.8); /* Drop shadow blur 5, 80% */
+  --shadow50: 0 0 4px rgba(11, 11, 11, 0.5); /* Drop shadow blur 4, 50% */
 }
