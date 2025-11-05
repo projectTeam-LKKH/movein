@@ -27,13 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const subMenus = document.querySelectorAll(".ham-sub-box li");
 
+  subMenus.forEach((item) => item.classList.remove("active"));
+
   subMenus.forEach((sub) => {
     sub.addEventListener("click", () => {
-      subMenus.forEach((item) => {
-        item.classList.remove("active");
-
+      // 이미 활성화된 걸 다시 클릭한 경우, 해제
+      if (sub.classList.contains("active")) {
+        sub.classList.remove("active");
+      } else {
+        // 다른 모든 항목 비활성화 후 현재만 활성화
+        subMenus.forEach((item) => item.classList.remove("active"));
         sub.classList.add("active");
-      });
+      }
     });
   });
 });
@@ -50,6 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
       img.setAttribute("src", current === grayBtn ? greenBtn : grayBtn);
     });
   });
+});
+
+// 요즘 대세 영화는? 버튼 토글 효과
+document.addEventListener("DOMContentLoaded", () => {
+  const hotBtns = document.querySelectorAll(".all-btn");
+
+  hotBtns[0].classList.add("active");
+
+  hotBtns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      hotBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+    })
+  );
 });
 
 //------------------아직 작업 전입니다.
