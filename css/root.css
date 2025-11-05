@@ -49,9 +49,13 @@
   /* ========================
      Gradients
   ======================== */
-  --gr-ra-pur-dark: radial-gradient(circle, #8670ff 0%, #0b0b0b 100%);
-  --gr-li-gray: linear-gradient(90deg, #252426 0%, #6f6c76 100%);
-  --gr-li-purple: linear-gradient(90deg, #504399 0%, #8670ff 50%);
+  --gr-ra-pur-dark: linear-gradient(circle, #8670ff 0%, #0b0b0b 100%);
+  --gr-li-gray: linear-gradient(
+    180deg,
+    rgba(37, 36, 38, 0.3) 0%,
+    rgba(111, 108, 118, 0.1) 100%
+  );
+  --gr-li-purple: linear-gradient(0deg, #504399 0%, #8670ff 50%);
 
   /* ========================
      Shadows

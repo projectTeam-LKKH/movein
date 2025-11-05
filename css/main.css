@@ -8,13 +8,425 @@
 
 body,
 html {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
   font-family: var(--font-main);
-  font-size: var(--fs3);
+  font-size: var(--fs2);
   background: var(--c-bg);
 }
 
-a {
+body.lock {
+  overflow: hidden;
+}
+
+a,
+span,
+p {
   text-decoration: none;
   color: var(--c-font);
+}
+
+button {
+  all: unset;
+}
+
+#container {
+  width: 100%;
+}
+
+#header {
+  width: 90%;
+  height: 60px;
+  z-index: 50;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header a img {
+  height: 18px;
+}
+
+#header a img.hide {
+  display: none;
+}
+
+.header-icon {
+  display: flex;
+  height: 18px;
+  gap: 14px;
+}
+
+/* ============= 햄버거 ============= */
+
+.modal-bg.active {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background: var(--c-);
+}
+.hamburger {
+  z-index: 20;
+  position: fixed;
+  visibility: hidden;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  margin-bottom: 150px;
+  color: var(--c-font);
+  height: calc(100dvh - 60px);
+}
+
+.hamburger.show {
+  top: 60px;
+  visibility: visible;
+  opacity: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  transform: translateX(0);
+}
+
+.ham-title {
+  margin-bottom: 3rem;
+}
+
+.ham-title > span {
+  font-weight: 800;
+  font-size: var(--fs3);
+  display: block;
+  margin-bottom: 1rem;
+}
+.ham-sub-box {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: var(--fs3);
+}
+.ham-sub-box li {
+  display: inline-flex;
+  height: 35px;
+  line-height: 40px;
+  padding: 0 1.5rem;
+  align-items: center;
+  border-radius: 50px;
+  background: var(--c-gray);
+  transition: all 0.3s ease-in;
+}
+
+.ham-sub-box li.active {
+  background: var(--c-main);
+  color: var(--c-bg);
+  font-weight: 800;
+}
+
+/* ============= 검색창 ============= */
+.search-f {
+  width: 90%;
+  margin: 0 auto;
+  height: 40px;
+  border-radius: 50px;
+  background: var(--c-gray);
+  display: flex;
+  align-items: center;
+  border: 1px solid red; /*  추후 지우기 */
+}
+
+.search-box {
+  width: 100%;
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-f button {
+  background: var(--c-gray2);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+}
+
+.search-f button img {
+  height: 14px;
+  width: 14px;
+}
+
+.search-in {
+  border: none;
+  width: 90%;
+  font-size: var(--fs2);
+  background: transparent;
+  padding-left: 0.5rem;
+}
+
+/* 닉네임 활성화 칸 */
+.user-txt-box {
+  width: 90%;
+  margin: 0 auto;
+}
+.user-txt {
+  padding: 2rem 0rem;
+  font-size: var(--fs5);
+  color: var(--c-font);
+  line-height: 160%;
+}
+
+/* 카테고리 원 박스 */
+#navi-wrap {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 320px;
+  background: var(--gr-li-gray);
+  border-radius: 20px;
+}
+.navi-box ul {
+  width: 100%;
+}
+.navi-box li {
+  position: relative;
+  display: inline-block;
+  background: var(--gr-li-purple);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.navi-box li a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: var(--fs2);
+  font-weight: 300;
+}
+
+.navi-box li.active {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  background: var(--c-point-50);
+  overflow: hidden;
+}
+
+.navi-box li.active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg-img) center/cover no-repeat;
+  z-index: -1;
+  opacity: 1;
+  filter: blur(10px);
+}
+
+.navi-box li.active a {
+  font-weight: 800;
+}
+
+/* 사용자 데이터 기반 장르 추천 */
+.favorite {
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.favorite-txt-box {
+  width: 90%;
+  margin: 1.5rem auto;
+}
+
+.favorite-txt .input {
+  color: var(--c-main);
+}
+
+.favorite-list-box {
+  padding: 0 5vw;
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+}
+
+.favorite-list-box li {
+  cursor: pointer;
+}
+
+.favorite-list-box li a {
+  display: inline-block;
+  width: 65px;
+  height: 65px;
+}
+
+.favorite-list-box li a img {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  border-radius: 10px;
+}
+
+.favorite-list-box li a:last-child {
+  border: 1px solid var(--c-gray);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorite-list-box li:last-child > a > img {
+  width: 15px;
+  height: 15px;
+}
+
+/* 요즘 대세 영화는? */
+#hot-movie {
+  width: 100%;
+  margin-top: 5rem;
+}
+.hot-movie-contain {
+  overflow-x: hidden;
+}
+
+.hot-txt-box {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.hot-txt-box > img {
+  width: 10px;
+  height: 10px;
+}
+
+.hot-txt-box h3 {
+  color: var(--c-font);
+  font-size: var(--fs4);
+}
+
+/* ott선택 버튼 */
+.hot-wrap {
+  width: 100%;
+  height: max-content;
+  overflow-x: auto;
+  padding: 0 5vw;
+}
+
+.hot-nav-box {
+  height: 50px;
+  display: flex;
+  gap: 16px;
+}
+
+#all-btn {
+  position: relative;
+  color: var(--c-font);
+  flex: 0 0 40px;
+  height: 40px;
+  border: 2px solid var(--c-gray2);
+  border-radius: 50px;
+  object-fit: cover;
+}
+
+#all-btn p {
+  color: var(--c-gray2);
+  font-weight: 800;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#all-btn img {
+  display: block;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#all-btn .point::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--c-gray2); /* 삼각형 색상 */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -9px;
+}
+
+#all-btn.active {
+  color: var(--c-main);
+  border: 2px solid var(--c-main);
+}
+
+#all-btn .point.active::after {
+  border-top: 8px solid var(--c-main); /* 삼각형 색상 */
+}
+
+/* 포스터 들어갈 영역 */
+.poster-wrap {
+  margin-top: 1.5rem;
+  width: 100%;
+  overflow-x: hidden;
+}
+.poster-box {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 5vw;
+}
+
+.all-posters {
+  display: flex;
+  gap: 16px;
+  width: 172px;
+}
+
+.all-poster > a > p {
+  margin: 0.6rem 0;
+  font-size: var(--fs3);
+  font-weight: 800;
+  width: 172px;
+  text-align: center;
+}
+
+.all-poster a img {
+  width: 172px;
+  height: 252px;
+}
+.detail-box {
+  width: 172px;
+  font-size: var(--fs2);
+}
+.date-box {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.score-contain {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.score-contain p {
+  white-space: nowrap;
+}
+.score-box {
+  display: flex;
+  gap: 1px;
+}
+.score-box img {
+  width: 10px;
 }

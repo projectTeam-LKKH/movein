@@ -6,124 +6,311 @@
     <title>Document</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
 
   <body>
+    
     <div id="container">
       <!-- 헤더 -->
-      <header>
-        <div class="header-img">
-          <a href="index.html">
-            <img src="img/logo.png" alt="MOVEINlogo" />
-          </a>
-        </div>
+      <header id="header">
+        <a href="index.html">
+          <img src="img/logo.png" alt="MOVEINlogo" />
+        </a>
 
         <div class="header-icon">
           <img src="img/alarm_f5f5f5.png" alt="alarm" />
-          <img src="img/hamburger_f5f5f5.png" alt="hamburger" />
+          <img class="hambtn" src="img/hamburger_f5f5f5.png" alt="hamburger" />
         </div>
 
-        <nav>
-          <ul>
+        <nav class="hamburger">
+          <ul class="ham-title-box">
             <li class="ham-title">
-              <a href="#">종류별</a>
+              <span>종류별</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">영화</a></li>
-                <li class="ham-sub"><a href="">드라마</a></li>
-                <li class="ham-sub"><a href="">예능</a></li>
-                <li class="ham-sub"><a href="">다큐멘터리</a></li>
-                <li class="ham-sub"><a href="">애니메이션</a></li>
-                <li class="ham-sub"><a href="">스포츠</a></li>
+                <li class="ham-sub active">영화</li>
+                <li class="ham-sub">드라마</li>
+                <li class="ham-sub">예능</li>
+                <li class="ham-sub">다큐멘터리</li>
+                <li class="ham-sub">애니메이션</li>
+                <li class="ham-sub">스포츠</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">OTT별</a>
+              <span>OTT별</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">넷플릭스</a></li>
-                <li class="ham-sub"><a href="">쿠팡플레이</a></li>
-                <li class="ham-sub"><a href="">티빙</a></li>
-                <li class="ham-sub"><a href="">웨이브</a></li>
-                <li class="ham-sub"><a href="">디즈니+</a></li>
-                <li class="ham-sub"><a href="">왓챠</a></li>
-                <li class="ham-sub"><a href="">기타</a></li>
+                <li class="ham-sub">넷플릭스</li>
+                <li class="ham-sub">쿠팡플레이</li>
+                <li class="ham-sub">티빙</li>
+                <li class="ham-sub">웨이브</li>
+                <li class="ham-sub">디즈니+</li>
+                <li class="ham-sub">왓챠</li>
+                <li class="ham-sub">기타</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">장르별</a>
+              <span>장르별</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">드라마</a></li>
-                <li class="ham-sub"><a href="">로맨스</a></li>
-                <li class="ham-sub"><a href="">액션</a></li>
-                <li class="ham-sub"><a href="">스릴러</a></li>
-                <li class="ham-sub"><a href="">코미디</a></li>
-                <li class="ham-sub"><a href="">미스터리</a></li>
-                <li class="ham-sub"><a href="">판타지</a></li>
+                <li class="ham-sub">드라마</li>
+                <li class="ham-sub">로맨스</li>
+                <li class="ham-sub">액션</li>
+                <li class="ham-sub">스릴러</li>
+                <li class="ham-sub">코미디</li>
+                <li class="ham-sub">미스터리</li>
+                <li class="ham-sub">판타지</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">랭킹순</a>
+              <span>랭킹순</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">조회수 랭킹순</a></li>
-                <li class="ham-sub"><a href="">이용자 랭킹순</a></li>
+                <li class="ham-sub">조회수 랭킹순</li>
+                <li class="ham-sub">이용자 랭킹순</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">평점순</a>
+              <span>평점순</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">전체 평점순</a></li>
-                <li class="ham-sub"><a href="">종류별 평점순</a></li>
-                <li class="ham-sub"><a href="">OTT별 평점순</a></li>
-                <li class="ham-sub"><a href="">장르별 평점순</a></li>
+                <li class="ham-sub">전체 평점순</li>
+                <li class="ham-sub">종류별 평점순</li>
+                <li class="ham-sub">OTT별 평점순</li>
+                <li class="ham-sub">장르별 평점순</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">탐색</a>
+              <span>탐색</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">오늘의 작품 티켓 뽑기</a></li>
-                <li class="ham-sub"><a href="">밸런스 게임</a></li>
-                <li class="ham-sub"><a href="">나만의 보석 찾기</a></li>
+                <li class="ham-sub">오늘의 작품 티켓 뽑기</li>
+                <li class="ham-sub">밸런스 게임</li>
+                <li class="ham-sub">나만의 보석 찾기</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">커뮤니티</a>
+              <span>커뮤니티</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">감상 피드</a></li>
+                <li class="ham-sub">감상 피드</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">마이페이지</a>
+              <span>마이페이지</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">나의 수집함</a></li>
-                <li class="ham-sub"><a href="">내가 남긴 여정</a></li>
-                <li class="ham-sub"><a href="">선호 장르 관리</a></li>
+                <li class="ham-sub">나의 수집함</li>
+                <li class="ham-sub">내가 남긴 여정</li>
+                <li class="ham-sub">선호 장르 관리</li>
               </ul>
             </li>
 
             <li class="ham-title">
-              <a href="#">로그인 설정</a>
+              <span>로그인 설정</span>
               <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="">로그인</a></li>
-                <li class="ham-sub"><a href="">회원가입</a></li>
-                <li class="ham-sub"><a href="">닉네임 변경</a></li>
-                <li class="ham-sub"><a href="">비밀번호 변경</a></li>
+                <li class="ham-sub">로그인</li>
+                <li class="ham-sub">회원가입</li>
+                <li class="ham-sub">닉네임 변경</li>
+                <li class="ham-sub">비밀번호 변경</li>
               </ul>
             </li>
           </ul>
         </nav>
       </header>
+      <div class="modal-bg"></div>
+
+      <!-- 검색창 -->
+      <form class="search-f">
+        <label for="search" class="search skip">검색어 입력</label>
+        <div class="search-box">
+          <button>
+            <img src="img/search_3B393C.png" alt="search_btn" />
+          </button>
+          <input
+            class="search-in"
+            type="text"
+            id="search"
+            placeholder="당신의 마음을 뒤흔들 작품을 검색해보세요"
+          />
+        </div>
+      </form>
+      <!-- 검색창 끝-->
+
+      <!-- 닉네임 활성화 칸 -->
+      <div class="user-txt-box">
+        <!-- 로그인 안 됐을 땐 아래 텍스트로 보이게. 로그인이 될 때는 피그마 속의 글자로 변하게 -->
+        <h2 class="user-txt">나만의 취향 탐험, <br> 로그인으로 시작하세요</h2>
+      </div>
+      
+      <main>
+        <div class="containOne">
+      <!-- 카테고리 원 박스 구현 부탁드립니다. navi-wrap을 빠져나오면 안됩니다. 
+       그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
+       <section id="navi-wrap">
+        <ul class="navi-box">
+          <li class="circle active"><a href="#">드라마</a></li>
+          <li class="circle"><a href="#">로맨스</a></li>
+          <li class="circle"><a href="#">액션</a></li>
+          <li class="circle"><a href="#">스릴러</a></li>
+          <li class="circle"><a href="#">코미디</a></li>
+          <li class="circle"><a href="#">미스터리</a></li>
+          <li class="circle"><a href="#">판타지</a></li>
+        </ul>
+       </section>
     </div>
 
+    <!-- 데이터에 해당되는 장르를 보여주는 구간 -->
+     <section class="favorite">
+      <div class="favorite-txt-box">
+        <p class="favorite-txt">
+          <span class="input">장르명 </span><span>장르를 좋아하신다면, 이건 어때요?</span>
+        </p>
+      </div>
+      <div class="favorite-list">
+        <ul class="favorite-list-box">
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li><a href=""><img src="img/poster/poster_가구야공주이야기.jpg" alt="poster"></a></li>
+          <li>
+            <a href="" class="blankbtn">
+              <img src="img/next_icon_6F6C76.png" alt="moreBtn" >
+            </a>
+          </li>
+        </ul>
+      </div>
+     </section>
+     
+     <!-- 요즘 대세 영화는? -->
+     <section id="hot-movie">
+      <div class="hot-movie-contain">
+        <div class="hot-txt-box">
+          <h3 class="hot-txt">요즘 대세 영화는?</h3>
+          <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
+        </div>
+        <div class="hot-wrap">
+          <ul class="hot-nav-box">
+            <li id="all-btn" class="active">
+                <p>All</p>
+                <span class="point active"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <img src="img/picture_6f6c76.png" alt="보류"/>
+                <span class="point"></span>
+            </li>
+            <li id="all-btn">
+              <p>기타
+              </p>
+              <span class="point"></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 포스터 영역 -->
+        <div class="poster-wrap">
+          <div class="poster-box">
+            <ul class="all-posters">
+                <li class="all-poster">
+                  <a href="">
+                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                    <p class="poster-title">작품 제목이 들어갈 공간</p>
+                  </a>
+                  <div class="detail-box">
+                    <div class="date-box">
+                      <p>개봉일</p>
+                      <span class="date-detail">0000.00.00</span>
+                    </div>
+                    <div class="score-contain">
+                        <p class="score">별점</p>
+                        <ul class="score-box">
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                        </ul>
+                    </div>
+                  </div>
+                </li>
+                <li class="all-poster">
+                  <a href="">
+                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                    <p class="poster-title">작품 제목이 들어갈 공간</p>
+                  </a>
+                  <div class="detail-box">
+                    <div class="date-box">
+                      <p>개봉일</p>
+                      <span class="date-detail">0000.00.00</span>
+                    </div>
+                    <div class="score-contain">
+                        <p class="score">별점</p>
+                        <ul class="score-box">
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                        </ul>
+                    </div>
+                  </div>
+                </li>
+                <li class="all-poster">
+                  <a href="">
+                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                    <p class="poster-title">작품 제목이 들어갈 공간</p>
+                  </a>
+                  <div class="detail-box">
+                    <div class="date-box">
+                      <p>개봉일</p>
+                      <span class="date-detail">0000.00.00</span>
+                    </div>
+                    <div class="score-contain">
+                        <p class="score">별점</p>
+                        <ul class="score-box">
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                        </ul>
+                    </div>
+                  </div>
+                </li>
+                
+            </ul>
+          </div>
+        </div>
+      </div>
+     </section>
+     </main>
+
     <!-- JS -->
-    <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>

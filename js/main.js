@@ -1,3 +1,45 @@
+// 메뉴 나오고 안 나오고
+document.addEventListener("DOMContentLoaded", () => {
+  const hamBtn = document.querySelector(".hambtn");
+  const hamMenu = document.querySelector("nav.hamburger");
+  const locked = document.body;
+  const logoImg = document.querySelector("#header a img");
+  const modal = document.querySelector(".modal-bg");
+
+  hamBtn.addEventListener("click", () => {
+    hamMenu.classList.toggle("show");
+
+    if (hamMenu.classList.contains("show")) {
+      //만약 햄메뉴가 보이면
+      modal.classList.add("active");
+      locked.classList.add("lock");
+      logoImg.classList.add("hide");
+    } else {
+      //햄메뉴가 안보이면
+      modal.classList.remove("active");
+      locked.classList.remove("lock");
+      logoImg.classList.remove("hide");
+    }
+  });
+});
+
+//
+
+//
+document.addEventListener("DOMContentLoaded", () => {
+  const subMenus = document.querySelectorAll(".ham-sub-box li");
+
+  subMenus.forEach((sub) => {
+    sub.addEventListener("click", () => {
+      subMenus.forEach((item) => {
+        item.classList.remove("active");
+
+        sub.classList.add("active");
+      });
+    });
+  });
+});
+
 // 화면 최상단에서 아래로 스와이프하는 경우 감지
 // 기본 새로고침 동작 차단 start
 let touchStartY = 0;
