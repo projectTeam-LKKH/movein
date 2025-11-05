@@ -23,9 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//
-
-//
+//헤더 버튼
 document.addEventListener("DOMContentLoaded", () => {
   const subMenus = document.querySelectorAll(".ham-sub-box li");
 
@@ -40,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//------------------아직 작업 전입니다.
 // 화면 최상단에서 아래로 스와이프하는 경우 감지
 // 기본 새로고침 동작 차단 start
 let touchStartY = 0;
