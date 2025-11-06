@@ -57,18 +57,40 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// 요즘 대세 영화는? 버튼 토글 효과
+// 요즘 대세(영화/드라마) 버튼 토글 — 섹션별 독립 동작
 document.addEventListener("DOMContentLoaded", () => {
-  const hotBtns = document.querySelectorAll(".all-btn");
+  document.querySelectorAll(".hot-container").forEach((section) => {
+    const nav = section.querySelector(".hot-nav-box");
+    if (!nav) return;
 
-  hotBtns[0].classList.add("active");
+    const buttons = () => nav.querySelectorAll(".all-btn");
 
-  hotBtns.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      hotBtns.forEach((b) => b.classList.remove("active"));
+    // 초기 활성화: 해당 섹션에 active가 하나도 없으면 첫 번째에 부여
+    if (!nav.querySelector(".all-btn.active") && buttons().length) {
+      buttons()[0].classList.add("active");
+    }
+
+    // 이벤트 위임: 섹션 내부 버튼끼리만 토글
+    nav.addEventListener("click", (e) => {
+      const btn = e.target.closest(".all-btn");
+      if (!btn || !nav.contains(btn)) return;
+
+      buttons().forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-    })
-  );
+    });
+  });
+});
+
+//
+const reviewBtn = document.querySelector(".review-input");
+const reviewForm = document.querySelector(".review-form");
+
+reviewForm.style.display = "none";
+
+reviewBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  reviewForm.style.display =
+    reviewForm.style.display === "none" ? "block" : "none";
 });
 
 //------------------아직 작업 전입니다.

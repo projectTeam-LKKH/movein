@@ -25,6 +25,8 @@ span,
 p {
   text-decoration: none;
   color: var(--c-font);
+  line-height: 1.6;
+  letter-spacing: -0.02rem;
 }
 
 button {
@@ -96,7 +98,7 @@ button {
 
 .ham-title > span {
   font-weight: 800;
-  font-size: var(--fs3);
+  font-size: var(--fs4);
   display: block;
   margin-bottom: 1rem;
 }
@@ -128,19 +130,18 @@ button {
   width: 90%;
   margin: 0 auto;
   position: relative;
-  height: 40px;
+  height: 35px;
   border-radius: 50px;
   background: var(--c-gray);
   display: flex;
   align-items: center;
-  border: 1px solid red; /*  추후 지우기 */
 }
 
 .search-box {
   position: absolute;
   width: 100%;
   margin: 0 auto;
-  padding: 5px;
+  padding: 6px;
   display: flex;
   gap: 5px;
   left: 50%;
@@ -150,8 +151,8 @@ button {
 
 .search-f button {
   background: var(--c-gray2);
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,6 +212,7 @@ button {
   transform: translateX(-50%) translateY(-50%);
   font-size: var(--fs2);
   font-weight: 300;
+  white-space: nowrap;
 }
 
 .navi-box li.active {
@@ -244,7 +246,7 @@ button {
 
 .favorite-txt-box {
   width: 90%;
-  margin: 1.5rem auto;
+  margin: 25px 0 12px 5vw;
 }
 
 .favorite-txt .input {
@@ -323,6 +325,7 @@ button {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  font-weight: 900;
 }
 
 .hot-txt-box > img {
@@ -349,7 +352,7 @@ button {
   padding: 0 5vw;
   height: 50px;
   display: flex;
-  gap: 16px;
+  gap: 10px;
 }
 
 .all-btn {
@@ -420,17 +423,20 @@ button {
 .poster-box {
   display: flex;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 0 5vw;
 }
 
 .all-posters {
   display: flex;
+
   gap: 16px;
   width: 172px;
 }
 
 .poster-title {
-  margin: 0.6rem 0;
+  margin: 5px 0;
   font-size: var(--fs3);
   font-weight: 800;
   width: 172px;
@@ -449,25 +455,240 @@ button {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 0.2rem;
 }
 
-.date-box p {
-  font-weight: 700;
+.date-box span {
+  font-weight: 300;
 }
 
 .score-contain {
   display: flex;
   gap: 8px;
   justify-content: center;
+  align-self: center;
 }
-.score-contain p {
+.score-contain .score {
   white-space: nowrap;
 }
 .score-box {
   display: flex;
+  align-items: center;
   gap: 1px;
 }
 .score-box img {
   width: 10px;
+}
+
+/* 무브오너들의 감상평 */
+.review-container {
+  width: 100%;
+}
+.review-wrap {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 5vw;
+}
+.review-card-box {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.review-card {
+  display: inline-block;
+  width: 257px;
+  border-radius: 10px;
+  background: var(--c-gray);
+}
+
+.review {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.left-box {
+  width: 80px;
+}
+.left-box > img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 5px;
+}
+
+.right-box {
+  width: 100%;
+}
+
+.work-name {
+  font-size: var(--fs1);
+  color: var(--c-gray2);
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+.user-review {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--c-font);
+  font-weight: 700;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  margin-top: 0.6rem;
+  font-size: var(--fs1);
+}
+
+.user-box > img {
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+.user-nick {
+  color: var(--c-main);
+  font-weight: 800;
+}
+
+.user-box span {
+  color: var(--c-gray2);
+  font-weight: 700;
+}
+
+/* 감상평 남기기 */
+.review-input {
+  width: 90%;
+  margin: 5vw auto;
+}
+.review-input-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  background: var(--c-gray);
+  border-radius: 10px;
+  padding: 0 5vw;
+}
+
+.formBtn-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.formBtn-box p {
+  font-size: var(--fs2);
+  color: var(--c-gray2);
+}
+.formBtn > img {
+  display: flex;
+  width: 15px;
+  height: 15px;
+}
+
+/* 버튼 클릭시 열리는 창 */
+.btn-form-container {
+  position: relative;
+}
+.review-form {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  border-radius: 10px;
+  background: var(--c-gray);
+  height: 120px;
+}
+
+.input-box.form {
+  padding: 0 5vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-search-box {
+  width: 100%;
+  display: flex;
+  height: 40px;
+}
+
+#work-name {
+  width: 90%;
+  background: var(--c-gray);
+  border: 0;
+  color: var(--c-font);
+}
+
+#work-name::placeholder {
+  font-size: var(--fs2);
+}
+
+#work-name:focus {
+  outline: none;
+}
+
+.title-search-box button {
+  width: 10%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.title-search-box button > img {
+  width: 15px;
+  height: 15px;
+}
+
+.review-text-box {
+  width: 100%;
+  display: flex;
+}
+
+#review-text {
+  width: 100%;
+  height: 60px;
+  background: var(--c-gray);
+  border: none;
+  color: var(--c-font);
+  font-family: var(--font-main);
+  line-height: 1.6;
+}
+
+#review-text::placeholder {
+  font-size: var(--fs2);
+  font-family: var(--font-main);
+}
+
+#review-text:focus {
+  outline: none;
+}
+
+.review-text-box .submit {
+  width: 10%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+.review-text-box .submit > img {
+  width: 15px;
+  height: 15px;
+}
+
+.prev-btn-box {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.prev-btn {
+  width: 15px;
+  height: 15px;
+  transform: rotate(90deg);
 }

@@ -53,7 +53,7 @@
   --gr-li-gray: linear-gradient(
     180deg,
     rgba(37, 36, 38, 0.3) 0%,
-    rgba(111, 108, 118, 0.1) 100%
+    rgba(111, 108, 118, 0.3) 100%
   );
   --gr-li-purple: linear-gradient(0deg, #504399 0%, #8670ff 50%);
 
