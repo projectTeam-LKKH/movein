@@ -63,19 +63,23 @@
 
 /* ============= 바텀 네비 ============= */
 .bottom-nav {
+  width: 100%;
+  box-sizing: border-box;
   position: fixed;
-  width: 90%;
-  bottom: 2vh;
+  bottom: 2%;
   left: 50%;
   transform: translateX(-50%);
-  height: 50px;
+}
+
+.bot-nav-box {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 8vw;
   background: rgba(37, 36, 38, 0.8);
   backdrop-filter: blur(5px); /* 배경 뒤 블러 */
   -webkit-backdrop-filter: blur(5px); /* 사파리 대응 */
   border-radius: 10px;
-  padding: 0 8vw;
 }
-
 .bot-nav-icons {
   height: 50px;
   display: flex;
@@ -83,10 +87,27 @@
   align-items: center;
   line-height: 50px;
 }
-
 .bot-nav-icon img {
   display: flex;
   align-items: center;
   width: 25px;
   height: 25px;
+  cursor: pointer;
+}
+.bot-nav-icon {
+  position: relative;
+}
+.bot-nav-icon.active::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  top: -13px;
+  background: var(--c-font);
+}
+
+/* 푸터 */
+.footer {
+  width: 100%;
 }

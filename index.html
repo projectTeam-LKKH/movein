@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>MOVEIN</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/reset.css" />
@@ -505,13 +505,13 @@
                 <div class="review-input-box">
                   <div class="formBtn-box">
                     <p class="btn-text">감상평 남기기</p>
-                    <button type="submit" class="formBtn"><img src="img/pen_6f6c76.png" alt="review icon"> </button>
+                    <button class="formBtn"><img src="img/pen_6f6c76.png" alt="review icon"> </button>
                   </div>
                 </div>
               </div>
               
               <!-- 버튼을 누르면 폼이 열린다 이부분 데이터 연결 후에 css 다시 만져야 할듯 -->
-              <form class="review-form" action="review_insert.php" method="post">
+              <form class="review-form open" action="review_insert.php" method="post">
                 <div class="input-box form">
                   <!-- [1] 작품명 자동검색 입력 -->
                   <div class="title-search-box">
@@ -541,22 +541,24 @@
                      <!-- [3] 제출 버튼 -->
                   <button type="submit" class="submit"><img src="img/pen_6f6c76.png" alt="submit btn"></button>
                   </div>
-                 
-                </div>
-                <div class="prev-btn-box">
+                 <div class="prev-btn-box">
                   <img class="prev-btn" src="img/prev_6f6c76.png" alt="prev btn">
                 </div>
+                </div>
+                
               </form>
+              
             </div>
 
           </div>
         </div>
       </section>
      </main>
-    
+    <div id="footer"></div>
     <div id="bottom-nav"></div>
 
     <!-- JS -->
+     <script src="js/import.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

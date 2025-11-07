@@ -1,48 +1,3 @@
-// 햄버거 루트 연결
-$(function () {
-  $("#header-slot").load("import/header.html", initHeader); // 로드 완료 후에만 바인딩
-});
-
-function initHeader() {
-  const root = document.getElementById("header-slot"); // 범위 한정
-  root
-    .querySelectorAll(".ham-sub")
-    .forEach((el) => el.classList.remove("active")); // ✅ 초기 상태 해제
-  const hamBtn = root.querySelector(".hambtn");
-  const ham = root.querySelector("nav.hamburger");
-  const modal = root.querySelector(".modal-bg");
-  const logo = root.querySelector("header a img");
-
-  // 햄버거 토글
-  hamBtn?.addEventListener("click", () => {
-    const open = ham.classList.toggle("show");
-    modal?.classList.toggle("active", open);
-    document.body.classList.toggle("lock", open);
-    logo?.classList.toggle("hide", open);
-  });
-
-  // 오버레이 클릭 시 닫기
-  modal?.addEventListener("click", () => {
-    ham.classList.remove("show");
-    modal.classList.remove("active");
-    document.body.classList.remove("lock");
-    logo?.classList.remove("hide");
-  });
-
-  // 서브 메뉴: 전체에서 단 하나만 활성
-  root.addEventListener("click", (e) => {
-    const sub = e.target.closest(".ham-sub");
-    if (!sub) return;
-
-    // 전부 해제
-    root
-      .querySelectorAll(".ham-sub.active")
-      .forEach((el) => el.classList.remove("active"));
-    // 클릭한 것만 활성
-    sub.classList.add("active");
-  });
-}
-
 // 하트 버튼 토글
 document.addEventListener("DOMContentLoaded", () => {
   const greenBtn = "img/heart_49e99c.png";
@@ -82,20 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //
-const reviewBtn = document.querySelector(".review-input");
+const reviewBtn = document.querySelector(".formBtn-box");
 const reviewForm = document.querySelector(".review-form");
+const prevBtn = document.querySelector(".prev-btn");
 
-reviewForm.style.display = "none";
+reviewForm.classList.remove("open");
 
 reviewBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  reviewForm.style.display =
-    reviewForm.style.display === "none" ? "block" : "none";
+  reviewForm.classList.add("open");
 });
 
-//푸터 루트 연결
-$(function () {
-  $("#bottom-nav").load("import/bottom-nav.html");
+prevBtn.addEventListener("click", () => {
+  reviewForm.classList.remove("open");
 });
 
 //------------------아직 작업 전입니다.

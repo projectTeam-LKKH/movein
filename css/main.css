@@ -9,8 +9,6 @@
 body,
 html {
   overflow-x: hidden;
-  overflow-y: auto;
-  height: auto;
   font-family: var(--font-main);
   font-size: var(--fs2);
   background: var(--c-bg);
@@ -530,16 +528,28 @@ button {
 /* 버튼 클릭시 열리는 창 */
 .btn-form-container {
   position: relative;
+  z-index: 0;
 }
+
 .review-form {
+  visibility: hidden;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
+  max-height: 0;
   border-radius: 10px;
   background: var(--c-gray);
-  height: 120px;
+  height: max-content;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.review-form.open {
+  visibility: visible;
+  max-height: 110px;
+  z-index: 1;
 }
 
 .input-box.form {
@@ -584,10 +594,12 @@ button {
   width: 100%;
   display: flex;
 }
-
+.review-text-box textarea {
+  resize: none;
+}
 #review-text {
   width: 100%;
-  height: 60px;
+
   background: var(--c-gray);
   border: none;
   color: var(--c-font);
@@ -617,14 +629,17 @@ button {
 }
 
 .prev-btn-box {
-  margin-top: 2rem;
+  margin: 0.5rem 0 0.5rem 0;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .prev-btn {
+  pointer-events: auto;
   width: 15px;
   height: 15px;
   transform: rotate(90deg);
+  cursor: pointer;
+  z-index: 5;
 }
