@@ -1,47 +1,47 @@
-// 햄버거바 터치 이벤트
-document.addEventListener("DOMContentLoaded", () => {
-  const hamBtn = document.querySelector(".hambtn");
-  const hamMenu = document.querySelector("nav.hamburger");
-  const locked = document.body;
-  const logoImg = document.querySelector("#header a img");
-  const modal = document.querySelector(".modal-bg");
-
-  hamBtn.addEventListener("click", () => {
-    hamMenu.classList.toggle("show");
-
-    if (hamMenu.classList.contains("show")) {
-      //만약 햄메뉴가 보이면
-      modal.classList.add("active");
-      locked.classList.add("lock");
-      logoImg.classList.add("hide");
-    } else {
-      //햄메뉴가 안보이면
-      modal.classList.remove("active");
-      locked.classList.remove("lock");
-      logoImg.classList.remove("hide");
-    }
-  });
+// 햄버거 루트 연결
+$(function () {
+  $("#header-slot").load("import/header.html", initHeader); // 로드 완료 후에만 바인딩
 });
 
-//헤더 내부 버튼 클릭 이벤트
-document.addEventListener("DOMContentLoaded", () => {
-  const subMenus = document.querySelectorAll(".ham-sub-box li");
+function initHeader() {
+  const root = document.getElementById("header-slot"); // 범위 한정
+  root
+    .querySelectorAll(".ham-sub")
+    .forEach((el) => el.classList.remove("active")); // ✅ 초기 상태 해제
+  const hamBtn = root.querySelector(".hambtn");
+  const ham = root.querySelector("nav.hamburger");
+  const modal = root.querySelector(".modal-bg");
+  const logo = root.querySelector("header a img");
 
-  subMenus.forEach((item) => item.classList.remove("active"));
-
-  subMenus.forEach((sub) => {
-    sub.addEventListener("click", () => {
-      // 이미 활성화된 걸 다시 클릭한 경우, 해제
-      if (sub.classList.contains("active")) {
-        sub.classList.remove("active");
-      } else {
-        // 다른 모든 항목 비활성화 후 현재만 활성화
-        subMenus.forEach((item) => item.classList.remove("active"));
-        sub.classList.add("active");
-      }
-    });
+  // 햄버거 토글
+  hamBtn?.addEventListener("click", () => {
+    const open = ham.classList.toggle("show");
+    modal?.classList.toggle("active", open);
+    document.body.classList.toggle("lock", open);
+    logo?.classList.toggle("hide", open);
   });
-});
+
+  // 오버레이 클릭 시 닫기
+  modal?.addEventListener("click", () => {
+    ham.classList.remove("show");
+    modal.classList.remove("active");
+    document.body.classList.remove("lock");
+    logo?.classList.remove("hide");
+  });
+
+  // 서브 메뉴: 전체에서 단 하나만 활성
+  root.addEventListener("click", (e) => {
+    const sub = e.target.closest(".ham-sub");
+    if (!sub) return;
+
+    // 전부 해제
+    root
+      .querySelectorAll(".ham-sub.active")
+      .forEach((el) => el.classList.remove("active"));
+    // 클릭한 것만 활성
+    sub.classList.add("active");
+  });
+}
 
 // 하트 버튼 토글
 document.addEventListener("DOMContentLoaded", () => {
@@ -91,6 +91,11 @@ reviewBtn.addEventListener("click", (e) => {
   e.preventDefault();
   reviewForm.style.display =
     reviewForm.style.display === "none" ? "block" : "none";
+});
+
+//푸터 루트 연결
+$(function () {
+  $("#bottom-nav").load("import/bottom-nav.html");
 });
 
 //------------------아직 작업 전입니다.
