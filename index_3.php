@@ -38,34 +38,19 @@ if ($first_favorite) {
   $stmt->execute();
   $favorite_movies = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
-// 플랫폼 선택 (GET 파라미터)
-$platform = $_GET['platform'] ?? 'All'; // 기본값은 All
-$platform = trim($platform); // 혹시 공백 제거
 
-// 요즘 대세 영화 TOP10 (애니 제외, 플랫폼 필터 적용)
+// 요즘 대세 영화 TOP10 (애니 제외)
 $sql = "
 SELECT id, title, release_date, streaming
 FROM movies
 WHERE NOT JSON_CONTAINS(genre, JSON_QUOTE('애니'))
-AND release_date < CURDATE() AND type = '영화'
+AND release_date < '2025-11-07' AND type = '영화'
+ORDER BY release_date DESC
+LIMIT 10
 ";
-
-// All이 아닌 경우 JSON_CONTAINS로 필터
-if($platform !== 'All'){
-    // SQL 인젝션 방지를 위해 mysqli_real_escape_string 사용
-    $platform_esc = $connect->real_escape_string($platform);
-    $sql .= " AND JSON_CONTAINS(streaming, '\"$platform_esc\"')";
-    // $sql .= " AND streaming LIKE '%\"$platform_esc\"%'";
-}
-
-$sql .= " ORDER BY release_date DESC LIMIT 10";
 
 $result = $connect->query($sql);
 $hot_movies = $result->fetch_all(MYSQLI_ASSOC);
-
-// 플랫폼 선택 (GET 파라미터)
-$platform2 = $_GET['platform2'] ?? 'All'; // 기본값은 All
-$platform2 = trim($platform2); // 혹시 공백 제거
 
 // 요즘 대세 영화외 TOP10
 $sql = "
@@ -73,17 +58,9 @@ SELECT id, title, release_date, streaming
 FROM movies
 WHERE release_date < '2025-11-07'
 AND type != '영화'
+ORDER BY release_date DESC
+LIMIT 10
 ";
-
-// All이 아닌 경우 JSON_CONTAINS로 필터
-if($platform2 !== 'All'){
-    // SQL 인젝션 방지를 위해 mysqli_real_escape_string 사용
-    $platform_esc = $connect->real_escape_string($platform2);
-    $sql .= " AND JSON_CONTAINS(streaming, '\"$platform_esc\"')";
-    // $sql .= " AND streaming LIKE '%\"$platform_esc\"%'";
-}
-
-$sql .= " ORDER BY release_date DESC LIMIT 10";
 
 $result = $connect->query($sql);
 $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
@@ -323,30 +300,14 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
         
         <div class="hot-wrap">
           <ul class="hot-nav-box">
-            <li class="all-btn <?= ($platform === 'All') ? 'active' : '' ?>" data-platform="All">
-              <a href="?platform=All"><p>All</p><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
-              <a href="?platform=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
-              <a href="?platform=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
-              <a href="?platform=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
-              <a href="?platform=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
-              <a href="?platform=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
-              <a href="?platform=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Other') ? 'active' : '' ?>" data-platform="Other">
-              <a href="?platform=Other"><p>Other</p><span class="point"></span></a>
-            </li>
+            <li class="all-btn active" data-platform="All"><p>All</p><span class="point"></span></li>
+            <li class="all-btn" data-platform="Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></li>
+            <li class="all-btn" data-platform="TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Disney+"><img src="img/disney.png" alt="Disney+"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Other"><p>Other</p><span class="point"></span></li>
           </ul>
         </div>
 
@@ -405,30 +366,14 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
 
         <div class="hot-wrap">
           <ul class="hot-nav-box">
-            <li class="all-btn <?= ($platform2 === 'All') ? 'active' : '' ?>" data-platform="All">
-              <a href="?platform2=All"><p>All</p><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
-              <a href="?platform2=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
-              <a href="?platform2=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
-              <a href="?platform2=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
-              <a href="?platform2=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
-              <a href="?platform2=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
-              <a href="?platform2=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Other') ? 'active' : '' ?>" data-platform="Other">
-              <a href="?platform2=Other"><p>Other</p><span class="point"></span></a>
-            </li>
+            <li class="all-btn active" data-platform="All"><p>All</p><span class="point"></span></li>
+            <li class="all-btn" data-platform="Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></li>
+            <li class="all-btn" data-platform="TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Disney+"><img src="img/disney.png" alt="Disney+"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></li>
+            <li class="all-btn" data-platform="Other"><p>Other</p><span class="point"></span></li>
           </ul>
         </div>
 
@@ -717,47 +662,6 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
       location.reload();
     }, 500); // 0.5초 동안 멈추면 새로고침
   });
-
-  window.addEventListener("beforeunload", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-window.addEventListener("load", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    window.scrollTo(0, parseInt(savedY));
-  }
-});
-
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});
-
-window.addEventListener("pagehide", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-// [2] 페이지 로드 시 스크롤 복원
-window.addEventListener("DOMContentLoaded", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
-    setTimeout(() => {
-      window.scrollTo(0, parseInt(savedY));
-    }, 50);
-  }
-});
-
-// [3] 버튼 클릭 시 수동 저장
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});
 </script>
   </body>
 </html>
