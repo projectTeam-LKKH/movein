@@ -30,7 +30,7 @@
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: var(--fs26);
+        font-size: var(--fs6);
         line-height: 1.5;
     }
 
@@ -56,7 +56,7 @@
         border-radius: 10px;
         background-color: #333;
         color: #ccc; /* 약간 어두운 글씨색 */
-        font-size: var(--fs16);
+        font-size: var(--fs4);
     }
 
     .findid-form input::placeholder {
@@ -69,7 +69,7 @@
         border-radius: 10px;
         background-color: var(--c-main);
         color: #fff;
-        font-size: var(--fs16);
+        font-size: var(--fs4);
         cursor: pointer;
         width: 100%; /* 입력창과 동일 */
     }
@@ -84,7 +84,7 @@
 
     .bottom-links a {
         text-decoration: none;
-        font-size: var(--fs14);
+        font-size: var(--fs3);
     }
 
     .bottom-links a.register {

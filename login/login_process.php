@@ -1,5 +1,6 @@
 <?php
 include 'db_connect.php';
+session_start(); // 세션 시작
 
 $userid = $_POST['userid'];
 $password = $_POST['password'];
@@ -11,9 +12,11 @@ if(mysqli_num_rows($result) == 1){
     $row = mysqli_fetch_assoc($result);
     if(password_verify($password, $row['password'])){
         // 로그인 성공
+        $_SESSION['userid'] = $userid;
+        $_SESSION['nickname'] = $row['username']; // ← 닉네임 세션 저장
         mysqli_query($connect, "UPDATE User SET lastdate=NOW() WHERE userid='$userid'");
         echo "<script>
-                window.location.href = '../index.html';
+                window.location.href = '../index.php';
             </script>";
     } else {
         echo "<script>

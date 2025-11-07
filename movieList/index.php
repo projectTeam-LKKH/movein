@@ -7,7 +7,7 @@ if (!$connect) {
 }
 mysqli_set_charset($connect, "utf8mb4");
 
-$query = "SELECT * FROM movies ORDER BY release_date ASC";
+$query = "SELECT * FROM movies ORDER BY title ASC";
 $result = mysqli_query($connect, $query);
 $movies = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>

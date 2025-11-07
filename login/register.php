@@ -30,7 +30,7 @@
         left: 10%;
         width: 80%;
         text-align: left;
-        font-size: var(--fs26);
+        font-size: var(--fs6);
         line-height: 1.5;
         transition: opacity 0.3s ease;
     }
@@ -42,7 +42,7 @@
     /* 폼 */
     .register-form {
         position: absolute;
-        top: 120px;
+        top: 150px;
         left: 50%;
         transform: translateX(-50%);
         width: 80%;
@@ -57,14 +57,14 @@
         border-radius: 10px;
         background-color: #333;
         color: #ccc;
-        font-size: var(--fs14);
+        font-size: var(--fs3);
         width: 100%;
         box-sizing: border-box;
     }
 
     #smallText {
         color: #888;
-        font-size: var(--fs12);
+        font-size: var(--fs2);
     }
 
     input::placeholder {
@@ -87,7 +87,7 @@
         border: none;
         border-radius: 8px;
         padding: 12px 15px;
-        font-size: var(--fs14);
+        font-size: var(--fs3);
         cursor: pointer;
         white-space: nowrap;
     }
@@ -99,7 +99,7 @@
         border: none;
         /* border-radius: 8px; */
         /* padding: 12px 20px; */
-        font-size: var(--fs16);
+        font-size: var(--fs4);
         cursor: pointer;
         margin-top: 15px;
     }
@@ -129,7 +129,7 @@
         border-radius: 10px;
         cursor: pointer;
         color: #ccc;
-        font-size: var(--fs14);
+        font-size: var(--fs3);
         transition: all 0.2s;
     }
 
@@ -145,7 +145,7 @@
         border: none;
         border-radius: 10px;
         padding: 15px;
-        font-size: var(--fs16);
+        font-size: var(--fs4);
         cursor: pointer;
         width: 100%;
         margin-top: 10px;
@@ -178,7 +178,7 @@
         padding: 15px;
         border: none;
         border-radius: 10px;
-        font-size: var(--fs16);
+        font-size: var(--fs4);
         cursor: pointer;
         width: 100%;
     }
@@ -233,12 +233,14 @@
         <div id="step3" class="step">
             <label style="color:#ccc;">좋아하는 장르</label>
             <div id="genres" class="toggle-section">
-                <span class="toggle-btn" onclick="toggleSelection(this)">영화</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">애니</span>
                 <span class="toggle-btn" onclick="toggleSelection(this)">드라마</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">예능</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">다큐멘터리</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">애니메이션</span>
-                <span class="toggle-btn" onclick="toggleSelection(this)">시트콤</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">액션</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">SF</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">코미디</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">판타지</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">스릴러</span>
+                <span class="toggle-btn" onclick="toggleSelection(this)">로맨스</span>
             </div>
 
             <label style="color:#ccc;">주로 사용하는 OTT</label>
@@ -280,7 +282,7 @@
                 <img src="../img/movein_character.png" alt="완료 이미지" class="complete-img">
                 <div class="button-group">
                     <button type="button" class="login-btn" onclick="location.href='login.php'">로그인 페이지 바로가기</button>
-                    <button type="button" class="home-btn" onclick="location.href='../index.html'">홈으로 돌아가기</button>
+                    <button type="button" class="home-btn" onclick="location.href='../index.php'">홈으로 돌아가기</button>
                 </div>
             </div>
         </div>
