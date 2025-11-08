@@ -24,7 +24,7 @@ p {
   text-decoration: none;
   color: var(--c-font);
   line-height: 1.6;
-  letter-spacing: -0.02rem;
+  letter-spacing: -0.05rem;
 }
 
 button {
@@ -94,6 +94,7 @@ button {
   font-size: var(--fs5);
   color: var(--c-font);
   line-height: 160%;
+  letter-spacing: -0.03rem;
 }
 
 /* 카테고리 원 박스 */
@@ -160,6 +161,11 @@ button {
 
 .favorite-txt .input {
   color: var(--c-main);
+  letter-spacing: -0.015rem;
+}
+
+.favorite-txt span {
+  letter-spacing: -0.015rem;
 }
 
 .favorite-gutter {
@@ -254,6 +260,7 @@ button {
   align-items: center;
   margin-bottom: 1.5rem;
   font-weight: 900;
+  letter-spacing: -0.05rem;
 }
 
 .hot-txt-box > img {
@@ -387,6 +394,7 @@ button {
 
 .date-box span {
   font-weight: 300;
+  letter-spacing: 0rem;
 }
 
 .score-contain {
@@ -464,6 +472,7 @@ button {
   text-overflow: ellipsis;
   color: var(--c-font);
   font-weight: 700;
+  letter-spacing: 0rem;
 }
 
 .user-box {
