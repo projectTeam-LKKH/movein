@@ -49,18 +49,31 @@ $(function () {
   });
 });
 
-//푸터 루트 연결
+//하단바 루트 연결
 $(function () {
   $("#bottom-nav").load("import/bottom-nav.html", () => {
     const botNavs = document.querySelectorAll(".bot-nav-icon");
-    const botImg = document.querySelectorAll(".bot-nav-icon > img");
+    const botImgs = document.querySelectorAll(".bot-nav-icon > img");
 
-    botNavs.forEach((nav) => {
+    // 초기 상태: 첫 번째(Home) 활성화 이미지로 설정
+    botImgs[0].src = botImgs[0].src.replace(/_[^_]+\.png$/, "_f5f5f5.png");
+    botNavs[0].classList.add("active");
+
+    botNavs.forEach((nav, i) => {
       nav.addEventListener("click", () => {
-        // 1. 전체 active 해제
-        botNavs.forEach((n) => n.classList.remove("active"));
-        // 2. 클릭된 요소만 활성화
+        // 1전체 초기화
+        botNavs.forEach((n, j) => {
+          n.classList.remove("active");
+          // 기본 색상 복원 (6F6C76)
+          botImgs[j].src = botImgs[j].src.replace(
+            /_[^_]+\.png$/,
+            "_6F6C76.png"
+          );
+        });
+
+        // 2️클릭된 요소만 활성화
         nav.classList.add("active");
+        botImgs[i].src = botImgs[i].src.replace(/_[^_]+\.png$/, "_f5f5f5.png");
       });
     });
   });

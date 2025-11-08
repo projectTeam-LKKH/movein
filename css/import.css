@@ -1,10 +1,38 @@
+/* 헤더 */
+#header {
+  position: fixed;
+  width: 100%;
+  padding: 0 5vw;
+  height: 70px;
+  background: var(--c-bg);
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header a img {
+  display: flex;
+  height: 18px;
+}
+
+#header a img.hide {
+  display: none;
+}
+
+.header-icon {
+  display: flex;
+  height: 18px;
+  gap: 14px;
+}
+
 /* ============= 햄버거 ============= */
 .modal-bg.active {
   position: relative;
   z-index: 10;
   width: 100vw;
   height: 100vh;
-  background: var(--c-);
+  background: var(--c-bg);
 }
 .hamburger {
   z-index: 20;
@@ -14,6 +42,7 @@
   transform: translateX(100%);
   transition: transform 0.25s ease, opacity 0.25s ease;
   margin-bottom: 150px;
+  background: var(--c-bg);
   color: var(--c-font);
   height: calc(100dvh - 60px);
 }
@@ -90,8 +119,8 @@
 .bot-nav-icon img {
   display: flex;
   align-items: center;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
 .bot-nav-icon {
