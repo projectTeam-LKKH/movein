@@ -448,7 +448,7 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                   }
                 ?>
                 <li class="all-poster <?= $platform_classes ?>">
-                  <a href="drama_detail.php?id=<?= htmlspecialchars($drama['id']) ?>">
+                  <a href="movie_detail.php?id=<?= htmlspecialchars($drama['id']) ?>">
                       <?= $img_tag ?>
                       <p class="poster-title"><?= htmlspecialchars($drama['title']) ?></p>
                   </a>

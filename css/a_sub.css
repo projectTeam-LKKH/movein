@@ -1,0 +1,369 @@
+@charset "utf-8";
+
+/* 초기 설정 */
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+
+/* 전체 Div*/
+.posterBox {
+	background-color: var(--c-bg);
+	position: relative;
+	width: 100%;
+	height: 47rem;
+	/* 높이 중간중간 수정하며 확인하기 */
+}
+
+/* 배경 스틸컷 */
+.a_background_still {
+	/* 내부 요소 기준점 */
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--gr-li-gray),
+		url(../img/stillcut/stillcut_헤어질결심.jpg) center / cover no-repeat;
+	z-index: 1;
+}
+
+/* 상단 아이콘 영역 */
+/* 상단 아이콘 공동속성 */
+.a_icon_button {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	line-height: 0;
+	/* button 태그 기본 공백 제거 */
+}
+
+.a_top_nav_container {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 80px;
+	background-color: var(--c-bg);
+	z-index: 10;
+}
+
+/* 상단 아이콘 틀 */
+.a_top_nav {
+	width: 90%;
+	height: 80px;
+	position: absolute;
+	top: 0;
+	left: 5%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/* z-index: 10; */
+}
+/* 
+width: 90% : 부모 요소의 90% 
+left: 5% : 왼쪽에서 5%
+= 왼쪽 여백 5% + 아이콘 틀 90% + 오른쪽 여백 5% = 100% -> 가로 중앙 정렬 */
+
+/* 오른쪽 아이콘들 */
+.a_top_nav_right {
+	display: flex;
+	gap: 14px;
+}
+
+/* 아이콘 크기 */
+.a_icon_button img {
+	height: 18px;
+}
+
+/* 포스터 박스 */
+.a_movie_meta_wrap {
+	/* display: none; */
+	/* border: 3px solid var(--c-main); */
+	width: 90%;
+	position: absolute;
+	top: 20%;
+	left: 5%;
+	z-index: 10;
+}
+
+/* 세부 정보 그룹 */
+.a_info_group {
+	/* border: 3px solid var(--c-point); */
+}
+
+/* 영화 포스터 틀 */
+.a_movie_poster {
+	width: 30%;
+}
+
+/* 영화 포스터 이미지 세부 설정 */
+.a_movie_poster img {
+	width: 100%;
+	display: block;
+	/* 내부 여백 제거 */
+	border-radius: 10%;
+	filter: drop-shadow(var(--shadow50));
+	/* 그림자 효과 */
+	object-fit: cover;
+	/* 이미지 꽉 채우기 */
+}
+
+/* 영화 세부 정보 틀*/
+.a_meta_data {
+	/* border: 3px solid var(--c-danger); */
+	/* 확인 후 제거하기 */
+	margin-top: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 영화 세부 정보 텍스트 틀*/
+.a_movie_info_text {
+	margin-top: 0.5rem;
+}
+
+/* 영화 제목 틀 */
+.a_movie_info_text h1 {
+	padding-bottom: 0.5rem;
+	line-height: var(--fs5);
+}
+
+/* 영화 제목 */
+.a_movie_title_value {
+	color: var(--c-font);
+	font-size: var(--fs5);
+	font-weight: bold;
+}
+
+/* 영화 세부 정보 */
+.a_details_value {
+	color: var(--c-font);
+}
+
+/* 평가 + 별점 틀 */
+.a_ratings {
+	/* border: 1px solid red; */
+	margin-top: 0.5rem;
+}
+
+/* 평가 + 별점 내부 목록  */
+.a_ratings p {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+/* 별점 + 평가 텍스트 */
+.a_ratings span {
+	color: var(--c-font);
+	font-size: var(--fs2);
+	font-weight: bold;
+}
+
+/* 아이콘 이미지들 */
+.a_ratings img {
+	height: 18px;
+}
+
+/* 영화 줄거리 틀*/
+.a_movie_forms {
+	margin-top: 1.3rem;
+}
+
+/* 영화 줄거리 텍스트 */
+.a_movie_forms .a_plot_value {
+	display: block;
+	color: var(--c-font);
+	font-size: var(--fs2);
+}
+
+/* 스트리밍 가능 플랫폼 상자*/
+.a_movie_ott_platforms {
+	width: 100%;
+	height: 7rem;
+	margin-top: 2rem;
+	background-color: rgba(11, 11, 11, 0.4);
+	/* --c-bg(#0b0b0b) */
+	border-radius: 20px;
+}
+
+/* 내부 요소 감싸는 틀 */
+.a_movie_ott_platforms_wrap {
+	width: 90%;
+	height: 7rem;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* 왼쪽 스트리밍 아이콘 */
+.a_movie_streaming_icon {
+	width: 25px;
+	height: 25px;
+}
+
+.a_movie_streaming_icon img {
+	width: 100%;
+	height: 25px;
+}
+
+/* 오른쪽 플랫폼 아이콘들 */
+.a_streaming_icon {
+	display: flex;
+	gap: 10px;
+}
+
+.a_streaming_icon li {
+	width: 40px;
+	height: 40px;
+}
+
+.a_streaming_icon li img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: 3px solid var(--c-gray);
+	border-radius: 40px;
+}
+
+/* 밸런스 게임 + 자. 메. 추. 전체 영역*/
+.a_gameBox {
+	/* border: 2px solid red; */
+	width: 100%;
+	background: var(--c-gray);
+	padding-bottom: 3rem;
+}
+
+/* 밸런스 게임 틀 */
+.a_balance_game_section {
+	width: 90%;
+	margin: 3rem auto;
+}
+
+/* 밸런스 게임 제목 (로그인) */
+.a_balance_game_title_login h2 {
+	font-size: var(--fs4);
+	color: var(--c-font);
+	font-weight: bold;
+	line-height: 1.4;
+	text-align: left;
+}
+.a_balance_game_title_login h2 .a_user_nickname {
+	color: var(--c-point, #9d8bff);
+}
+
+/* 제목(로그인)*/
+.a_balance_game_title_login {
+	padding-top: 3rem;
+	/* display: none; */
+}
+
+/* 제목 (비로그인) */
+.a_balance_game_title_non_login h2 {
+	font-size: var(--fs4);
+	color: var(--c-font);
+	font-weight: bold;
+	text-align: left;
+	display: none;
+}
+
+/* 밸런스 카드 공통 */
+.a_balance_card {
+	width: 100%;
+	height: 15rem;
+	background-color: var(--c-bg, #1a1a1a);
+	border-radius: 15px;
+	box-sizing: border-box;
+	/* 임시 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 왼쪽 영역*/
+.a_balance_card.left {
+	clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%);
+}
+/* 오른쪽 영역 */
+.a_balance_card.right {
+	clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* 두 카드 거의 딱 붙이고 VS 위에 띄우기*/
+.a_balance_game_container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	gap: 0;
+	margin-top: 2rem;
+}
+
+/* vs */
+.a_vs_divider {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-weight: bold;
+	color: #fff;
+	opacity: 0.5;
+	z-index: 5;
+	display: block;
+}
+
+/* 카드 내부 아이콘 (공통) */
+.a_balance_card img.a_like_icon,
+.a_balance_card img.a_hate_icon {
+	position: absolute;
+	height: 24px;
+	width: auto;
+	opacity: 0.5;
+	display: block;
+}
+
+/* 왼쪽 카드 아이콘*/
+.a_balance_card.left img.a_like_icon {
+	top: 20px;
+	left: 20px;
+}
+
+/* 오른쪽 카드 아이콘 */
+.a_balance_card.right img.a_like_icon {
+	top: 20px;
+	right: 20px;
+	bottom: auto;
+}
+
+/* 카드 내부 p*/
+.a_balance_card p {
+	margin: 0;
+	padding: 0;
+	line-height: 1.4;
+}
+
+/* 카드 텍스트 값 */
+.a_balance_text_value_left {
+	font-size: var(--fs3);
+	color: white;
+}
+
+.a_balance_text_value_right {
+	font-size: var(--fs3);
+	color: white;
+}
+
+/* 자.만.추 */
+.a_recommend_section {
+	width: 90%;
+	margin: 3rem auto 0;
+	border: 2px solid var(--c-bg);
+}
+
+/* 자.만.추 제목 */
+.a_recommend_title {
+	color: var(--c-font);
+	font-size: var(--fs4);
+}
