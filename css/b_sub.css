@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+body {
+  width: 375px;
+  margin: 0 auto;
+}
+
+/* 전체 레이아웃 */
+.tab_menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--c-bg);
+  height: 50px;
+}
+
+.tab_menu li {
+  flex: 1;
+  text-align: center;
+}
+
+.tab_menu button {
+  width: 100%;
+  height: 100%;
+  background: none;
+  color: var(--c-gray2);
+  font-size: var(--fs14);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.tab_menu li.b_active button {
+  color: var(--c-main); /* 활성 탭 보라색 */
+  background-color: var(--c-gray);
+  height: 50px;
+}
+
+/* 콘텐츠 정보 영역 */
+#tab_info {
+  padding: 16px;
+  background-color: var(--c-bg);
+  color: var(--c-font);
+  font-size: var(--fs12);
+}
+
+#tab_info h3 {
+  font-size: var(--fs14);
+  font-weight: bold;
+  text-align: center;
+  margin: 18px;
+}
+
+/* 추천 버튼 영역 */
+.like_box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.like_box button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 150px;
+  height: 38px;
+  background-color: var(--c-gray);
+  border-radius: 10px;
+  border: none;
+  color: var(--c-gray2);
+  font-size: var(--fs12);
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.like_box button img {
+  width: 12px;
+  height: 10px;
+  transition: 0.3s;
+}
+
+/* 버튼 클릭 시 활성화 */
+.like_box button.active {
+  /*background-color: var(--c-gray);*/
+  color: #49e99c; /* 초록색 텍스트 */
+}
+
+/* 영화 메타정보 */
+.movie_meta {
+  padding-top: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movie_meta li {
+  margin-bottom: 6px;
+  color: var(--c-font);
+  font-size: var(--fs12);
+}
+
+.movie_meta li strong {
+  display: inline-block;
+  width: 65px; /* 이 값으로 왼쪽 제목 영역 너비를 고정 */
+  font-weight: bold;
+  color: var(--c-font);
+}
+
+.movie_meta li span {
+  color: var(--c-font);
+}

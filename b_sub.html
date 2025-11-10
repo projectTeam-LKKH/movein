@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/a_sub_css.css" />
+    <link rel="stylesheet" href="css/b_sub_css.css" />
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/babel.min.js"></script>
+    <script src="js/a_sub_js.js"></script>
+    <script src="js/b_sub_js.js"></script>
+  </head>
+
+  <body>
+    <!--헤더-->
+    <div data-include="components/header.html"></div>
+
+    <!--메인컨텐츠-->
+    <div id="main_content">
+      <!--메인2 (b_혜정)-->
+      <div class="tabBox">
+        <div class="movie_detail">
+          <!-- 탭 메뉴 -->
+          <ul class="tab_menu">
+            <li class="b_active"><button type="button">콘텐츠 정보</button></li>
+            <li><button type="button">감상평 99+</button></li>
+            <li><button type="button">영상/이미지</button></li>
+          </ul>
+
+          <!-- 탭1 콘텐츠 정보 영역 -->
+          <section class="tab_content b_active" id="tab_info">
+            <h3>이 작품에 대한 간단한 피드백을 부탁해요</h3>
+
+            <div class="like_box">
+              <button type="button" class="like_btn">
+                <img src="img/like_icon_6F6C76.png" alt="like_icon" /> 추천해요
+              </button>
+              <button type="button" class="hate_btn">
+                <img src="img/hate_icon_6F6C76.png" alt="hate_icon" /> 별로예요
+              </button>
+            </div>
+
+            <ul class="movie_meta">
+              <li><strong>개봉 연도</strong><span>2010</span></li>
+              <li><strong>종류</strong><span>영화</span></li>
+              <li><strong>장르</strong><span>로맨스/SF</span></li>
+              <li><strong>감독</strong><span>샘 헤밍턴</span></li>
+              <li><strong>제작</strong><span>넷플릭스</span></li>
+              <li><strong>상영 시간</strong><span>136분</span></li>
+              <li>
+                <strong>스트리밍</strong><span>디즈니플러스,티빙,왓챠</span>
+              </li>
+              <li><strong>연령 등급</strong><span>ALL</span></li>
+            </ul>
+          </section>
+
+          <!-- 탭2 감상평 영역 -->
+          <section class="tab_content" id="tab_review">
+            <!-- 로그인된 상태 -->
+            <div class="review_login">
+              <p>
+                <strong
+                  ><span class="nickname">닉네임</span>님, 이 작품을 보신 적이
+                  있으세요? <img src="img/i_6f6c76.png" alt="i_icon" />
+                </strong>
+              </p>
+
+              <!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
+              <div class="iicon_popup" id="iicon_popup">
+                <p>
+                  무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
+                  부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
+                  없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
+                  이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
+                  통보 없이 탈퇴 처리될 수 있습니다.
+                </p>
+              </div>
+
+              <!-- 별점 -->
+              <div class="star_rating">
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="1점"
+                  data-value="1"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="2점"
+                  data-value="2"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="3점"
+                  data-value="3"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="4점"
+                  data-value="4"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="5점"
+                  data-value="5"
+                  class="star"
+                />
+              </div>
+
+              <!-- 텍스트 입력 -->
+              <textarea
+                class="review_input"
+                placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+              ></textarea>
+
+              <!-- 등록 버튼 -->
+              <button type="button" class="register_btn">
+                등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
+              </button>
+            </div>
+
+            <!-- 로그인하지 않은 상태 (비로그인 시 노출) -->
+            <div class="review_unlogin">
+              <p>
+                <strong
+                  >이 작품을 보신 적이 있으세요?
+                  <img src="img/i_6f6c76.png" alt="i_icon"
+                /></strong>
+              </p>
+
+              <!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
+              <div class="iicon_popup" id="iicon_popup">
+                <p>
+                  무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
+                  부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
+                  없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
+                  이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
+                  통보 없이 탈퇴 처리될 수 있습니다.
+                </p>
+              </div>
+
+              <!-- 별점 -->
+              <div class="star_rating">
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="1점"
+                  data-value="1"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="2점"
+                  data-value="2"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="3점"
+                  data-value="3"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="4점"
+                  data-value="4"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="5점"
+                  data-value="5"
+                  class="star"
+                />
+              </div>
+
+              <!-- 텍스트 입력 -->
+              <textarea
+                class="review_input"
+                placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+              ></textarea>
+
+              <!-- 등록 버튼 -->
+              <button type="button" class="register_btn">
+                등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
+              </button>
+            </div>
+
+            <!-- 전체 리뷰 -->
+            <div class="review_list">
+              <div class="review_header">
+                <h3>전체 리뷰</h3>
+                <button type="button" class="sort_btn">최신순 ▼</button>
+              </div>
+
+              <ul>
+                <li class="review_item">
+                  <div class="review_info">
+                    <img src="img/user_6F6C76.png" alt="user_icon" />
+                    <span class="list_nickname">닉네임</span>
+                    <span class="score"
+                      ><img
+                        src="img/star_49E99C.png"
+                        alt="star_icon"
+                      />4.0</span
+                    >
+                    <span class="date">14일 전</span>
+                  </div>
+                  <p class="review_text">뜨개하면서 보기 좋아요</p>
+                  <button type="button" class="bookmark_btn">
+                    +5<img
+                      src="img/bookmark_01_6f6c76.png"
+                      alt="bookmark_icon"
+                    />
+                  </button>
+                </li>
+
+                <li class="review_item">
+                  <div class="review_info">
+                    <img src="img/user_6F6C76.png" alt="user_icon" />
+                    <span class="list_nickname">닉네임</span>
+                    <span class="score"
+                      ><img
+                        src="img/star_49E99C.png"
+                        alt="star_icon"
+                      />4.0</span
+                    >
+                    <span class="date">14일 전</span>
+                  </div>
+                  <p class="review_text">생각보다 괜찮네요</p>
+                  <button type="button" class="bookmark_btn">
+                    +4<img
+                      src="img/bookmark_01_6f6c76.png"
+                      alt="bookmark_icon"
+                    />
+                  </button>
+                </li>
+
+                <li class="review_item">
+                  <div class="review_info">
+                    <span class="list_nickname">닉네임</span>
+                    <span class="score"
+                      ><img
+                        src="img/star_49E99C.png"
+                        alt="star_icon"
+                      />5.0</span
+                    >
+                    <span class="date">14일 전</span>
+                  </div>
+                  <p class="review_text">믿고 보는 명작입니다</p>
+                  <button type="button" class="bookmark_btn">
+                    +14<img
+                      src="img/bookmark_01_6f6c76.png"
+                      alt="bookmark_icon"
+                    />
+                  </button>
+                </li>
+              </ul>
+
+              <button type="button" class="more_btn">
+                더보기 <img src="img/next_icon_6F6C76.png" alt="" />
+              </button>
+            </div>
+
+            <!-- 로그인 후 별점 남겼을 시 상태 -->
+            <div class="review_edit">
+              <h3><strong>닉네임</strong>님이 등록한 리뷰</h3>
+
+              <div class="star_rating">
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="1점"
+                  data-value="1"
+                  class="star b_avtive"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="2점"
+                  data-value="2"
+                  class="star b_avtive"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="3점"
+                  data-value="3"
+                  class="star b_avtive"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="4점"
+                  data-value="4"
+                  class="star"
+                />
+                <img
+                  src="img/star_6f6c76.png"
+                  alt="5점"
+                  data-value="5"
+                  class="star"
+                />
+              </div>
+
+              <li class="review_item">
+                <div class="review_info">
+                  <span class="list_nickname">닉네임</span>
+                  <span class="score"
+                    ><img src="img/star_49E99C.png" alt="star_icon" />5.0</span
+                  >
+                  <span class="date">14일 전</span>
+                </div>
+                <p class="review_text">무난합니다</p>
+                <button type="button" class="bookmark_btn">
+                  +2
+                  <img src="img/bookmark_01_6f6c76.png" alt="bookmark_icon" />
+                </button>
+              </li>
+
+              <button type="button" class="edit_btn">
+                수정하기<img src="img/pen_6f6c76.png" alt="pen_icon" />
+              </button>
+            </div>
+          </section>
+
+          <!-- 탭3 영상/이미지 영역 -->
+          <section class="tab_content" id="tab_media">
+            <!-- 영상 섹션 -->
+            <div class="media_section">
+              <h3 class="media_title">영상</h3>
+
+              <div class="video_box">
+                <iframe
+                  src="https://youtu.be/i50tT8n9fp8?si=afIZltGupJHT9H0p"
+                  title="예고편 영상"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <!-- 스틸컷 섹션 -->
+            <div class="media_section stillcuts">
+              <h3 class="media_title">이미지</h3>
+
+              <!-- 큰 이미지 -->
+              <div class="image_item large">
+                <img
+                  src="https://example.com/image-large.jpg"
+                  alt="스틸컷 큰 이미지"
+                />
+              </div>
+
+              <!-- 하단 3분할 이미지 -->
+              <div class="image_layout">
+                <div class="image_left">
+                  <img
+                    src="https://example.com/image-left.jpg"
+                    alt="스틸컷 왼쪽 이미지"
+                  />
+                </div>
+
+                <div class="image_right">
+                  <div class="image_small top">
+                    <img
+                      src="https://example.com/image-top.jpg"
+                      alt="스틸컷 상단 이미지"
+                    />
+                  </div>
+                  <div class="image_small bottom">
+                    <img
+                      src="https://example.com/image-bottom.jpg"
+                      alt="스틸컷 하단 이미지"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <!--푸터 네비-->
+      <div data-include="components/footer_nav.html"></div>
+    </div>
+  </body>
+</html>
