@@ -44,10 +44,13 @@ $platform = trim($platform); // 혹시 공백 제거
 
 // 요즘 대세 영화 TOP10 (애니 제외, 플랫폼 필터 적용)
 $sql = "
-SELECT id, title, release_date, streaming
-FROM movies
-WHERE NOT JSON_CONTAINS(genre, JSON_QUOTE('애니'))
-AND release_date < CURDATE() AND type = '영화'
+SELECT m.id, m.title, m.release_date, m.streaming, 
+       ROUND(IFNULL(AVG(c.rating),0)) AS avg_rating
+FROM movies m
+LEFT JOIN comments c ON m.id = c.movie_id
+WHERE NOT JSON_CONTAINS(m.genre, JSON_QUOTE('애니'))
+  AND m.release_date < CURDATE() 
+  AND m.type = '영화'
 ";
 
 // All이 아닌 경우 JSON_CONTAINS로 필터
@@ -57,8 +60,9 @@ if($platform !== 'All'){
     $sql .= " AND JSON_CONTAINS(streaming, '\"$platform_esc\"')";
     // $sql .= " AND streaming LIKE '%\"$platform_esc\"%'";
 }
-
-$sql .= " ORDER BY release_date DESC LIMIT 10";
+$sql .= " GROUP BY m.id
+          ORDER BY m.release_date DESC
+          LIMIT 10";
 
 $result = $connect->query($sql);
 $hot_movies = $result->fetch_all(MYSQLI_ASSOC);
@@ -69,10 +73,12 @@ $platform2 = trim($platform2); // 혹시 공백 제거
 
 // 요즘 대세 영화외 TOP10
 $sql = "
-SELECT id, title, release_date, streaming
-FROM movies
-WHERE release_date < '2025-11-07'
-AND type != '영화'
+SELECT m.id, m.title, m.release_date, m.streaming,
+       ROUND(IFNULL(AVG(c.rating),0)) AS avg_rating
+FROM movies m
+LEFT JOIN comments c ON m.id = c.movie_id
+WHERE m.release_date < CURDATE()
+  AND m.type != '영화'
 ";
 
 // All이 아닌 경우 JSON_CONTAINS로 필터
@@ -83,10 +89,13 @@ if($platform2 !== 'All'){
     // $sql .= " AND streaming LIKE '%\"$platform_esc\"%'";
 }
 
-$sql .= " ORDER BY release_date DESC LIMIT 10";
+$sql .= " GROUP BY m.id
+          ORDER BY m.release_date DESC
+          LIMIT 10";
 
 $result = $connect->query($sql);
 $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 
@@ -101,7 +110,9 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/import.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   </head>
 
@@ -201,16 +212,6 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                 <li class="ham-sub">선호 장르 관리</li>
               </ul>
             </li>
-
-            <!-- <li class="ham-title">
-              <span>로그인 설정</span>
-              <ul class="ham-sub-box">
-                <li class="ham-sub"><a href="login/login.php">로그인</a></li>
-                <li class="ham-sub"><a href="login/register.php">회원가입</a></li>
-                <li class="ham-sub"><a href="login/logout.php">로그아웃</a></li>
-                <li class="ham-sub"><a href="login/reset_password.php">비밀번호 변경</li>
-              </ul>
-            </li> -->
             <li class="ham-title">
               <span>로그인 설정</span>
               <ul class="ham-sub-box">
@@ -263,7 +264,7 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
           그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
           <section id="navi-wrap">
             <div class="bubble-panel">
-              <div id="genre-bubble-container" style="width:100%; height:320px;"></div>
+              <div id="genre-bubble-container" style="width:100%; aspect-ratio: 1.06 /1;"></div>
           </div>
           </section>
         </div>
@@ -275,40 +276,41 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
           <?php if ($first_favorite): ?>
             <span class="input"><?= htmlspecialchars($first_favorite) ?></span>
             <span>장르를 좋아하신다면, 이건 어때요?</span>
-          <?php else: ?>
-            <span>아직 수집된 취향이 없지만 이 장르는 어때요?</span>
           <?php endif; ?>
         </p>
       </div>
-          
-      <div class="favorite-list">
-        <ul class="favorite-list-box">
-          <?php if (!empty($favorite_movies)): ?>
+    
+      <?php if (!empty($favorite_movies)): ?>
+        <div class="favorite-list">
+          <ul class="favorite-list-box">
             <?php foreach ($favorite_movies as $movie): ?>
               <?php
-                $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
+                  $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
+                  // 실제 서버 경로로 파일 존재 여부 확인
+                  if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
+                    $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster" style="max-width:65px; max-height:65px;">';
+                  } else {
+                      $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
+                  }
               ?>
               <li class="favorite-thing">
-                <a href="movie_detail.php?id=<?= htmlspecialchars($movie['id']) ?>">
-                  <img src="<?= htmlspecialchars($poster_path) ?>" alt="poster">
-                </a>
-                <button class="likeBtn">
-                  <img src="img/heart_6f6c76.png" alt="heart button">
-                </button>
+                  <a href="movie_detail.php?id=<?= htmlspecialchars($movie['id']) ?>">
+                      <?= $img_tag ?>
+                  </a>
+                  <button class="likeBtn">
+                      <img src="img/heart_6f6c76.png" alt="heart button">
+                  </button>
               </li>
             <?php endforeach; ?>
-          <?php else: ?>
-            <li>추천할 영화가 없습니다.</li>
-          <?php endif; ?>
-
-          <!-- "더보기" 버튼 -->
-          <li class="favorite-thing">
-            <a href="genre_recommend.php?genre=<?= urlencode($first_favorite) ?>" class="blankbtn">
-              <img src="img/next_icon_6F6C76.png" alt="moreBtn">
-            </a>
-          </li>
-        </ul>
-      </div>
+            <!-- "더보기" 버튼 -->
+            <li class="favorite-thing">
+                <a href="javascript:void(0);" class="blankbtn" onclick="showComingSoon()">
+                    <img src="img/next_icon_6F6C76.png" alt="moreBtn">
+                </a>
+            </li>
+          </ul>
+        </div>
+      <?php endif; ?>
     </section>
 
 
@@ -363,6 +365,7 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                   } else {
                       $img_tag = '<div style="width:200px; height:250px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
                   }
+                  $avg_rating = (int)$movie['avg_rating'];
                 ?>
                 <li class="all-poster <?= $platform_classes ?>">
                 <a href="movie_detail.php?id=<?= htmlspecialchars($movie['id']) ?>">
@@ -379,11 +382,15 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="score-contain">
                       <p class="score">별점</p>
                       <ul class="score-box">
-                        <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          <?php 
+                          for ($i = 1; $i <= 5; $i++) {
+                              if ($i <= $avg_rating) {
+                                  echo '<li class="score"><img src="img/star_49E99C.png" alt="star"></li>';
+                              } else {
+                                  echo '<li class="score"><img src="img/star_6f6c76.png" alt="star"></li>';
+                              }
+                          }
+                          ?>
                       </ul>
                     </div>
                   </div>
@@ -446,6 +453,7 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                   } else {
                       $img_tag = '<div style="width:200px; height:250px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
                   }
+                  $avg_rating = (int)$drama['avg_rating'];
                 ?>
                 <li class="all-poster <?= $platform_classes ?>">
                   <a href="movie_detail.php?id=<?= htmlspecialchars($drama['id']) ?>">
@@ -461,9 +469,15 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="score-contain">
                       <p class="score">별점</p>
                       <ul class="score-box">
-                        <?php for($i=0; $i<5; $i++): ?>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        <?php endfor; ?>
+                          <?php 
+                          for ($i = 1; $i <= 5; $i++) {
+                              if ($i <= $avg_rating) {
+                                  echo '<li class="score"><img src="img/star_49E99C.png" alt="star"></li>';
+                              } else {
+                                  echo '<li class="score"><img src="img/star_6f6c76.png" alt="star"></li>';
+                              }
+                          }
+                          ?>
                       </ul>
                     </div>
                   </div>
@@ -651,59 +665,97 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
       </section>
      </main>
 
+     <div id="footer"></div>
+    <div id="bottom-nav"></div>
+
     <!-- JS -->
-  <script src="js/main.js"></script>
+    <!-- JS -->
+     <script src="js/import.js"></script>
+    <script src="js/main.js"></script>
 
     
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script defer src="js/genre-bubbles.js"></script>
 
   <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const bubbleApp = window.genreBubbleApp.init('genre-bubble-container');
-    if (!bubbleApp) return;
 
-    // PHP에서 JS로 데이터 전달
+function showComingSoon() {
+    // 팝업 div 생성
+    const popup = document.createElement('div');
+    popup.textContent = "개발중인 화면입니다.";
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = "#333";
+    popup.style.color = "#fff";
+    popup.style.padding = "20px 40px";
+    popup.style.borderRadius = "8px";
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    popup.style.zIndex = "9999";
+    popup.style.fontSize = "16px";
+    popup.style.textAlign = "center";
+    
+    document.body.appendChild(popup);
+
+    // 1초 후 자동 제거
+    setTimeout(() => {
+        popup.remove();
+    }, 1000);
+}
+
+  // main-bubbles-init.js
+  // 2025-11-10 정리본 : 중복 제거 및 리사이즈/스크롤 복원 최적화
+
+  // [A] 페이지 진입 시 버블 초기화
+  window.addEventListener("DOMContentLoaded", () => {
+    const app = window.genreBubbleApp?.init("genre-bubble-container");
+    if (!app) return;
+
+    // PHP → JS
     const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
     const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
 
-    // 전체 장르 목록
+    // 모든 버블에 공통 적용할 그라데이션 옵션
+    const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
+
     const allGenres = [
-      { name: "애니", color: "#FFE4B5" },   // 따뜻하고 부드러운 살구빛 — 활기찬 애니 느낌
-      { name: "드라마", color: "#FFD6A5" }, // 감성적이면서 부드러운 오렌지톤
-      { name: "액션", color: "#A0E7E5" },   // 에너지 넘치는 밝은 청록색
-      { name: "SF", color: "#B5EAD7" },     // 미래적인 민트톤
-      { name: "코미디", color: "#FFFACD" }, // 유쾌하고 밝은 레몬색
-      { name: "판타지", color: "#C7CEEA" }, // 몽환적인 연보라색
-      { name: "스릴러", color: "#FFB6B9" }, // 긴장감 있지만 너무 어둡지 않은 핑크빛 붉은색
-      { name: "로맨스", color: "#FFD1DC" }  // 달콤한 파스텔 핑크
+      { name: "애니", color: "#8670FF" },
+      { name: "드라마", color: "#8670FF" },
+      { name: "액션", color: "#8670FF" },
+      { name: "SF", color: "#8670FF" },
+      { name: "코미디", color: "#8670FF" },
+      { name: "판타지", color: "#8670FF" },
+      { name: "스릴러", color: "#8670FF" },
+      { name: "로맨스", color: "#8670FF" },
     ];
 
-
     if (!isLoggedIn) {
-      // 👤 비로그인: 모두 동일한 크기
-      allGenres.forEach(g => {
-        bubbleApp.createGenreBubble(g.name, g.color, 30);
-      });
+      // ✅ 비로그인도 전부 그라데이션
+      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT));
     } else {
-      // 👤 로그인 상태: 선호 장르 순으로 크기 조정
-      const baseSize = 20;
-      const maxSize = 40;
-      const step = 5;
+      const base = 40, max = 90, step = 5;
 
-      allGenres.forEach(g => {
+      allGenres.forEach((g) => {
         const idx = favoriteGenres.indexOf(g.name);
         if (idx !== -1) {
-          // 좋아하는 순서대로 크기 차등 적용
-          const size = maxSize - idx * step;
-          bubbleApp.createGenreBubble(g.name, g.color, size > baseSize ? size : baseSize);
+          const size = Math.max(base, max - idx * step);
+
+          // ✅ 로그인도 전부 그라데이션 (+ 1순위만 볼드 유지)
+          const opts = (idx === 0)
+            ? { ...GRAD_OPT, fontWeight: 700 } // 1순위 강조(굵기만)
+            : GRAD_OPT;
+
+            const color = (idx === 0) ? "#49e99c" : g.color; // 1순위 색상 변경
+
+            app.createGenreBubble(g.name, color, size, opts);
         } else {
-          // 선호하지 않는 장르는 작게 표시
-          bubbleApp.createGenreBubble(g.name, g.color, baseSize);
+          app.createGenreBubble(g.name, g.color, base, GRAD_OPT);
         }
       });
     }
   });
+
   
   let resizeTimeout;
 
