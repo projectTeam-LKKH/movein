@@ -264,7 +264,7 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
           그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
           <section id="navi-wrap">
             <div class="bubble-panel">
-              <div id="genre-bubble-container" style="width:100%; aspect-ratio: 1.06 /1;"></div>
+              <div id="genre-bubble-container" style="width:100%; height:320px;"></div>
           </div>
           </section>
         </div>
@@ -675,141 +675,60 @@ $hot_dramas = $result->fetch_all(MYSQLI_ASSOC);
 
     
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-  <script defer src="js/genre-bubbles.js"></script>
+  <script defer src="js/genre-bubbles_test.js"></script>
 
   <script>
+// main-bubbles-init.js
+// 2025-11-10 정리본 : 중복 제거 및 리사이즈/스크롤 복원 최적화
 
-function showComingSoon() {
-    // 팝업 div 생성
-    const popup = document.createElement('div');
-    popup.textContent = "개발중인 화면입니다.";
-    popup.style.position = "fixed";
-    popup.style.top = "50%";
-    popup.style.left = "50%";
-    popup.style.transform = "translate(-50%, -50%)";
-    popup.style.background = "#333";
-    popup.style.color = "#fff";
-    popup.style.padding = "20px 40px";
-    popup.style.borderRadius = "8px";
-    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-    popup.style.zIndex = "9999";
-    popup.style.fontSize = "16px";
-    popup.style.textAlign = "center";
-    
-    document.body.appendChild(popup);
-
-    // 1초 후 자동 제거
-    setTimeout(() => {
-        popup.remove();
-    }, 1000);
-}
-
-  // main-bubbles-init.js
-  // 2025-11-10 정리본 : 중복 제거 및 리사이즈/스크롤 복원 최적화
-
-  // [A] 페이지 진입 시 버블 초기화
-  window.addEventListener("DOMContentLoaded", () => {
-    const app = window.genreBubbleApp?.init("genre-bubble-container");
-    if (!app) return;
-
-    // PHP → JS
-    const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
-    const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
-
-    // 모든 버블에 공통 적용할 그라데이션 옵션
-    const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
-
-    const allGenres = [
-      { name: "애니", color: "#8670FF" },
-      { name: "드라마", color: "#8670FF" },
-      { name: "액션", color: "#8670FF" },
-      { name: "SF", color: "#8670FF" },
-      { name: "코미디", color: "#8670FF" },
-      { name: "판타지", color: "#8670FF" },
-      { name: "스릴러", color: "#8670FF" },
-      { name: "로맨스", color: "#8670FF" },
-    ];
-
-    if (!isLoggedIn) {
-      // ✅ 비로그인도 전부 그라데이션
-      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT));
-    } else {
-      const base = 40, max = 90, step = 5;
-
-      allGenres.forEach((g) => {
-        const idx = favoriteGenres.indexOf(g.name);
-        if (idx !== -1) {
-          const size = Math.max(base, max - idx * step);
-
-          // ✅ 로그인도 전부 그라데이션 (+ 1순위만 볼드 유지)
-          const opts = (idx === 0)
-            ? { ...GRAD_OPT, fontWeight: 700 } // 1순위 강조(굵기만)
-            : GRAD_OPT;
-
-            const color = (idx === 0) ? "#49e99c" : g.color; // 1순위 색상 변경
-
-            app.createGenreBubble(g.name, color, size, opts);
-        } else {
-          app.createGenreBubble(g.name, g.color, base, GRAD_OPT);
-        }
-      });
-    }
-  });
-
-  
-  let resizeTimeout;
-
-  window.addEventListener('resize', () => {
-    // 이전 타이머 취소
-    if (resizeTimeout) clearTimeout(resizeTimeout);
-
-    // 마지막 resize 후 500ms 지나면 실행
-    resizeTimeout = setTimeout(() => {
-      console.log('리사이즈 멈춤, 새로고침 실행');
-      location.reload();
-    }, 500); // 0.5초 동안 멈추면 새로고침
-  });
-
-  window.addEventListener("beforeunload", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-window.addEventListener("load", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    window.scrollTo(0, parseInt(savedY));
-  }
-});
-
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});
-
-window.addEventListener("pagehide", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-// [2] 페이지 로드 시 스크롤 복원
+// [A] 페이지 진입 시 버블 초기화
 window.addEventListener("DOMContentLoaded", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
-    setTimeout(() => {
-      window.scrollTo(0, parseInt(savedY));
-    }, 50);
+  const app = window.genreBubbleApp?.init("genre-bubble-container");
+  if (!app) return;
+
+  // PHP → JS
+  const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
+  const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
+
+  // 모든 버블에 공통 적용할 그라데이션 옵션
+  const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
+
+  const allGenres = [
+    { name: "애니", color: "#8670FF" },
+    { name: "드라마", color: "#8670FF" },
+    { name: "액션", color: "#8670FF" },
+    { name: "SF", color: "#8670FF" },
+    { name: "코미디", color: "#8670FF" },
+    { name: "판타지", color: "#8670FF" },
+    { name: "스릴러", color: "#8670FF" },
+    { name: "로맨스", color: "#8670FF" },
+  ];
+
+  if (!isLoggedIn) {
+    // ✅ 비로그인도 전부 그라데이션
+    allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT));
+  } else {
+    const base = 40, max = 90, step = 5;
+
+    allGenres.forEach((g) => {
+      const idx = favoriteGenres.indexOf(g.name);
+      if (idx !== -1) {
+        const size = Math.max(base, max - idx * step);
+
+        // ✅ 로그인도 전부 그라데이션 (+ 1순위만 볼드 유지)
+        const opts = (idx === 0)
+          ? { ...GRAD_OPT, fontWeight: 700 } // 1순위 강조(굵기만)
+          : GRAD_OPT;
+
+        app.createGenreBubble(g.name, g.color, size, opts);
+      } else {
+        app.createGenreBubble(g.name, g.color, base, GRAD_OPT);
+      }
+    });
   }
 });
 
-// [3] 버튼 클릭 시 수동 저장
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});
+
 </script>
   </body>
 </html>

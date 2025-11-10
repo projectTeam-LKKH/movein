@@ -39,7 +39,7 @@ $like_status = null;
 if (isset($userid)) {
     // SQL 준비
     $stmt = mysqli_prepare($connect, "SELECT status FROM Likes WHERE user_id = ? AND movie_id = ?");
-    mysqli_stmt_bind_param($stmt, "ii", $userid, $movie_id);
+    mysqli_stmt_bind_param($stmt, "si", $userid, $movie_id);
     mysqli_stmt_execute($stmt);
     
     // 결과 가져오기
@@ -86,6 +86,7 @@ $result = mysqli_stmt_get_result($stmt);
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?= htmlspecialchars($movie['title']) ?> - 상세</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/root.css" />
@@ -459,7 +460,7 @@ $result = mysqli_stmt_get_result($stmt);
 					<!-- 👤 로그인한 사용자의 리뷰 표시 -->
 					<?php if ($user_review): ?>
 					<div class="review_edit">
-						<h3><strong><?= htmlspecialchars($userid) ?></strong>님이 등록한 리뷰</h3>
+						<h3><strong><?= htmlspecialchars($nickname) ?></strong>님이 등록한 리뷰</h3>
 
 						<div class="star_rating">
 						<?php for ($i = 1; $i <= 5; $i++): ?>
