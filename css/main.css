@@ -236,7 +236,7 @@ button {
 /* 좋아요 버튼 */
 .likeBtn {
   position: absolute;
-  z-index: 5;
+  z-index: 1;
   right: 6px;
   bottom: 3px;
 }
