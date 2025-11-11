@@ -47,16 +47,16 @@
       <!-- 카테고리 원 박스 구현 부탁드립니다. navi-wrap을 빠져나오면 안됩니다. 
        그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
        <section id="navi-wrap">
-          <ul class="navi-box">
-            <li class="circle"><a href="#" data-genre="드라마">드라마</a></li>
-            <li class="circle"><a href="#" data-genre="로맨스">로맨스</a></li>
-            <li class="circle"><a href="#" data-genre="액션">액션</a></li>
-            <li class="circle"><a href="#" data-genre="스릴러">스릴러</a></li>
-            <li class="circle"><a href="#" data-genre="코미디">코미디</a></li>
-            <li class="circle"><a href="#" data-genre="미스터리">미스터리</a></li>
-            <li class="circle"><a href="#" data-genre="판타지">판타지</a></li>
-          </ul>
-        </section>
+        <ul class="navi-box">
+          <li class="circle active"><a href="#">드라마</a></li>
+          <li class="circle"><a href="#">로맨스</a></li>
+          <li class="circle"><a href="#">액션</a></li>
+          <li class="circle"><a href="#">스릴러</a></li>
+          <li class="circle"><a href="#">코미디</a></li>
+          <li class="circle"><a href="#">미스터리</a></li>
+          <li class="circle"><a href="#">판타지</a></li>
+        </ul>
+       </section>
     </div>
 
     <!-- 데이터에 해당되는 장르를 보여주는 구간 -->
@@ -561,6 +561,109 @@
 
     <!-- JS -->
      <script src="js/import.js"></script>
+     <script src="js/genre-bubbles_test.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const bubbleApp = window.genreBubbleApp.init('genre-bubble-container');
+    if (!bubbleApp) return;
+
+    // PHP에서 JS로 데이터 전달
+    const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
+    const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
+
+    // 전체 장르 목록
+    const allGenres = [
+      { name: "애니", color: "#FFE4B5" },   // 따뜻하고 부드러운 살구빛 — 활기찬 애니 느낌
+      { name: "드라마", color: "#FFD6A5" }, // 감성적이면서 부드러운 오렌지톤
+      { name: "액션", color: "#A0E7E5" },   // 에너지 넘치는 밝은 청록색
+      { name: "SF", color: "#B5EAD7" },     // 미래적인 민트톤
+      { name: "코미디", color: "#FFFACD" }, // 유쾌하고 밝은 레몬색
+      { name: "판타지", color: "#C7CEEA" }, // 몽환적인 연보라색
+      { name: "스릴러", color: "#FFB6B9" }, // 긴장감 있지만 너무 어둡지 않은 핑크빛 붉은색
+      { name: "로맨스", color: "#FFD1DC" }  // 달콤한 파스텔 핑크
+    ];
+
+
+    if (!isLoggedIn) {
+      // 👤 비로그인: 모두 동일한 크기
+      allGenres.forEach(g => {
+        bubbleApp.createGenreBubble(g.name, g.color, 30);
+      });
+    } else {
+      // 👤 로그인 상태: 선호 장르 순으로 크기 조정
+      const baseSize = 20;
+      const maxSize = 40;
+      const step = 5;
+
+      allGenres.forEach(g => {
+        const idx = favoriteGenres.indexOf(g.name);
+        if (idx !== -1) {
+          // 좋아하는 순서대로 크기 차등 적용
+          const size = maxSize - idx * step;
+          bubbleApp.createGenreBubble(g.name, g.color, size > baseSize ? size : baseSize);
+        } else {
+          // 선호하지 않는 장르는 작게 표시
+          bubbleApp.createGenreBubble(g.name, g.color, baseSize);
+        }
+      });
+    }
+  });
+  
+  let resizeTimeout;
+
+  window.addEventListener('resize', () => {
+    // 이전 타이머 취소
+    if (resizeTimeout) clearTimeout(resizeTimeout);
+
+    // 마지막 resize 후 500ms 지나면 실행
+    resizeTimeout = setTimeout(() => {
+      console.log('리사이즈 멈춤, 새로고침 실행');
+      location.reload();
+    }, 500); // 0.5초 동안 멈추면 새로고침
+  });
+
+  window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("scrollY", window.scrollY);
+});
+
+window.addEventListener("load", () => {
+  const savedY = sessionStorage.getItem("scrollY");
+  if (savedY !== null) {
+    window.scrollTo(0, parseInt(savedY));
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("button, input[type='submit']");
+  if (target) {
+    sessionStorage.setItem("scrollY", window.scrollY);
+  }
+});
+
+window.addEventListener("pagehide", () => {
+  sessionStorage.setItem("scrollY", window.scrollY);
+});
+
+// [2] 페이지 로드 시 스크롤 복원
+window.addEventListener("DOMContentLoaded", () => {
+  const savedY = sessionStorage.getItem("scrollY");
+  if (savedY !== null) {
+    // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
+    setTimeout(() => {
+      window.scrollTo(0, parseInt(savedY));
+    }, 50);
+  }
+});
+
+// [3] 버튼 클릭 시 수동 저장
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("button, input[type='submit']");
+  if (target) {
+    sessionStorage.setItem("scrollY", window.scrollY);
+  }
+});
