@@ -7,164 +7,150 @@
 		<link rel="stylesheet" href="css/reset.css" />
 		<link rel="stylesheet" href="css/root.css" />
 		<link rel="stylesheet" href="css/a_sub.css" />
-		<script src="js/jquery-1.11.2.min.js"></script>
+		<link rel="stylesheet" href="css/import.css" />
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="js/import.js"></script>
 		<script src="js/babel.min.js"></script>
 		<script src="js/a_sub_js.js"></script>
 		<script src="js/b_sub_js.js"></script>
+		
 	</head>
-	<body>
-		<div data-include="components/header.html"></div>
+	<body class="sub-body">
+
+		
 		<!--헤더-->
+		<div id="header-slot"></div>
 
 		<!--메인 컨텐츠-->
 		<div id="main_content">
 			<!--메인1 (a_여진)-->
 			<div class="posterBox">
 				<!-- 배경 이미지 스틸컷 -->
-				<div class="a_background_still"></div>
+					<img
+						src="img/stillcut/stillcut_헤어질결심.jpg"
+						alt="영화 배경 스틸컷"
+						class="a_background_still"
+					/>
+					<!-- </div>  posterbox 원래 위치 -->
 
-				<div class="a_top_nav_container">
-					<!-- 상단 아이콘 모음 -->
-					<div class="a_top_nav">
-						<!-- 왼쪽 아이콘 -->
-						<div class="a_top_nav_left">
-							<button type="button" class="a_icon_button">
-								<img src="img/prev_f5f5f5.png" alt="뒤로가기" />
-							</button>
-						</div>
-
-						<!-- 오른쪽 아이콘 -->
-						<div class="a_top_nav_right">
-							<!-- 알림 아이콘 -->
-							<button type="button" class="a_icon_button">
-								<img src="img/alarm_f5f5f5.png" alt="알림" />
-							</button>
-							<!-- 더보기 아이콘 -->
-							<button type="button" class="a_icon_button">
+					<!-- 메인 포스터, 제목 등 세부 정보 데이터 -->
+					<div class="a_movie_meta_wrap">
+						<!-- 세부 데이터 그룹 틀 ( flex 적용 )-->
+						<div class="a_info_group">
+							<!--  메인 포스터 영역 -->
+							<div class="a_movie_poster">
 								<img
-									src="img/hamburger_f5f5f5.png"
-									alt="더보기"
+									src="img/poster/poster_헤어질결심.jpg"
+									alt="포스터1"
 								/>
-							</button>
-						</div>
-					</div>
-				</div>
+							</div>
 
-				<!-- 메인 포스터, 제목 등 세부 정보 데이터 -->
-				<div class="a_movie_meta_wrap">
-					<!-- 세부 데이터 그룹 틀 ( flex 적용 )-->
-					<div class="a_info_group">
-						<!--  메인 포스터 영역 -->
-						<div class="a_movie_poster">
-							<img
-								src="img/poster/poster_헤어질결심.jpg"
-								alt="포스터1"
-							/>
-						</div>
+							<!-- 영화 제목 + 세부 정보 + 별점 -->
+							<div class="a_meta_data">
+								<!-- 세부 텍스트 그룹 -->
+								<div class="a_movie_info_text">
+									<!-- 영화 제목-->
+									<h1>
+										<span class="a_movie_title_value"
+											>헤어질 결심</span
+										>
+									</h1>
+									<!-- 세부 정보 -->
+									<p>
+										<span class="a_details_value"
+											>15세 · 2022 · 영화 · 로맨스/멜로
+											138분
+										</span>
+									</p>
+								</div>
 
-						<!-- 영화 제목 + 세부 정보 + 별점 -->
-						<div class="a_meta_data">
-							<!-- 세부 텍스트 그룹 -->
-							<div class="a_movie_info_text">
-								<!-- 영화 제목-->
-								<h1>
-									<span class="a_movie_title_value"
-										>헤어질 결심</span
-									>
-								</h1>
-								<!-- 세부 정보 -->
+								<!-- 평가 + 별점 -->
+								<div class="a_ratings">
+									<!-- 평점 -->
+									<p class="a_rating_percent">
+										<img
+											src="img/like_icon_49E99C.png"
+											class="a_icon_like"
+											alt="좋아요 아이콘"
+										/>
+										<span class="rating_value">80.2%</span>
+										<img
+											src="img/i_6f6c76.png"
+											class="a_icon_info"
+											alt="정보 아이콘"
+										/>
+									</p>
+									<!-- 별점 -->
+									<p class="a_star_rating">
+										<img
+											src="img/star_49E99C.png"
+											class="a_icon_star"
+											alt="별점 아이콘"
+										/>
+										<span class="star_value">4.8</span>
+									</p>
+								</div>
+							</div>
+
+							<!-- 영화 줄거리 -->
+							<div class="a_movie_forms">
 								<p>
-									<span class="a_details_value"
-										>15세 · 2022 · 영화 · 로맨스/멜로 138분
+									<!-- 줄거리 텍스트 -->
+									<span class="a_plot_value">
+										산 정상에서 남편이 추락사한 뒤, 담담한
+										아내 ‘서래’는 용의선상에 오른다. 수사를
+										맡은 형사 ‘해준’은 그녀를 의심하면서도
+										점점 끌리게 된다. 의심과 사랑이 교차하는
+										두 사람의 위험한 관계가 시작된다.
 									</span>
 								</p>
 							</div>
 
-							<!-- 평가 + 별점 -->
-							<div class="a_ratings">
-								<!-- 평점 -->
-								<p class="a_rating_percent">
-									<img
-										src="img/like_icon_49E99C.png"
-										class="a_icon_like"
-										alt="좋아요 아이콘"
-									/>
-									<span class="rating_value">80.2%</span>
-									<img
-										src="img/i_6f6c76.png"
-										class="a_icon_info"
-										alt="정보 아이콘"
-									/>
-								</p>
-								<!-- 별점 -->
-								<p class="a_star_rating">
-									<img
-										src="img/star_49E99C.png"
-										class="a_icon_star"
-										alt="별점 아이콘"
-									/>
-									<span class="star_value">4.8</span>
-								</p>
-							</div>
-						</div>
+							<!-- 스트리밍 가능 플랫폼 -->
+							<div class="a_movie_ott_platforms">
+								<div class="a_movie_ott_platforms_wrap">
+									<!-- 왼쪽 스트리밍 아이콘 -->
+									<div class="a_movie_streaming_icon">
+										<img
+											src="img/streaming_f5f5f5.png"
+											alt="스트리밍_아이콘"
+										/>
+									</div>
 
-						<!-- 영화 줄거리 -->
-						<div class="a_movie_forms">
-							<p>
-								<!-- 줄거리 텍스트 -->
-								<span class="a_plot_value">
-									산 정상에서 남편이 추락사한 뒤, 담담한 아내
-									‘서래’는 용의선상에 오른다. 수사를 맡은 형사
-									‘해준’은 그녀를 의심하면서도 점점 끌리게
-									된다. 의심과 사랑이 교차하는 두 사람의
-									위험한 관계가 시작된다.
-								</span>
-							</p>
-						</div>
-
-						<!-- 스트리밍 가능 플랫폼 -->
-						<div class="a_movie_ott_platforms">
-							<div class="a_movie_ott_platforms_wrap">
-								<!-- 왼쪽 스트리밍 아이콘 -->
-								<div class="a_movie_streaming_icon">
-									<img
-										src="img/streaming_f5f5f5.png"
-										alt="스트리밍_아이콘"
-									/>
+									<!-- 오른쪽 플랫폼 아이콘-->
+									<ul class="a_streaming_icon">
+										<li>
+											<a href="#" target="_blank">
+												<img
+													src="img/disney.png"
+													alt="플랫폼_1"
+												/>
+											</a>
+										</li>
+										<li>
+											<a href="#" target="_blank">
+												<img
+													src="img/TVING.png"
+													alt="플랫폼_2"
+												/>
+											</a>
+										</li>
+										<li>
+											<a href="#" target="_blank">
+												<img
+													src="img/watcha.png"
+													alt="플랫폼_3"
+												/>
+											</a>
+										</li>
+									</ul>
 								</div>
-
-								<!-- 오른쪽 플랫폼 아이콘-->
-								<ul class="a_streaming_icon">
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/disney.png"
-												alt="플랫폼_1"
-											/>
-										</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/TVING.png"
-												alt="플랫폼_2"
-											/>
-										</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/watcha.png"
-												alt="플랫폼_3"
-											/>
-										</a>
-									</li>
-								</ul>
 							</div>
 						</div>
-					</div>
+					
 				</div>
 			</div>
+		</div>
 
 			<!--poster box 끝-->
 
@@ -212,16 +198,19 @@
 
 						<!-- 오른쪽 영역 -->
 						<div class="a_balance_card right">
-							<img
-								src="img/like_icon_6F6C76.png"
-								class="a_like_icon"
-								alt="좋아요 아이콘"
-							/>
-							<p>
-								<span class="a_balance_text_value_right"
-									>산타와 함께<br />전 세계 선물 배달</span
-								>
-							</p>
+							<div class="a_balance_card_text_right">
+								<img
+									src="img/like_icon_6F6C76.png"
+									class="a_like_icon"
+									alt="좋아요 아이콘"
+								/>
+								<p>
+									<span class="a_balance_text_value_right"
+										>산타와 함께<br />전 세계 선물
+										배달</span
+									>
+								</p>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -232,12 +221,12 @@
 						취향.자.만.추 여기에서 하세요
 					</h3>
 
-					<!-- 자만추 영역 -->
+					<!-- 자.만.추 영역 -->
 					<div class="a_recommend_cards_container">
 						<!-- 티켓 뽑기 -->
 						<div class="a_recommend_ticket">
 							<div class="a_card_icon_wrap">
-								<img src="img/game1.png" alt="티켓 아이콘" />
+								<img src="img/game1.svg" alt="티켓 아이콘" />
 							</div>
 							<p>
 								<span class="a_card_text_value"
@@ -249,7 +238,7 @@
 						<!-- 밸런스 게임 -->
 						<div class="a_recommend_balance">
 							<div class="a_card_icon_wrap">
-								<img src="img/game.png" alt="그래프 아이콘" />
+								<img src="img/game2.svg" alt="그래프 아이콘" />
 							</div>
 							<p>
 								<span class="a_card_text_value"
@@ -278,7 +267,10 @@
 		</div>
 
 		<!-- 메인 컨텐츠 끝 -->
-		<div data-include="components/footer_nav.html"></div>
+		<div id="bottom-nav"></div>
+		<div id="footer"></div>
 		<!--푸터-->
+
+		
 	</body>
 </html>
