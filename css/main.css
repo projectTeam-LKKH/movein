@@ -279,17 +279,19 @@ button {
 }
 
 /* ott선택 버튼 */
-.hot-wrap {
+.hot-nav-container {
   width: 100%;
-  height: max-content;
+  overflow-x: hidden;
+}
+.hot-wrap {
+  padding: 0 5vw;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .hot-nav-box {
-  width: 100%;
-  padding: 0 5vw;
+  width: max-content;
   height: 60px;
   display: flex;
   gap: 10px;
@@ -298,20 +300,30 @@ button {
 .all-btn {
   position: relative;
   color: var(--c-font);
+  background-color: var(--c-bg);
   flex: 0 0 50px;
   height: 50px;
   border: 3px solid var(--c-gray);
   border-radius: 50px;
   object-fit: cover;
 }
-
+.all-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(var(--c-bg-rgb), 0.5);
+  pointer-events: none;
+  border-radius: inherit;
+}
 .all-btn p {
   font-weight: 800;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  color: var(--c-gray);
+  color: var(--c-gray3);
+  font-size: var(--fs3);
 }
 
 .all-btn img {
@@ -343,6 +355,11 @@ button {
 .all-btn.active {
   color: var(--c-main);
   border: 3px solid var(--c-main);
+}
+
+.all-btn.active::after {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .all-btn.active .point::after {
@@ -386,6 +403,7 @@ button {
 .all-poster a img {
   width: 172px;
   height: 252px;
+  border-radius: 10px;
 }
 .detail-box {
   width: 172px;

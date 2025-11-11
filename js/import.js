@@ -49,6 +49,8 @@ $(function () {
   });
 });
 
+//푸터 연결
+
 //하단바 루트 연결
 $(function () {
   $("#bottom-nav").load("import/bottom-nav.html", () => {

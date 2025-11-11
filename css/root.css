@@ -42,6 +42,17 @@
   --c-gray3: #8e8e9f;
   --c-danger: #f66060;
 
+  /* background: rgba(var(--c-gray2-rgb), 0.4); /* 투명도 40% */
+  --c-bg-rgb: 11, 11, 11; /* #0b0b0b */
+  --c-font-rgb: 250, 245, 245; /* #faf5f5 */
+  --c-main-rgb: 134, 112, 255; /* #8670ff */
+  --c-main2-rgb: 196, 185, 255; /* #c4b9ff */
+  --c-point-rgb: 73, 233, 156; /* #49e99c */
+  --c-gray-rgb: 37, 36, 38; /* #252426 */
+  --c-gray2-rgb: 111, 108, 118; /* #6f6c76 */
+  --c-gray3-rgb: 142, 142, 159; /* #8e8e9f */
+  --c-danger-rgb: 246, 96, 96; /* #f66060 */
+
   /* Transparency 투명도 */
   --c-point-50: rgba(73, 233, 156, 0.5);
   --c-main-50: rgba(134, 112, 255, 0.5);
