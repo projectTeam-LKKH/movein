@@ -44,20 +44,14 @@
       
       <main>
         <div class="container">
-      <!-- 카테고리 원 박스 구현 부탁드립니다. navi-wrap을 빠져나오면 안됩니다. 
-       그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
-       <section id="navi-wrap">
-        <ul class="navi-box">
-          <li class="circle active"><a href="#">드라마</a></li>
-          <li class="circle"><a href="#">로맨스</a></li>
-          <li class="circle"><a href="#">액션</a></li>
-          <li class="circle"><a href="#">스릴러</a></li>
-          <li class="circle"><a href="#">코미디</a></li>
-          <li class="circle"><a href="#">미스터리</a></li>
-          <li class="circle"><a href="#">판타지</a></li>
-        </ul>
-       </section>
-    </div>
+          <!-- 카테고리 원 박스 구현 부탁드립니다. navi-wrap을 빠져나오면 안됩니다. 
+          그리고 원이 모서리 부분에 잘리지 않게 해주세요-->
+          <section id="navi-wrap">
+            <div class="bubble-panel">
+              <div id="genre-bubble-container" style="width:100%; height:320px;"></div>
+          </div>
+          </section>
+        </div>
 
     <!-- 데이터에 해당되는 장르를 보여주는 구간 -->
      <section class="favorite">
@@ -139,531 +133,433 @@
       </div>
      </section>
      
-     <!-- 요즘 대세 영화는? -->
-     <section class="hot-container">
-      <div class="hot-title">
-        <div class="hot-txt-box">
-          <h3 class="hot-txt">요즘 대세 영화는?</h3>
-          <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
-        </div>
-        <div class="hot-wrap">
-          <ul class="hot-nav-box">
-            <li class="all-btn active">
-                <p>All</p>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/netflix.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/watcha.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/wavve.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/TVING.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/disney.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/coupang.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <p>Other
-              </p>
-              <span class="point"></span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- 포스터 영역 -->
-        <div class="poster-wrap">
-          <div class="poster-box">
-            <ul class="all-posters">
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-     </section>
-
-     <!-- 요즘 대세 드라마는? -->
-     <section class="hot-container">
-      <div class="hot-title">
-        <div class="hot-txt-box">
-          <h3 class="hot-txt">요즘 대세 프로그램은?</h3>
-          <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
-        </div>
-        <div class="hot-wrap">
-          <ul class="hot-nav-box">
-            <li class="all-btn active">
-                <p>All</p>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/netflix.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/watcha.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/wavve.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/TVING.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/disney.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <img src="img/coupang.png" alt="보류"/>
-                <span class="point"></span>
-            </li>
-            <li class="all-btn">
-              <p>Other
-              </p>
-              <span class="point"></span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- 포스터 영역 -->
-        <div class="poster-wrap">
-          <div class="poster-box">
-            <ul class="all-posters">
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-                <li class="all-poster">
-                  <a href="">
-                    <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
-                    <p class="poster-title">작품 제목이 들어갈 공간</p>
-                  </a>
-                  <div class="detail-box">
-                    <div class="date-box">
-                      <p>개봉일</p>
-                      <span class="date-detail">0000.00.00</span>
-                    </div>
-                    <div class="score-contain">
-                        <p class="score">별점</p>
-                        <ul class="score-box">
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                          <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
-                        </ul>
-                    </div>
-                  </div>
-                </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-     </section>
-    
-     <!-- 무브오너들의 감상평 -->
-      <section class="movein-review">
-        <div class="review-txt-box">
+      <!-- 요즘 대세 영화는? -->
+      <section class="hot-container">
+        <div class="hot-title">
           <div class="hot-txt-box">
-            <h3 class="hot-txt">무브오너들의 감상평</h3>
+            <h3 class="hot-txt">요즘 대세 영화는?</h3>
             <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
           </div>
+          <div class="hot-wrap">
+            <ul class="hot-nav-box">
+              <li class="all-btn active">
+                  <p>All</p>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/netflix.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/watcha.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/wavve.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/TVING.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/disney.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/coupang.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <p>Other
+                </p>
+                <span class="point"></span>
+              </li>
+            </ul>
+          </div>
 
-          <div class="review-container">
-            <!-- 데이터 첨부 필요 -->
-             <div class="review-wrap">
-              <ul class="review-card-box">
-                <li class="review-card">
-                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
-                  <a href="" class="review">
-                    <!-- 작품 데이터가 들어가야 합니다 -->
-                    <div class="left-box">
-                      <img src="img/poster/poster_3인의기사.jpg" alt="poster">
-                    </div>
-                    <div class="right-box">
-                      <p class="work-name">작품 제목이 들어가는 곳</p>
-                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다 유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다 css 참고
-                      </p>
-                      <div class="user-box">
-                        <img src="img/user_6F6C76.png" alt="user icon">
-                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+          <!-- 포스터 영역 -->
+          <div class="poster-wrap">
+            <div class="poster-box">
+              <ul class="all-posters">
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
                       </div>
-
-                    </div>
-                  </a>
-                </li>
-                <li class="review-card">
-                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
-                  <a href="" class="review">
-                    <!-- 작품 데이터가 들어가야 합니다 -->
-                    <div class="left-box">
-                      <img src="img/poster/poster_3인의기사.jpg" alt="poster">
-                    </div>
-                    <div class="right-box">
-                      <p class="work-name">작품 제목이 들어가는 곳</p>
-                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다
-                      </p>
-                      <div class="user-box">
-                        <img src="img/user_6F6C76.png" alt="user icon">
-                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
                       </div>
-
                     </div>
-                  </a>
-
-                </li>
-                <li class="review-card">
-                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
-                  <a href="" class="review">
-                    <!-- 작품 데이터가 들어가야 합니다 -->
-                    <div class="left-box">
-                      <img src="img/poster/poster_3인의기사.jpg" alt="poster">
-                    </div>
-                    <div class="right-box">
-                      <p class="work-name">작품 제목이 들어가는 곳</p>
-                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다
-                      </p>
-                      <div class="user-box">
-                        <img src="img/user_6F6C76.png" alt="user icon">
-                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                  </li>
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
                       </div>
-
-                    </div>
-                  </a>
-
-                </li>
-                <li class="review-card">
-                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
-                  <a href="" class="review">
-                    <!-- 작품 데이터가 들어가야 합니다 -->
-                    <div class="left-box">
-                      <img src="img/poster/poster_3인의기사.jpg" alt="poster">
-                    </div>
-                    <div class="right-box">
-                      <p class="work-name">작품 제목이 들어가는 곳</p>
-                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다
-                      </p>
-                      <div class="user-box">
-                        <img src="img/user_6F6C76.png" alt="user icon">
-                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
                       </div>
-
                     </div>
-                  </a>
-
-                </li>
-                <li class="review-card">
-                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
-                  <a href="" class="review">
-                    <!-- 작품 데이터가 들어가야 합니다 -->
-                    <div class="left-box">
-                      <img src="img/poster/poster_3인의기사.jpg" alt="poster">
-                    </div>
-                    <div class="right-box">
-                      <p class="work-name">작품 제목이 들어가는 곳</p>
-                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
-                        줄바꿈으로 처리됩니다
-                      </p>
-                      <div class="user-box">
-                        <img src="img/user_6F6C76.png" alt="user icon">
-                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                  </li>
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
                       </div>
-
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
+                      </div>
                     </div>
-                  </a>
-
-                </li>
+                  </li>
               </ul>
             </div>
-
-            <!-- 감상평 남기기 버튼. 로그인이 되어 있지 않을 때에는 로그인 창으로 넘어간다 -->
-            <div class="btn-form-container">
-              <div class="review-input">
-                <div class="review-input-box">
-                  <div class="formBtn-box">
-                    <p class="btn-text">감상평 남기기</p>
-                    <button class="formBtn"><img src="img/pen_6f6c76.png" alt="review icon"> </button>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- 버튼을 누르면 폼이 열린다 이부분 데이터 연결 후에 css 다시 만져야 할듯 -->
-              <form class="review-form open" action="review_insert.php" method="post">
-                <div class="input-box form">
-                  <!-- [1] 작품명 자동검색 입력 -->
-                  <div class="title-search-box">
-                    <label for="work-name" class="skip">작품 이름</label>
-                    <input
-                      type="text"
-                      id="work-name"
-                      name="work_name"
-                      placeholder="작품 이름을 입력하세요"
-                      autocomplete="off"
-                      required
-                    />
-                    <button><img src="img/search_6F6C76.png" alt="search btn"></button>
-                  </div>
-                  <!-- 자동완성 목록 들어가는 곳(나중에 css 잡기)-->
-                    <ul id="search-result" class="search-result"></ul>
-                  <!-- [2] 감상평 입력 -->
-                  <div class="review-text-box">
-                    <label for="review-text" class="skip">감상평</label>
-                    <textarea
-                      id="review-text"
-                      name="review"
-                      placeholder="감상평을 작성하세요"
-                      required
-                    ></textarea>
-                  
-                     <!-- [3] 제출 버튼 -->
-                  <button type="submit" class="submit"><img src="img/pen_6f6c76.png" alt="submit btn"></button>
-                  </div>
-                 <div class="prev-btn-box">
-                  <img class="prev-btn" src="img/prev_6f6c76.png" alt="prev btn">
-                </div>
-                </div>
-                
-              </form>
-              
-            </div>
-
           </div>
         </div>
       </section>
-     </main>
-    <div id="footer"></div>
-    <div id="bottom-nav"></div>
+
+      <!-- 요즘 대세 드라마는? -->
+      <section class="hot-container">
+        <div class="hot-title">
+          <div class="hot-txt-box">
+            <h3 class="hot-txt">요즘 대세 프로그램은?</h3>
+            <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
+          </div>
+          <div class="hot-wrap">
+            <ul class="hot-nav-box">
+              <li class="all-btn active">
+                  <p>All</p>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/netflix.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/watcha.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/wavve.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/TVING.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/disney.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <img src="img/coupang.png" alt="보류"/>
+                  <span class="point"></span>
+              </li>
+              <li class="all-btn">
+                <p>Other
+                </p>
+                <span class="point"></span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 포스터 영역 -->
+          <div class="poster-wrap">
+            <div class="poster-box">
+              <ul class="all-posters">
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
+                      </div>
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
+                      </div>
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="all-poster">
+                    <a href="">
+                      <img src="img/poster/poster_헤어질결심.jpg" alt="hot-product">
+                      <p class="poster-title">작품 제목이 들어갈 공간</p>
+                    </a>
+                    <div class="detail-box">
+                      <div class="date-box">
+                        <p>개봉일</p>
+                        <span class="date-detail">0000.00.00</span>
+                      </div>
+                      <div class="score-contain">
+                          <p class="score">별점</p>
+                          <ul class="score-box">
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                            <li class="score"><img src="img/star_49E99C.png" alt="star"></li>
+                          </ul>
+                      </div>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 무브오너들의 감상평 -->
+        <section class="movein-review">
+          <div class="review-txt-box">
+            <div class="hot-txt-box">
+              <h3 class="hot-txt">무브오너들의 감상평</h3>
+              <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
+            </div>
+
+            <div class="review-container">
+              <!-- 데이터 첨부 필요 -->
+              <div class="review-wrap">
+                <ul class="review-card-box">
+                  <li class="review-card">
+                    <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                    <a href="" class="review">
+                      <!-- 작품 데이터가 들어가야 합니다 -->
+                      <div class="left-box">
+                        <img src="img/poster/poster_3인의기사.jpg" alt="poster">
+                      </div>
+                      <div class="right-box">
+                        <p class="work-name">작품 제목이 들어가는 곳</p>
+                        <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다 유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다 css 참고
+                        </p>
+                        <div class="user-box">
+                          <img src="img/user_6F6C76.png" alt="user icon">
+                          <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                        </div>
+
+                      </div>
+                    </a>
+                  </li>
+                  <li class="review-card">
+                    <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                    <a href="" class="review">
+                      <!-- 작품 데이터가 들어가야 합니다 -->
+                      <div class="left-box">
+                        <img src="img/poster/poster_3인의기사.jpg" alt="poster">
+                      </div>
+                      <div class="right-box">
+                        <p class="work-name">작품 제목이 들어가는 곳</p>
+                        <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다
+                        </p>
+                        <div class="user-box">
+                          <img src="img/user_6F6C76.png" alt="user icon">
+                          <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                        </div>
+
+                      </div>
+                    </a>
+
+                  </li>
+                  <li class="review-card">
+                    <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                    <a href="" class="review">
+                      <!-- 작품 데이터가 들어가야 합니다 -->
+                      <div class="left-box">
+                        <img src="img/poster/poster_3인의기사.jpg" alt="poster">
+                      </div>
+                      <div class="right-box">
+                        <p class="work-name">작품 제목이 들어가는 곳</p>
+                        <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다
+                        </p>
+                        <div class="user-box">
+                          <img src="img/user_6F6C76.png" alt="user icon">
+                          <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                        </div>
+
+                      </div>
+                    </a>
+
+                  </li>
+                  <li class="review-card">
+                    <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                    <a href="" class="review">
+                      <!-- 작품 데이터가 들어가야 합니다 -->
+                      <div class="left-box">
+                        <img src="img/poster/poster_3인의기사.jpg" alt="poster">
+                      </div>
+                      <div class="right-box">
+                        <p class="work-name">작품 제목이 들어가는 곳</p>
+                        <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다
+                        </p>
+                        <div class="user-box">
+                          <img src="img/user_6F6C76.png" alt="user icon">
+                          <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                        </div>
+
+                      </div>
+                    </a>
+
+                  </li>
+                  <li class="review-card">
+                    <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                    <a href="" class="review">
+                      <!-- 작품 데이터가 들어가야 합니다 -->
+                      <div class="left-box">
+                        <img src="img/poster/poster_3인의기사.jpg" alt="poster">
+                      </div>
+                      <div class="right-box">
+                        <p class="work-name">작품 제목이 들어가는 곳</p>
+                        <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                          줄바꿈으로 처리됩니다
+                        </p>
+                        <div class="user-box">
+                          <img src="img/user_6F6C76.png" alt="user icon">
+                          <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                        </div>
+
+                      </div>
+                    </a>
+
+                  </li>
+                </ul>
+              </div>
+
+              <!-- 감상평 남기기 버튼. 로그인이 되어 있지 않을 때에는 로그인 창으로 넘어간다 -->
+              <div class="btn-form-container">
+                <div class="review-input">
+                  <div class="review-input-box">
+                    <div class="formBtn-box">
+                      <p class="btn-text">감상평 남기기</p>
+                      <button class="formBtn"><img src="img/pen_6f6c76.png" alt="review icon"> </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 버튼을 누르면 폼이 열린다 이부분 데이터 연결 후에 css 다시 만져야 할듯 -->
+                <form class="review-form open" action="review_insert.php" method="post">
+                  <div class="input-box form">
+                    <!-- [1] 작품명 자동검색 입력 -->
+                    <div class="title-search-box">
+                      <label for="work-name" class="skip">작품 이름</label>
+                      <input
+                        type="text"
+                        id="work-name"
+                        name="work_name"
+                        placeholder="작품 이름을 입력하세요"
+                        autocomplete="off"
+                        required
+                      />
+                      <button><img src="img/search_6F6C76.png" alt="search btn"></button>
+                    </div>
+                    <!-- 자동완성 목록 들어가는 곳(나중에 css 잡기)-->
+                      <ul id="search-result" class="search-result"></ul>
+                    <!-- [2] 감상평 입력 -->
+                    <div class="review-text-box">
+                      <label for="review-text" class="skip">감상평</label>
+                      <textarea
+                        id="review-text"
+                        name="review"
+                        placeholder="감상평을 작성하세요"
+                        required
+                      ></textarea>
+                    
+                      <!-- [3] 제출 버튼 -->
+                    <button type="submit" class="submit"><img src="img/pen_6f6c76.png" alt="submit btn"></button>
+                    </div>
+                  <div class="prev-btn-box">
+                    <img class="prev-btn" src="img/prev_6f6c76.png" alt="prev btn">
+                  </div>
+                  </div>
+                  
+                </form>
+                
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </main>
+      <div id="footer"></div>
+      <div id="bottom-nav"></div>
 
     <!-- JS -->
      <script src="js/import.js"></script>
-     <script src="js/genre-bubbles_test.js"></script>
+     <script src="js/genre-bubbles_init.js"></script>
+     <script src="js/genre-bubbles_edit.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-
   <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const bubbleApp = window.genreBubbleApp.init('genre-bubble-container');
-    if (!bubbleApp) return;
-
-    // PHP에서 JS로 데이터 전달
-    const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
-    const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
-
-    // 전체 장르 목록
-    const allGenres = [
-      { name: "애니", color: "#FFE4B5" },   // 따뜻하고 부드러운 살구빛 — 활기찬 애니 느낌
-      { name: "드라마", color: "#FFD6A5" }, // 감성적이면서 부드러운 오렌지톤
-      { name: "액션", color: "#A0E7E5" },   // 에너지 넘치는 밝은 청록색
-      { name: "SF", color: "#B5EAD7" },     // 미래적인 민트톤
-      { name: "코미디", color: "#FFFACD" }, // 유쾌하고 밝은 레몬색
-      { name: "판타지", color: "#C7CEEA" }, // 몽환적인 연보라색
-      { name: "스릴러", color: "#FFB6B9" }, // 긴장감 있지만 너무 어둡지 않은 핑크빛 붉은색
-      { name: "로맨스", color: "#FFD1DC" }  // 달콤한 파스텔 핑크
-    ];
-
-
-    if (!isLoggedIn) {
-      // 👤 비로그인: 모두 동일한 크기
-      allGenres.forEach(g => {
-        bubbleApp.createGenreBubble(g.name, g.color, 30);
-      });
-    } else {
-      // 👤 로그인 상태: 선호 장르 순으로 크기 조정
-      const baseSize = 20;
-      const maxSize = 40;
-      const step = 5;
-
-      allGenres.forEach(g => {
-        const idx = favoriteGenres.indexOf(g.name);
-        if (idx !== -1) {
-          // 좋아하는 순서대로 크기 차등 적용
-          const size = maxSize - idx * step;
-          bubbleApp.createGenreBubble(g.name, g.color, size > baseSize ? size : baseSize);
-        } else {
-          // 선호하지 않는 장르는 작게 표시
-          bubbleApp.createGenreBubble(g.name, g.color, baseSize);
-        }
-      });
-    }
-  });
   
-  let resizeTimeout;
-
-  window.addEventListener('resize', () => {
-    // 이전 타이머 취소
-    if (resizeTimeout) clearTimeout(resizeTimeout);
-
-    // 마지막 resize 후 500ms 지나면 실행
-    resizeTimeout = setTimeout(() => {
-      console.log('리사이즈 멈춤, 새로고침 실행');
-      location.reload();
-    }, 500); // 0.5초 동안 멈추면 새로고침
-  });
-
-  window.addEventListener("beforeunload", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-window.addEventListener("load", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    window.scrollTo(0, parseInt(savedY));
-  }
-});
-
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});
-
-window.addEventListener("pagehide", () => {
-  sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-// [2] 페이지 로드 시 스크롤 복원
-window.addEventListener("DOMContentLoaded", () => {
-  const savedY = sessionStorage.getItem("scrollY");
-  if (savedY !== null) {
-    // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
-    setTimeout(() => {
-      window.scrollTo(0, parseInt(savedY));
-    }, 50);
-  }
-});
-
-// [3] 버튼 클릭 시 수동 저장
-document.addEventListener("click", (e) => {
-  const target = e.target.closest("button, input[type='submit']");
-  if (target) {
-    sessionStorage.setItem("scrollY", window.scrollY);
-  }
-});

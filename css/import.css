@@ -4,7 +4,7 @@
   width: 100%;
   padding: 0 5vw;
   height: 70px;
-  background: var(--c-bg);
+  background: var(--c-gray2);
   z-index: 50;
   display: flex;
   justify-content: space-between;
