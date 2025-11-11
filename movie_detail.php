@@ -79,6 +79,36 @@ mysqli_stmt_bind_param($stmt, "i", $movie_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
+// 별점 평균 가져오기
+$query_rating = "
+    SELECT ROUND(IFNULL(AVG(c.rating), 0), 1) AS avg_rating
+    FROM comments c
+    WHERE c.movie_id = ? AND c.is_deleted = 0
+";
+$stmt = mysqli_prepare($connect, $query_rating);
+mysqli_stmt_bind_param($stmt, "i", $movie_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($result);
+$avg_rating = $row['avg_rating'] ?? 0;
+
+// 좋아요 비율
+$query_likes = "
+    SELECT 
+        SUM(CASE WHEN status = 'like' THEN 1 ELSE 0 END) AS like_count,
+        COUNT(*) AS total_count
+    FROM Likes
+    WHERE movie_id = ?
+";
+$stmt2 = mysqli_prepare($connect, $query_likes);
+mysqli_stmt_bind_param($stmt2, "i", $movie_id);
+mysqli_stmt_execute($stmt2);
+$result2 = mysqli_stmt_get_result($stmt2);
+$row2 = mysqli_fetch_assoc($result2);
+
+$like_count = $row2['like_count'] ?? 0;
+$total_count = $row2['total_count'] ?? 0;
+$like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) : 0;
 ?>
 
 
@@ -207,13 +237,14 @@ $result = mysqli_stmt_get_result($stmt);
 										class="a_icon_like"
 										alt="좋아요 아이콘"
 									/>
-									<span class="rating_value">80.2%</span>
+									<span class="rating_value"><?php echo $like_percent; ?>%</span>
 									<img
 										src="img/i_6f6c76.png"
 										class="a_icon_info"
 										alt="정보 아이콘"
 									/>
 								</p>
+
 								<!-- 별점 -->
 								<p class="a_star_rating">
 									<img
@@ -221,7 +252,7 @@ $result = mysqli_stmt_get_result($stmt);
 										class="a_icon_star"
 										alt="별점 아이콘"
 									/>
-									<span class="star_value">4.8</span>
+									<span class="star_value"><?php echo $avg_rating; ?></span>
 								</p>
 							</div>
 						</div>
@@ -682,6 +713,17 @@ $result = mysqli_stmt_get_result($stmt);
 					document.getElementById(target).classList.add("b_active");
 				});
 				});
+			});
+			document.addEventListener("DOMContentLoaded", function () {
+				const movieId = <?php echo (int)$movie_id; ?>;
+
+				fetch(`movie_detail.php?action=get_ratings&movie_id=${movieId}`)
+					.then(response => response.json())
+					.then(data => {
+						document.querySelector(".rating_value").textContent = `${data.like_percent}%`;
+						document.querySelector(".star_value").textContent = data.avg_rating;
+					})
+					.catch(error => console.error("평가 데이터 로드 실패:", error));
 			});
 
 			//  i아이콘 클릭
