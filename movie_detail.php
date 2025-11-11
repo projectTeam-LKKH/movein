@@ -126,7 +126,7 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 <body>
         <?php 
             $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
-            $stillcut_path = sprintf("img/stillcut/st%03d.webp", $movie['id']);
+            $stillcut_path = sprintf("img/stillcut/st%03d_1.webp", $movie['id']);
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
                 $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster">';
             } else {
