@@ -94,7 +94,12 @@ button {
   font-size: var(--fs5);
   color: var(--c-font);
   line-height: 160%;
-  letter-spacing: -0.03rem;
+  letter-spacing: -0.02rem;
+  font-weight: 800;
+}
+
+.user-txt > span {
+  color: var(--c-main);
 }
 
 /* 카테고리 원 박스 */
