@@ -52,13 +52,15 @@
 
 .hamburger.show {
   top: 70px;
-  padding: 0 5vw;
   visibility: visible;
   opacity: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   transform: translateX(0);
+}
+.ham-title-box {
+  padding: 0 5vw;
 }
 
 .ham-title {
@@ -143,4 +145,21 @@
 /* 푸터 */
 .footer {
   width: 100%;
+  text-align: start;
+  background: var(--c-gray);
+  padding: 5vw 5vw;
+  margin-bottom: 0.5rem;
+}
+
+.foot-two-box {
+  display: flex;
+}
+
+.pf-foot p a {
+  display: inline-block;
+}
+.pf-foot p,
+.pf-foot p a {
+  color: var(--c-gray3);
+  font-weight: 700;
 }
