@@ -295,7 +295,7 @@ button {
   color: var(--c-font);
   flex: 0 0 50px;
   height: 50px;
-  border: 2.5px solid var(--c-gray);
+  border: 3px solid var(--c-gray);
   border-radius: 50px;
   object-fit: cover;
 }
@@ -327,22 +327,22 @@ button {
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-top: 10px solid var(--c-gray); /* 삼각형 색상 */
+  border-top: 9px solid var(--c-gray); /* 삼각형 색상 */
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -10px;
+  bottom: -11px;
 }
 
 /* .all-btn에 액티브 붙였을 경우 변화 */
 .all-btn.active {
   color: var(--c-main);
-  border: 2.5px solid var(--c-main);
+  border: 3px solid var(--c-main);
 }
 
 .all-btn.active .point::after {
   content: "";
-  border-top: 10px solid var(--c-main); /* 삼각형 색상 */
+  border-top: 9px solid var(--c-main); /* 삼각형 색상 */
 }
 
 .all-btn.active p {
