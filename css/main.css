@@ -234,14 +234,14 @@ button {
 }
 
 /* 좋아요 버튼 */
-.favorite-thing > button {
+.likeBtn {
   position: absolute;
   z-index: 5;
-  right: 5px;
-  bottom: 5px;
+  right: 6px;
+  bottom: 3px;
 }
 
-.favorite-thing > button > img {
+.likeBtn > img {
   width: 15px;
   height: 15px;
   filter: drop-shadow(var(--shadow50));

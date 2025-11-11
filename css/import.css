@@ -110,7 +110,7 @@
   width: 90%;
   margin: 0 auto;
   padding: 0 8vw;
-  background: rgba(37, 36, 38, 0.8);
+  background: rgba(var(--c-gray-rgb), 0.7);
   backdrop-filter: blur(5px); /* 배경 뒤 블러 */
   -webkit-backdrop-filter: blur(5px); /* 사파리 대응 */
   border-radius: 10px;
