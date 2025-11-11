@@ -103,14 +103,12 @@ SELECT
     c.id AS comment_id,
     c.content,
     c.user_id,
-    u.username,
     c.rating,
     c.created_at,
     m.id AS movie_id,
     m.title
 FROM comments c
 JOIN movies m ON c.movie_id = m.id
-JOIN User u ON c.user_id = u.userid
 WHERE c.is_deleted = 0
 ORDER BY c.created_at DESC
 LIMIT 10
@@ -524,43 +522,115 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
             <!-- 데이터 첨부 필요 -->
              <div class="review-wrap">
               <ul class="review-card-box">
-                <?php if (!empty($reviews)): ?>
-                  <?php foreach ($reviews as $review): ?>
-                    <?php
-                      // 포스터 경로 생성
-                      $poster_path = sprintf("img/poster/pt%03d.webp", $review['movie_id']);
-                      if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
-                        $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster">';
-                      } else {
-                        $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center;">이미지 없음</div>';
-                      }
-                    ?>
-                    <li class="review-card">
-                      <a href="movie_detail.php?id=<?= htmlspecialchars($review['movie_id']) ?>" class="review">
-                        <div class="left-box">
-                          <?= $img_tag ?>
-                        </div>
-                        <div class="right-box">
-                          <p class="work-name"><?= htmlspecialchars($review['title']) ?></p>
-                          <p class="user-review"><?= nl2br(htmlspecialchars($review['content'])) ?></p>
-                          <div class="user-box">
-                            <img src="img/user_6F6C76.png" alt="user icon">
-                            <p class="user-nick"><?= htmlspecialchars($review['username']) ?></p><span>님의 감상</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  <?php endforeach; ?>
-                <?php else: ?>
-                  <li class="review-card no-data">
-                    <p>아직 등록된 감상평이 없습니다.</p>
-                  </li>
-                <?php endif; ?>
+                <li class="review-card">
+                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                  <a href="" class="review">
+                    <!-- 작품 데이터가 들어가야 합니다 -->
+                    <div class="left-box">
+                      <img src="img/poster/pt003.webp" alt="poster">
+                    </div>
+                    <div class="right-box">
+                      <p class="work-name">작품 제목이 들어가는 곳</p>
+                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다 유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다 css 참고
+                      </p>
+                      <div class="user-box">
+                        <img src="img/user_6F6C76.png" alt="user icon">
+                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      </div>
+
+                    </div>
+                  </a>
+                </li>
+                <li class="review-card">
+                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                  <a href="" class="review">
+                    <!-- 작품 데이터가 들어가야 합니다 -->
+                    <div class="left-box">
+                      <img src="img/poster/pt003.webp" alt="poster">
+                    </div>
+                    <div class="right-box">
+                      <p class="work-name">작품 제목이 들어가는 곳</p>
+                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다
+                      </p>
+                      <div class="user-box">
+                        <img src="img/user_6F6C76.png" alt="user icon">
+                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      </div>
+
+                    </div>
+                  </a>
+
+                </li>
+                <li class="review-card">
+                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                  <a href="" class="review">
+                    <!-- 작품 데이터가 들어가야 합니다 -->
+                    <div class="left-box">
+                      <img src="img/poster/pt003.webp" alt="poster">
+                    </div>
+                    <div class="right-box">
+                      <p class="work-name">작품 제목이 들어가는 곳</p>
+                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다
+                      </p>
+                      <div class="user-box">
+                        <img src="img/user_6F6C76.png" alt="user icon">
+                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      </div>
+
+                    </div>
+                  </a>
+
+                </li>
+                <li class="review-card">
+                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                  <a href="" class="review">
+                    <!-- 작품 데이터가 들어가야 합니다 -->
+                    <div class="left-box">
+                      <img src="img/poster/pt003.webp" alt="poster">
+                    </div>
+                    <div class="right-box">
+                      <p class="work-name">작품 제목이 들어가는 곳</p>
+                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다
+                      </p>
+                      <div class="user-box">
+                        <img src="img/user_6F6C76.png" alt="user icon">
+                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      </div>
+
+                    </div>
+                  </a>
+
+                </li>
+                <li class="review-card">
+                  <!-- 리뷰피드로 연결되는 a묶음 (구현 미정) -->
+                  <a href="" class="review">
+                    <!-- 작품 데이터가 들어가야 합니다 -->
+                    <div class="left-box">
+                      <img src="img/poster/pt003.webp" alt="poster">
+                    </div>
+                    <div class="right-box">
+                      <p class="work-name">작품 제목이 들어가는 곳</p>
+                      <p class="user-review">유저들의 리뷰가 들어가야 하는 곳으로 두줄까지 출력되며 두 줄 이상은
+                        줄바꿈으로 처리됩니다
+                      </p>
+                      <div class="user-box">
+                        <img src="img/user_6F6C76.png" alt="user icon">
+                        <p class="user-nick">한글 아이디</p><span>님의 감상</span>
+                      </div>
+
+                    </div>
+                  </a>
+
+                </li>
               </ul>
             </div>
 
             <!-- 감상평 남기기 버튼. 로그인이 되어 있지 않을 때에는 로그인 창으로 넘어간다 -->
-          <?php if ($nickname): ?>
             <div class="btn-form-container">
               <div class="review-input">
                 <div class="review-input-box">
@@ -572,9 +642,9 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
               </div>
               
               <!-- 버튼을 누르면 폼이 열린다 이부분 데이터 연결 후에 css 다시 만져야 할듯 -->
-              <form class="review-form" id="reviewForm" action="login/review_insert.php" method="post">
-                <div class="input-box form" >
-                  <!-- 작품 검색 -->
+              <form class="review-form" action="review_insert.php" method="post">
+                <div class="input-box form">
+                  <!-- [1] 작품명 자동검색 입력 -->
                   <div class="title-search-box">
                     <label for="work-name" class="skip">작품 이름</label>
                     <input
@@ -585,13 +655,11 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                       autocomplete="off"
                       required
                     />
-                    <input type="hidden" id="movie_id" name="movie_id" value="">
-                    <button type="button"><img src="img/search_6F6C76.png" alt="search btn"></button>
+                    <button><img src="img/search_6F6C76.png" alt="search btn"></button>
                   </div>
-
-                  <ul id="search-result" class="search-result"></ul>
-
-                  <!-- 감상평 입력 -->
+                  <!-- 자동완성 목록 들어가는 곳(나중에 css 잡기)-->
+                    <ul id="search-result" class="search-result"></ul>
+                  <!-- [2] 감상평 입력 -->
                   <div class="review-text-box">
                     <label for="review-text" class="skip">감상평</label>
                     <textarea
@@ -600,58 +668,24 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                       placeholder="감상평을 작성하세요"
                       required
                     ></textarea>
-
-                    <button type="submit" class="submit"><img src="img/pen_6f6c76.png" alt="submit btn"></button>
+                  
+                     <!-- [3] 제출 버튼 -->
+                  <button type="submit" class="submit"><img src="img/pen_6f6c76.png" alt="submit btn"></button>
                   </div>
+                 
                 </div>
                 <div class="prev-btn-box">
                   <img class="prev-btn" src="img/prev_6f6c76.png" alt="prev btn">
                 </div>
               </form>
             </div>
-           <?php else: ?>
-              <div class="review-input1">
-                <div class="review-input-box">
-                  <div class="formBtn-box">
-                    <a href="login/login.php" class="formBtn-link">
-                      <p class="btn-text">로그인 후 감상평 남기기</p>
-                    </a>
-                  </div>
-                </div>
-              </div>
 
-          <?php endif; ?>
           </div>
         </div>
       </section>
      </main>
 
-     <div id="footer">
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-     </div>
+     <div id="footer"></div>
     <div id="bottom-nav"></div>
 
     <!-- JS -->
@@ -750,10 +784,10 @@ function showComingSoon() {
     if (resizeTimeout) clearTimeout(resizeTimeout);
 
     // 마지막 resize 후 500ms 지나면 실행
-    // resizeTimeout = setTimeout(() => {
-    //   console.log('리사이즈 멈춤, 새로고침 실행');
-    //   location.reload();
-    // }, 500); // 0.5초 동안 멈추면 새로고침
+    resizeTimeout = setTimeout(() => {
+      console.log('리사이즈 멈춤, 새로고침 실행');
+      location.reload();
+    }, 500); // 0.5초 동안 멈추면 새로고침
   });
 
   window.addEventListener("beforeunload", () => {
@@ -778,16 +812,16 @@ window.addEventListener("pagehide", () => {
   sessionStorage.setItem("scrollY", window.scrollY);
 });
 
-// // [2] 페이지 로드 시 스크롤 복원
-// window.addEventListener("DOMContentLoaded", () => {
-//   const savedY = sessionStorage.getItem("scrollY");
-//   if (savedY !== null) {
-//     // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
-//     setTimeout(() => {
-//       window.scrollTo(0, parseInt(savedY));
-//     }, 50);
-//   }
-// });
+// [2] 페이지 로드 시 스크롤 복원
+window.addEventListener("DOMContentLoaded", () => {
+  const savedY = sessionStorage.getItem("scrollY");
+  if (savedY !== null) {
+    // DOM 렌더링 후 잠시 기다렸다가 복원 (모바일 안정화용)
+    setTimeout(() => {
+      window.scrollTo(0, parseInt(savedY));
+    }, 50);
+  }
+});
 
 // [3] 버튼 클릭 시 수동 저장
 document.addEventListener("click", (e) => {
@@ -796,109 +830,6 @@ document.addEventListener("click", (e) => {
     sessionStorage.setItem("scrollY", window.scrollY);
   }
 });
-
-// 감상평 열고 닫기
-// document.addEventListener("DOMContentLoaded", () => {
-//   const btn = document.querySelector(".formBtn");
-//   const form = document.querySelector(".review-form");
-//   const prevBtn = document.querySelector(".prev-btn");
-
-//   if (btn && form) {
-//     btn.addEventListener("click", (e) => {
-//       e.preventDefault();
-//       form.classList.toggle("open");
-//     });
-//   }
-
-//   if (prevBtn) {
-//     prevBtn.addEventListener("click", (e) => {
-//       e.preventDefault();
-//       form.classList.remove("open");
-//     });
-//   }
-// });
-
-const reviewBtn1 = document.querySelector(".review-input");
-const reviewForm1 = document.querySelector(".review-form");
-
-// reviewForm1.style.display = "none";
-
-reviewBtn1.addEventListener("click", (e) => {
-  e.preventDefault();
-  reviewForm1.style.display =
-    // reviewForm1.style.display === "none" ? "block" : "none";
-    reviewForm1.classList.toggle("open");
-});
-
-// 감상평 입력
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("work-name");
-  const resultBox = document.getElementById("search-result");
-  const movieIdInput = document.getElementById("movie_id");
-
-  // 입력 시 자동검색
-  input.addEventListener("input", async () => {
-    const query = input.value.trim();
-    resultBox.innerHTML = "";
-    movieIdInput.value = "";
-
-    if (query.length < 1) return;
-
-    const res = await fetch("login/search_movie.php?q=" + encodeURIComponent(query));
-    const data = await res.json();
-
-    if (data.length === 0) {
-      resultBox.innerHTML = "<li>검색 결과 없음</li>";
-      return;
-    }
-    const rect = input.getBoundingClientRect();
-      resultBox.style.top = rect.bottom + "px";
-      resultBox.style.left = rect.left + "px";
-      resultBox.style.width = rect.width + "px";
-
-    data.forEach(movie => {
-      const li = document.createElement("li");
-      li.textContent = movie.title;
-      li.dataset.id = movie.id;
-      li.addEventListener("click", () => {
-        input.value = movie.title;
-        movieIdInput.value = movie.id;
-        resultBox.innerHTML = "";
-      });
-      resultBox.appendChild(li);
-    });
-  });
-
-  // 제출 시 유효성 검사
-  const form = document.getElementById("reviewForm");
-  form.addEventListener("submit", async (e) => {
-    if (!movieIdInput.value) {
-      alert("영화를 선택해주세요.");
-      e.preventDefault();
-      return;
-    }
-
-    // 기존 리뷰 존재 여부 체크
-    const checkRes = await fetch("login/review_insert.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        action: "check",
-        movie_id: movieIdInput.value
-      })
-    });
-
-    const result = await checkRes.json();
-    if (result.exists) {
-      const confirmOverwrite = confirm("이미 작성한 리뷰가 있습니다. 덮어쓰겠습니까?");
-      if (!confirmOverwrite) {
-        e.preventDefault();
-        return;
-      }
-    }
-  });
-});
-
 </script>
   </body>
 </html>

@@ -144,8 +144,8 @@ $result = mysqli_stmt_get_result($stmt);
 					<div class="a_top_nav">
 						<!-- 왼쪽 아이콘 -->
 						<div class="a_top_nav_left">
-							<button type="button" class="a_icon_button" onclick="history.back();">
-								<img src="img/prev_f5f5f5.png" alt="뒤로가기" />
+							<button type="button" class="a_icon_button">
+								<a href="index.php"><img src="img/prev_f5f5f5.png" alt="뒤로가기" /></a>
 							</button>
 						</div>
 
@@ -340,7 +340,7 @@ $result = mysqli_stmt_get_result($stmt);
 					</p>
 
 					<!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
-					<div class="iicon_popup" id="iicon_popup" style="display:none;">
+					<div class="iicon_popup" id="iicon_popup">
 						<p>
 						무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
 						부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
@@ -360,10 +360,11 @@ $result = mysqli_stmt_get_result($stmt);
 					</div>
 
 					<!-- 텍스트 입력 -->
-					<textarea
+					<a href="login/login.php"><textarea
 						class="review_input"
 						placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
-					></textarea>
+					></textarea></a>
+					
 
 					<!-- 등록 버튼 -->
 					<button type="button" class="register_btn">
@@ -376,7 +377,7 @@ $result = mysqli_stmt_get_result($stmt);
 					<p>
 						<strong
 						>이 작품을 보신 적이 있으세요?
-						<img src="img/i_6f6c76.png" alt="i_icon"
+						<img src="img/i_6f6c76.png" alt="i_icon" id="i_icon"
 						/></strong>
 					</p>
 
@@ -403,13 +404,14 @@ $result = mysqli_stmt_get_result($stmt);
 					<!-- 텍스트 입력 -->
 					<textarea
 						class="review_input"
-						placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+						placeholder="지금 바로 로그인 하고 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+						disabled
 					></textarea>
 
 					<!-- 등록 버튼 -->
-					<button type="button" class="register_btn">
+					<!-- <button type="button" class="register_btn">
 						등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
-					</button>
+					</button> -->
 					</div>
 				<?php endif; ?>
 
@@ -681,6 +683,24 @@ $result = mysqli_stmt_get_result($stmt);
 				});
 				});
 			});
+
+			//  i아이콘 클릭
+			document.addEventListener("DOMContentLoaded", function() {
+			const infoIcon = document.getElementById("i_icon");
+			const popup = document.getElementById("iicon_popup");
+
+			if (infoIcon && popup) {
+				infoIcon.addEventListener("click", function (event) {
+				event.stopPropagation(); // 다른 이벤트에 영향 주지 않도록
+				popup.classList.add("active");
+				});
+
+				popup.addEventListener("click", function () {
+				popup.classList.remove("active");
+				});
+			}
+			});
+
 
 			// 좋아요 싫어요 여부 서버 저장
 			document.addEventListener("DOMContentLoaded", function() {

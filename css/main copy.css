@@ -9,6 +9,8 @@
 body,
 html {
   overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
   font-family: var(--font-main);
   font-size: var(--fs2);
   background: var(--c-bg);
@@ -24,7 +26,7 @@ p {
   text-decoration: none;
   color: var(--c-font);
   line-height: 1.6;
-  letter-spacing: -0.05rem;
+  letter-spacing: -0.02rem;
 }
 
 button {
@@ -35,13 +37,100 @@ button {
   width: 100%;
 }
 
+#header {
+  width: 90%;
+  height: 60px;
+  z-index: 50;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header a img {
+  height: 18px;
+}
+
+#header a img.hide {
+  display: none;
+}
+
+.header-icon {
+  display: flex;
+  height: 18px;
+  gap: 14px;
+}
+
+/* ============= 햄버거 ============= */
+
+.modal-bg.active {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background: var(--c-);
+}
+.hamburger {
+  z-index: 20;
+  position: fixed;
+  visibility: hidden;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  margin-bottom: 150px;
+  color: var(--c-font);
+  height: calc(100dvh - 60px);
+}
+
+.hamburger.show {
+  top: 60px;
+  visibility: visible;
+  opacity: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  transform: translateX(0);
+}
+
+.ham-title {
+  margin-bottom: 3rem;
+}
+
+.ham-title > span {
+  font-weight: 800;
+  font-size: var(--fs4);
+  display: block;
+  margin-bottom: 1rem;
+}
+.ham-sub-box {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: var(--fs3);
+}
+.ham-sub-box li {
+  display: inline-flex;
+  height: 35px;
+  line-height: 40px;
+  padding: 0 1.5rem;
+  align-items: center;
+  border-radius: 50px;
+  background: var(--c-gray);
+  transition: all 0.3s ease-in;
+}
+
+.ham-sub-box li.active {
+  background: var(--c-main);
+  color: var(--c-bg);
+  font-weight: 800;
+}
+
 /* ============= 검색창 ============= */
 .search-f {
   width: 90%;
   margin: 0 auto;
   position: relative;
-  top: 70px;
-  height: 40px;
+  height: 35px;
   border-radius: 50px;
   background: var(--c-gray);
   display: flex;
@@ -62,8 +151,8 @@ button {
 
 .search-f button {
   background: var(--c-gray2);
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,14 +176,13 @@ button {
 /* 닉네임 활성화 칸 */
 .user-txt-box {
   width: 90%;
-  margin: 70px auto 0 auto;
+  margin: 0 auto;
 }
 .user-txt {
   padding: 2rem 0rem;
   font-size: var(--fs5);
   color: var(--c-font);
   line-height: 160%;
-  letter-spacing: -0.03rem;
 }
 
 /* 카테고리 원 박스 */
@@ -102,7 +190,7 @@ button {
   width: 90%;
   margin: 0 auto;
   overflow: hidden;
-  aspect-ratio: 1.06 / 1;
+  height: 320px;
   background: var(--gr-li-gray);
   border-radius: 20px;
 }
@@ -152,6 +240,8 @@ button {
 /* 사용자 데이터 기반 장르 추천 */
 .favorite {
   width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .favorite-txt-box {
@@ -161,66 +251,42 @@ button {
 
 .favorite-txt .input {
   color: var(--c-main);
-  letter-spacing: -0.015rem;
-}
-
-.favorite-txt span {
-  letter-spacing: -0.015rem;
-}
-
-.favorite-gutter {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.favorite-list {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  display: flex;
-}
-
-.favorite-list::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
 }
 
 .favorite-list-box {
-  display: flex;
   padding: 0 5vw;
-  gap: 16px;
-  height: 75px;
-  flex-wrap: nowrap;
-  width: max-content;
-}
-
-.favorite-list-box::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .favorite-thing {
   cursor: pointer;
   position: relative;
-  width: 100%;
-  flex: 0 0 var(--card-w);
-  aspect-ratio: 1 / 1;
 }
 
-.favorite-thing-one > img {
-  display: block;
+.favorite-thing a {
+  display: inline-block;
+  width: 65px;
+  height: 65px;
+}
+
+.favorite-thing a img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-size: contain;
   border-radius: 10px;
   z-index: 1;
 }
 
-.favorite-thing .blankbtn {
-  border: 2px solid var(--c-gray);
+.favorite-thing a:last-child {
+  border: 1px solid var(--c-gray);
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75px;
 }
 
 .favorite-thing:last-child > a > img {
@@ -260,7 +326,6 @@ button {
   align-items: center;
   margin-bottom: 1.5rem;
   font-weight: 900;
-  letter-spacing: -0.05rem;
 }
 
 .hot-txt-box > img {
@@ -285,7 +350,7 @@ button {
 .hot-nav-box {
   width: 100%;
   padding: 0 5vw;
-  height: 60px;
+  height: 50px;
   display: flex;
   gap: 10px;
 }
@@ -293,8 +358,8 @@ button {
 .all-btn {
   position: relative;
   color: var(--c-font);
-  flex: 0 0 50px;
-  height: 50px;
+  flex: 0 0 40px;
+  height: 40px;
   border: 2.5px solid var(--c-gray);
   border-radius: 50px;
   object-fit: cover;
@@ -325,13 +390,13 @@ button {
   display: block;
   width: 0;
   height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 10px solid var(--c-gray); /* 삼각형 색상 */
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--c-gray); /* 삼각형 색상 */
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -10px;
+  bottom: -8px;
 }
 
 /* .all-btn에 액티브 붙였을 경우 변화 */
@@ -342,12 +407,11 @@ button {
 
 .all-btn.active .point::after {
   content: "";
-  border-top: 10px solid var(--c-main); /* 삼각형 색상 */
+  border-top: 7px solid var(--c-main); /* 삼각형 색상 */
 }
 
 .all-btn.active p {
   color: var(--c-main);
-  font-weight: 800;
 }
 
 /* 포스터 들어갈 영역 */
@@ -366,6 +430,7 @@ button {
 
 .all-posters {
   display: flex;
+
   gap: 16px;
   width: 172px;
 }
@@ -394,7 +459,6 @@ button {
 
 .date-box span {
   font-weight: 300;
-  letter-spacing: 0rem;
 }
 
 .score-contain {
@@ -472,7 +536,6 @@ button {
   text-overflow: ellipsis;
   color: var(--c-font);
   font-weight: 700;
-  letter-spacing: 0rem;
 }
 
 .user-box {
@@ -502,7 +565,6 @@ button {
   width: 90%;
   margin: 5vw auto;
 }
-
 .review-input-box {
   display: flex;
   justify-content: center;
@@ -532,29 +594,16 @@ button {
 /* 버튼 클릭시 열리는 창 */
 .btn-form-container {
   position: relative;
-  z-index: 0;
 }
-
 .review-form {
-  visibility: hidden;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-height: 0;
   border-radius: 10px;
   background: var(--c-gray);
-  height: max-content;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
-  overflow: hidden;
-}
-
-.review-form.open {
-  visibility: visible;
-  max-height: 125px;
-  z-index: 1;
-  display:block;
+  height: 120px;
 }
 
 .input-box.form {
@@ -599,12 +648,10 @@ button {
   width: 100%;
   display: flex;
 }
-.review-text-box textarea {
-  resize: none;
-}
+
 #review-text {
   width: 100%;
-
+  height: 60px;
   background: var(--c-gray);
   border: none;
   color: var(--c-font);
@@ -634,49 +681,14 @@ button {
 }
 
 .prev-btn-box {
-  margin: 1rem 0 1rem 0;
+  margin-top: 2rem;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .prev-btn {
-  pointer-events: auto;
   width: 15px;
   height: 15px;
   transform: rotate(90deg);
-  cursor: pointer;
-  z-index: 5;
-}
-
-.movein-review {
-  margin-bottom: 11rem;
-}
-
-/* 자동완성 결과 리스트 */
-#search-result {
-  position: absolute; /* absolute -> fixed */
-  top:35px;
-  left: 0%;        /* input 위치 맞춤 */
-  width: 90%;      /* input 폭 맞춤 */
-  max-height: 400px;
-  overflow-y: auto;
-  background: var(--c-gray);
-  color: var(--c-font);
-  border-radius: 8px;
-  padding: 5px 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  -webkit-overflow-scrolling: touch;
-}
-
-#search-result li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  color: var(--c-font); /* 글씨 색 다크모드용 */
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-#search-result li:hover {
-  background: rgba(255,255,255,0.1); /* 호버 효과 */
 }

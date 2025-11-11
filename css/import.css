@@ -1,0 +1,142 @@
+/* 헤더 */
+#header {
+  position: fixed;
+  width: 100%;
+  padding: 0 5vw;
+  height: 70px;
+  background: var(--c-bg);
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header a img {
+  display: flex;
+  height: 18px;
+}
+
+#header a img.hide {
+  display: none;
+}
+
+.header-icon {
+  display: flex;
+  height: 18px;
+  gap: 14px;
+}
+
+/* ============= 햄버거 ============= */
+.modal-bg.active {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background: var(--c-bg);
+}
+.hamburger {
+  z-index: 20;
+  position: fixed;
+  visibility: hidden;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  margin-bottom: 150px;
+  background: var(--c-bg);
+  color: var(--c-font);
+  height: calc(100dvh - 60px);
+}
+
+.hamburger.show {
+  top: 60px;
+  visibility: visible;
+  opacity: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  transform: translateX(0);
+}
+
+.ham-title {
+  margin-bottom: 3rem;
+}
+
+.ham-title > span {
+  font-weight: 800;
+  font-size: var(--fs4);
+  display: block;
+  margin-bottom: 1rem;
+}
+.ham-sub-box {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: var(--fs3);
+}
+.ham-sub-box li {
+  display: inline-flex;
+  height: 35px;
+  line-height: 40px;
+  padding: 0 1.5rem;
+  align-items: center;
+  border-radius: 50px;
+  background: var(--c-gray);
+  transition: all 0.3s ease-in;
+}
+
+.ham-sub-box li.active {
+  background: var(--c-main);
+  color: var(--c-bg);
+  font-weight: 800;
+}
+
+/* ============= 바텀 네비 ============= */
+.bottom-nav {
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bot-nav-box {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 8vw;
+  background: rgba(37, 36, 38, 0.8);
+  backdrop-filter: blur(5px); /* 배경 뒤 블러 */
+  -webkit-backdrop-filter: blur(5px); /* 사파리 대응 */
+  border-radius: 10px;
+}
+.bot-nav-icons {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 50px;
+}
+.bot-nav-icon img {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.bot-nav-icon {
+  position: relative;
+}
+.bot-nav-icon.active::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  top: -13px;
+  background: var(--c-font);
+}
+
+/* 푸터 */
+.footer {
+  width: 100%;
+}
