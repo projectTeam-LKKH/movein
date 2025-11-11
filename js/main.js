@@ -1,28 +1,3 @@
-// 햄버거바 터치 이벤트
-document.addEventListener("DOMContentLoaded", () => {
-  const hamBtn = document.querySelector(".hambtn");
-  const hamMenu = document.querySelector("nav.hamburger");
-  const locked = document.body;
-  const logoImg = document.querySelector("#header a img");
-  const modal = document.querySelector(".modal-bg");
-
-  hamBtn.addEventListener("click", () => {
-    hamMenu.classList.toggle("show");
-
-    if (hamMenu.classList.contains("show")) {
-      //만약 햄메뉴가 보이면
-      modal.classList.add("active");
-      locked.classList.add("lock");
-      logoImg.classList.add("hide");
-    } else {
-      //햄메뉴가 안보이면
-      modal.classList.remove("active");
-      locked.classList.remove("lock");
-      logoImg.classList.remove("hide");
-    }
-  });
-});
-
 //헤더 내부 버튼 클릭 이벤트
 document.addEventListener("DOMContentLoaded", () => {
   const subMenus = document.querySelectorAll(".ham-sub-box li");
