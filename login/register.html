@@ -93,7 +93,7 @@
 
         <!-- STEP 3 -->
         <div id="step3" class="step">
-          <label style="color: #ccc">좋아하는 장르</label>
+          <label style="color: var(--c--font)">좋아하는 장르</label>
           <div id="genres" class="toggle-section">
             <span class="toggle-btn" onclick="toggleSelection(this)">애니</span>
             <span class="toggle-btn" onclick="toggleSelection(this)"
@@ -115,7 +115,7 @@
             >
           </div>
 
-          <label style="color: #ccc">주로 사용하는 OTT</label>
+          <label style="color: var(--c-font)">주로 사용하는 OTT</label>
           <div id="ott" class="toggle-section">
             <span class="toggle-btn" onclick="toggleSelection(this)"
               >넷플릭스</span
@@ -134,7 +134,7 @@
             <span class="toggle-btn" onclick="toggleSelection(this)">기타</span>
           </div>
 
-          <label style="color: #ccc">선호 콘텐츠 지역</label>
+          <label style="color: var(--c--font)">선호 콘텐츠 지역</label>
           <div id="region" class="toggle-section">
             <span class="toggle-btn" onclick="toggleSelection(this)">독일</span>
             <span class="toggle-btn" onclick="toggleSelection(this)">대만</span>
@@ -259,12 +259,16 @@
 
         // 단계별 문구 변경
         if (step === 1) {
+          header.classList.remove("up"); // ← 3‧4단계용 클래스 제거
           header.innerHTML = `<span class="highlight">무브오너</span>가 되어<br>나만의 취향을 확장해 보세요.`;
         } else if (step === 2) {
+          header.classList.remove("up");
           header.innerHTML = `<span class="highlight">무브인</span> 계정을 만들고<br>새로운 탐험을 시작하세요.`;
         } else if (step === 3) {
+          header.classList.add("up");
           header.innerHTML = `<span class="highlight">당신의 취향</span>을 알고 싶어요<br>장르, 플랫폼 등을 선택해주세요.`;
         } else if (step === 4) {
+          header.classList.add("up");
           header.innerHTML = `회원가입이 완료되었습니다.<br><span class="highlight">무브인</span>에 오신것을 환영합니다.`;
         }
       }

@@ -1,6 +1,4 @@
-/* ===== 공통: 여러 파일에서 공유 ===== */
-
-/* (선택) 전역 베이스 — 네 파일 모두 동일했음 */
+/* ===== 공통 css 스타일 여러 파일(php)에서 공유 ===== */
 html,
 body {
   margin: 0;
@@ -12,6 +10,10 @@ body {
   font-family: var(--font-main);
 }
 
+input:focus {
+  outline: 1px solid var(--c-main);
+}
+
 /* 레이아웃 공통 */
 .container {
   position: relative;
@@ -19,90 +21,81 @@ body {
   height: 100%;
   color: var(--c-font);
 }
-
 /* 상단 문구 공통 속성(위치값 top은 페이지별 override) */
 .header-text {
-  position: absolute;
-  left: 10%;
-  width: 80%;
+  width: 90%;
+  margin: 30% auto 3rem auto;
   text-align: left;
-  font-size: var(--fs6);
+  font-size: var(--fs5);
+  font-weight: 700;
   line-height: 1.5;
+}
+/* 로그인 단계 3, 4단계 전용 */
+/* 추후 테스트 할때 다시 확인해야 합니다=========2025.11.12 */
+.header-text.up {
+  margin: 20% auto 3rem auto; /* 위로 약간 올림 */
 }
 .header-text .highlight {
   color: var(--c-main);
+  font-weight: 800;
 }
 
 /* 하단 링크(로그인/아이디찾기/비번재설정에서 공통) */
 .bottom-links {
+  width: 100%;
   margin-top: 15px;
   display: flex;
   justify-content: center;
-  gap: 50px;
+  align-items: center;
+  gap: 30px;
 }
 .bottom-links a {
   text-decoration: none;
-  font-size: var(--fs3);
+  font-size: var(--fs2);
 }
 .bottom-links a.register {
   color: var(--c-main);
+  font-weight: 800;
 }
 .bottom-links a:not(.register) {
-  color: #aaa;
+  color: var(--c-gray3);
 }
 
-/* 로그인 페이지 전용 */
-/* 헤더 위치 */
-.header-text {
-  top: 200px;
-}
-
-/* 로그인 폼 login.php*/
+/* 로그인 폼 login.php =======================*/
 .login-form {
-  position: absolute;
-  top: 350px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 .login-form input {
-  padding: 15px;
   border: none;
   border-radius: 10px;
-  background-color: #333;
-  color: #ccc; /* 조금 더 어두운 글씨색 */
-  font-size: var(--fs4);
+  background: var(--c-gray);
+  color: var(--c-font); /* 조금 더 어두운 글씨색 */
+  font-size: var(--fs3);
 }
 .login-form input::placeholder {
-  color: #888;
+  color: var(--c-gray2);
 }
 .login-form button {
-  padding: 15px;
+  padding: 16px;
   border: none;
   border-radius: 10px;
   background-color: var(--c-main);
-  color: #fff;
-  font-size: var(--fs4);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 600;
   cursor: pointer;
   width: 100%; /* 입력창과 동일 길이 */
 }
 
-/* 아이디 찾기 전용 find_id.php*/
-/* 헤더 위치 */
-.header-text {
-  top: 200px;
-}
-
+/* 아이디 찾기 전용 find_id.php=======================*/
 /* 찾기 폼 */
 .findid-form {
-  position: absolute;
-  top: 350px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -111,39 +104,30 @@ body {
   padding: 15px;
   border: none;
   border-radius: 10px;
-  background-color: #333;
-  color: #ccc; /* 약간 어두운 글씨색 */
-  font-size: var(--fs4);
+  background: var(--c-gray);
+  color: var(--c-font); /* 약간 어두운 글씨색 */
+  font-size: var(--fs3);
 }
 .findid-form input::placeholder {
-  color: #888;
+  color: var(--c-gray2);
 }
 .findid-form button {
-  padding: 15px;
+  padding: 16px;
   border: none;
   border-radius: 10px;
   background-color: var(--c-main);
-  color: #fff;
-  font-size: var(--fs4);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 600;
   cursor: pointer;
-  width: 100%; /* 입력창과 동일 */
+  width: 100%; /* 입력창과 동일 길이 */
 }
 
-/* 회원가입 전용 register.php*/
-
-/* 헤더 위치 및 전환 */
-.header-text {
-  top: 50px;
-  transition: opacity 0.3s ease;
-}
-
+/* 회원가입 전용 register.php=======================*/
 /* 폼 위치 */
 .register-form {
-  position: absolute;
-  top: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -154,19 +138,20 @@ input {
   padding: 15px;
   border: none;
   border-radius: 10px;
-  background-color: #333;
-  color: #ccc;
+  background: var(--c-gray);
+  color: var(--c-font);
   font-size: var(--fs3);
   width: 100%;
   box-sizing: border-box;
 }
 input::placeholder {
-  color: #888;
+  color: var(--c-gray2);
 }
 
 #smallText {
-  color: #888;
+  color: var(--c-gray2);
   font-size: var(--fs2);
+  margin-left: 1rem;
 }
 
 .input-group {
@@ -179,22 +164,23 @@ input::placeholder {
 }
 
 .check-btn {
-  background-color: #555;
-  color: #000;
+  background-color: var(--c-gray2);
+  color: var(--c-gray);
   border: none;
   border-radius: 8px;
-  padding: 12px 15px;
-  font-size: var(--fs3);
+  padding: 15px 15px;
+  font-size: var(--fs2);
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
 }
 
 button.next-btn {
   align-self: flex-end;
-  background-color: black;
-  color: gray;
+  background: var(--c-bg);
+  color: var(--c-gray2);
   border: none;
-  font-size: var(--fs4);
+  font-size: var(--fs3);
   cursor: pointer;
   margin-top: 15px;
 }
@@ -218,27 +204,28 @@ button.next-btn {
 .toggle-btn {
   display: inline-block;
   padding: 10px 15px;
-  border: 1px solid #666;
-  border-radius: 10px;
+  border: 1px solid var(--c-gray2);
+  border-radius: 50px;
   cursor: pointer;
-  color: #ccc;
+  color: var(--c-gray3);
   font-size: var(--fs3);
   transition: all 0.2s;
 }
 .toggle-btn.selected {
-  background-color: var(--c-main);
-  color: #fff;
-  border-color: var(--c-main);
+  background-color: var(--c-main2);
+  color: var(--c-main);
+  font-weight: 800;
+  border: 1px solid var(--c-main);
 }
 
 /* 제출 버튼 */
 .submit-btn {
   background-color: var(--c-main);
-  color: #fff;
+  color: var(--c-font);
   border: none;
   border-radius: 10px;
   padding: 15px;
-  font-size: var(--fs4);
+  font-size: var(--fs3);
   cursor: pointer;
   width: 100%;
   margin-top: 10px;
@@ -255,7 +242,7 @@ button.next-btn {
   gap: 30px;
 }
 .complete-img {
-  width: 180px;
+  width: 200px;
   height: auto;
 }
 
@@ -263,39 +250,33 @@ button.next-btn {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 80%;
+  width: 90%;
   max-width: 300px;
 }
 .button-group button {
   padding: 15px;
   border: none;
   border-radius: 10px;
-  font-size: var(--fs4);
+  font-size: var(--fs3);
   cursor: pointer;
   width: 100%;
 }
 .login-btn {
   background-color: var(--c-main);
-  color: #fff;
+  color: var(--c-font);
 }
 .home-btn {
-  background-color: #333;
-  color: #ccc;
+  background-color: var(--c-gray);
+  color: var(--c-gray3);
 }
 
-/* 비밀번호 재설정 전용  reset_password.php*/
+/* 비밀번호 재설정 전용  reset_password.php=======================*/
 /* 헤더 위치 */
-.header-text {
-  top: 200px;
-}
 
 /* 재설정 폼 */
 .reset-form {
-  position: absolute;
-  top: 350px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -304,20 +285,21 @@ button.next-btn {
   padding: 15px;
   border: none;
   border-radius: 10px;
-  background-color: #333;
-  color: #ccc; /* 조금 어두운 글씨색 */
-  font-size: var(--fs4);
+  background: var(--c-gray);
+  color: var(--c-font); /* 조금 어두운 글씨색 */
+  font-size: var(--fs3);
 }
 .reset-form input::placeholder {
-  color: #888;
+  color: var(--c-gray2);
 }
 .reset-form button {
   padding: 15px;
   border: none;
   border-radius: 10px;
   background-color: var(--c-main);
-  color: #fff;
-  font-size: var(--fs4);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 500;
   cursor: pointer;
   width: 100%; /* 입력창과 동일한 길이 */
 }
