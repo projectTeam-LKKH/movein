@@ -532,6 +532,109 @@ html {
 	bottom: 30px;
 }
 
+/* 밸런스 게임 선택지 결과 */
+.a_balance_result_area {
+	width: 100%;
+	text-align: center;
+	margin: 5rem auto;
+}
+
+/* 결과 텍스트 틀 */
+.a_balance_result_message #a_result_message_text {
+	margin-top: 3.5rem;
+	width: 80%;
+	margin: 2rem auto;
+	text-align: center;
+}
+
+/* 결과 텍스트 */
+.a_balance_result_message_wrap #a_result_message_text,
+.a_balance_result_message_wrap .a_balance_result_title {
+	color: var(--c-font);
+	font-size: var(--fs3);
+	font-weight: 800;
+}
+
+/* 영화 제목 출력 */
+.a_balance_result_message_wrap
+	.a_balance_result_title
+	#a_result_movie_title_value {
+	color: var(--c-main);
+	font-size: var(--fs3);
+	font-weight: 800;
+}
+
+/* 결과창 틀*/
+.a_result_content {
+	width: 100%;
+	margin: 2rem auto;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/* 영화 포스터 */
+.a_result_poster_wrap {
+	width: 150px;
+	margin: 0 auto;
+	flex-shrink: 0;
+	/* 고유 너비(150px) 지키는 용도입니당 */
+}
+
+/* 영화 포스터 이미지 */
+.a_result_poster_wrap .a_result_movie_poster {
+	width: 100%;
+	height: auto;
+	display: block;
+	object-fit: cover;
+	border-radius: 20px;
+	box-shadow: 0 0 15px 3px var(--c-main);
+}
+
+/* 포스터 밑 태그 */
+.a_result_meta {
+	width: 100%;
+	max-width: 300px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+/* 태그 감싸는 틀 */
+.a_result_meta .a_result_tags_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin-bottom: 1rem;
+}
+
+/* 태그 공통 설정 */
+.a_result_meta .a_result_tags_container .a_result_tag {
+	border: 2px solid var(--c-gray2);
+	color: var(--c-gray2);
+	font-size: var(--fs2);
+	font-weight: 800;
+	border-radius: 20px;
+	padding: 4px 12px;
+	white-space: nowrap;
+}
+
+/*  정보 보러 가기 버튼 */
+.a_result_view_details_btn {
+	text-decoration: none;
+	color: var(--c-gray2);
+	font-size: var(--fs2);
+}
+
+/* 정보 보러 가기 화살표 아이콘 */
+.a_result_meta > img {
+	width: 18px;
+	height: 18px;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
 /* 자.만.추 섹션 */
 .a_recommend_section {
 	width: 90%;
