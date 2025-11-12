@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>아이디 찾기</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/root.css" />
+    <link rel="stylesheet" href="/css/login_form.css" />
+    <style></style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header-text">
+        <span class="highlight">무브인</span>에서 아이디를 찾아보세요
+      </div>
+
+      <form class="findid-form" method="POST" action="find_id_process.php">
+        <input type="text" name="username" placeholder="이름 입력" required />
+        <input type="email" name="email" placeholder="이메일 입력" required />
+        <button type="submit">아이디 찾기</button>
+
+        <div class="bottom-links">
+          <a href="login.php">로그인</a>
+          <a href="reset_password.php">비밀번호 찾기</a>
+          <a class="register" href="register.php">회원가입</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "F5" || (e.ctrlKey && e.key === "r")) {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </body>
+</html>
