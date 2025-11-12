@@ -576,7 +576,7 @@ html {
 
 /* 영화 포스터 */
 .a_result_poster_wrap {
-	width: 150px;
+	width: 170px;
 	margin: 0 auto;
 	flex-shrink: 0;
 	/* 고유 너비(150px) 지키는 용도입니당 */
@@ -606,7 +606,7 @@ html {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 8px;
-	margin-bottom: 1rem;
+	margin-bottom: 1.5rem;
 }
 
 /* 태그 공통 설정 */
@@ -616,7 +616,7 @@ html {
 	font-size: var(--fs2);
 	font-weight: 800;
 	border-radius: 20px;
-	padding: 4px 12px;
+	padding: 10px 12px;
 	white-space: nowrap;
 }
 
