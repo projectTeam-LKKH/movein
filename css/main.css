@@ -210,7 +210,8 @@ button {
   aspect-ratio: 1 / 1;
 }
 
-.favorite-thing-one > img {
+/* 2025-11-13 오후 5시 53분 김하빈 수정 */
+.favorite-thing > a > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -620,6 +621,7 @@ button {
 #search-result {
   width: 100%;
   height: max-content;
+  background: var(--c-gray);
 }
 #search-result > li {
   color: var(--c-font);
