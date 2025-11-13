@@ -532,6 +532,11 @@ button {
   width: 90%;
   margin: 5vw auto;
 }
+
+.review-input1 {
+  width: 90%;
+  margin: 5vw auto;
+}
 .review-input-box {
   display: flex;
   justify-content: center;
@@ -553,11 +558,6 @@ button {
   color: var(--c-gray2);
 }
 
-.formBtn-link {
-  width: 90%;
-  margin: 0 auto;
-}
-
 .formBtn > img {
   display: flex;
   width: 15px;
@@ -567,9 +567,6 @@ button {
 /* 버튼 클릭시 열리는 창 */
 .btn-form-container {
   position: relative;
-  width: 90%;
-  margin: 0 auto;
-
   z-index: 0;
 }
 
