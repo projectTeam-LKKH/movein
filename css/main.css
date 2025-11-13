@@ -567,6 +567,9 @@ button {
 /* 버튼 클릭시 열리는 창 */
 .btn-form-container {
   position: relative;
+  width: 90%;
+  margin: 0 auto;
+
   z-index: 0;
 }
 
