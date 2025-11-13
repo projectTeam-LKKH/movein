@@ -217,9 +217,9 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
                                     <?= htmlspecialchars($movie['type']) ?>
                                      · 
                                      <?= $genre_str ?>
-                                     · 
-                                    <?= htmlspecialchars($movie['running_time']) ?>
-                                    분
+									<?php if ($movie['running_time'] >= 30): ?>
+										· <?= htmlspecialchars($movie['running_time']) ?>분
+									<?php endif; ?>
 									</span>
 								</p>
 							</div>
@@ -262,6 +262,25 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 								</span>
 							</p>
 						</div>
+						<?php
+						$streams = json_decode($movie['streaming'], true); // true: associative array로 변환
+						if (json_last_error() !== JSON_ERROR_NONE) {
+							$streams = []; // JSON 파싱 실패 시 빈 배열
+						}
+
+						// 플랫폼별 이미지 매핑
+						$platform_images = [
+							"Netflix" => "img/netflix.png",
+							"Watcha" => "img/watcha.png",
+							"Wavve" => "img/wavve.png",
+							"TVING" => "img/TVING.png",
+							"Disney+" => "img/disney.png",
+							"Coupang" => "img/coupang.png"
+						];
+
+						// 최대 3개까지만 제한
+						$streams_to_display = array_slice($streams, 0, 3);
+						?>
 
 						<!-- 스트리밍 가능 플랫폼 -->
 						<div class="a_movie_ott_platforms">
@@ -274,33 +293,23 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 									/>
 								</div>
 
-								<!-- 오른쪽 플랫폼 아이콘-->
+								<!-- 오른쪽 플랫폼 아이콘 -->
 								<ul class="a_streaming_icon">
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/disney.png"
-												alt="플랫폼_1"
-											/>
-										</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/TVING.png"
-												alt="플랫폼_2"
-											/>
-										</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">
-											<img
-												src="img/watcha.png"
-												alt="플랫폼_3"
-											/>
-										</a>
-									</li>
+									<?php foreach ($streams_to_display as $index => $platform): ?>
+										<?php if (isset($platform_images[$platform])): ?>
+											<li>
+												<a href="#" target="_blank">
+													<img
+														src="<?= htmlspecialchars($platform_images[$platform]) ?>"
+														alt="플랫폼_<?= $index + 1 ?>"
+													/>
+												</a>
+											</li>
+										<?php endif; ?>
+									<?php endforeach; ?>
 								</ul>
+
+
 							</div>
 						</div>
 					</div>
@@ -329,7 +338,10 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 						class="like_btn <?= ($like_status === 'like') ? 'active' : '' ?>" 
 						data-status="like" 
 						data-movie-id="<?= $movie_id ?>">
-						<img src="img/like_icon_6F6C76.png" alt="like_icon" /> 추천해요
+						<img 
+							src="img/<?= ($like_status === 'like') ? 'like_icon_49E99C.png' : 'like_icon_6F6C76.png' ?>" 
+							alt="like_icon" 
+						/> 추천해요
 					</button>
 
 					<button 
@@ -337,7 +349,10 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 						class="hate_btn <?= ($like_status === 'hate') ? 'active' : '' ?>" 
 						data-status="hate" 
 						data-movie-id="<?= $movie_id ?>">
-						<img src="img/hate_icon_6F6C76.png" alt="hate_icon" /> 별로예요
+						<img 
+							src="img/<?= ($like_status === 'hate') ? 'hate_icon_49E99C.png' : 'hate_icon_6F6C76.png' ?>" 
+							alt="hate_icon" 
+						/> 별로에요
 					</button>
 					</div>
 
@@ -348,7 +363,9 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 					<li><strong>장르</strong><span><?= $genre_str ?></span></li>
 					<li><strong>감독</strong><span><?= htmlspecialchars($movie['director']) ?></span></li>
 					<li><strong>제작</strong><span><?= htmlspecialchars($movie['producer']) ?></span></li>
-					<li><strong>상영 시간</strong><span><?= htmlspecialchars($movie['running_time']) ?>분</span></li>
+					<?php if ($movie['running_time'] >= 30): ?>
+						<li><strong>상영 시간</strong><span><?= htmlspecialchars($movie['running_time']) ?>분</span></li>
+					<?php endif; ?>
 					<li><strong>스트리밍</strong><span><?= $stream_str ?></span></li>
 					<li><strong>연령 등급</strong><span><?= htmlspecialchars($movie['rating']) ?></span></li>
 					</ul>
@@ -565,18 +582,20 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 				<!-- 탭3 영상/이미지 영역 -->
 				<section class="tab_content" id="tab_media">
 					<!-- 영상 섹션 -->
-					<div class="media_section">
-						<h3 class="media_title">영상</h3>
+					 <?php if ($movie_id == 283): ?>
+						<div class="media_section">
+							<h3 class="media_title">영상</h3>
 
-						<div class="video_box">
-							<iframe width="90%" height="315"
-							src="https://www.youtube.com/embed/i50tT8n9fp8?si=MBFIC67575e8x7h7"
-							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-						</iframe>
+							<div class="video_box">
+								<iframe width="90%" height="315"
+								src="https://www.youtube.com/embed/i50tT8n9fp8?si=MBFIC67575e8x7h7"
+								title="YouTube video player" frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+							</iframe>
+							</div>
 						</div>
-					</div>
+					<?php endif; ?>
 
 					<!-- 스틸컷 섹션 -->
 					<div class="media_section stillcuts">
@@ -767,6 +786,37 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 			});
 
 
+			document.addEventListener('DOMContentLoaded', function() {
+				const buttons = document.querySelectorAll('.like_btn, .hate_btn');
+
+				buttons.forEach(function(btn) {
+					btn.addEventListener('click', function() {
+						const img = this.querySelector('img');
+						const status = this.dataset.status; // 'like' 또는 'hate'
+						const movieId = this.dataset.movieId;
+
+						// active 클래스 토글
+						this.classList.toggle('active');
+
+						// 이미지 변경
+						if (this.classList.contains('active')) {
+							img.src = `img/${status}_icon_49E99C.png`;
+						} else {
+							img.src = `img/${status}_icon_6F6C76.png`;
+						}
+
+						// 추가로, 반대 버튼(active 상태) 제거
+						const oppositeBtn = document.querySelector(`.${status === 'like' ? 'hate_btn' : 'like_btn'}[data-movie-id="${movieId}"]`);
+						if (oppositeBtn && oppositeBtn.classList.contains('active')) {
+							oppositeBtn.classList.remove('active');
+							const oppImg = oppositeBtn.querySelector('img');
+							const oppStatus = oppositeBtn.dataset.status;
+							oppImg.src = `img/${oppStatus}_icon_6F6C76.png`;
+						}
+
+					});
+				});
+			});
 			//  i아이콘 클릭
 			document.addEventListener("DOMContentLoaded", function() {
 			const infoIcon = document.getElementById("i_icon");
