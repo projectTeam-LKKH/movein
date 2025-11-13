@@ -82,6 +82,7 @@ button {
   background: transparent;
   padding-left: 0.5rem;
   border-radius: 50px;
+  color: var(--c-font);
 }
 
 /* 닉네임 활성화 칸 */

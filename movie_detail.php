@@ -152,7 +152,8 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 					}
 					
 				} else {
-					$st_tags[$i] = '<img src="img/picture_6f6c76.png" alt="noImage" >';
+					$className = ($i === 1) ? "a_background_still" : "ImgSize" . $i;
+					$st_tags[$i] = '<img src="img/picture_6f6c76.png" alt="noImage" class="' . $className . '">';
 					// $st_tags[$i] = '<div style="width:100%; height:500px; background:#333; color:#eee; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
 				}
 			}

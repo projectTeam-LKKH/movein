@@ -1,61 +1,61 @@
 // 햄버거바 터치 이벤트
-document.addEventListener("DOMContentLoaded", () => {
-  const hamBtn = document.querySelector(".hambtn");
-  const hamMenu = document.querySelector("nav.hamburger");
-  const locked = document.body;
-  const logoImg = document.querySelector("#header a img");
-  const modal = document.querySelector(".modal-bg");
+// document.addEventListener("DOMContentLoaded", () => {
+//   const hamBtn = document.querySelector(".hambtn");
+//   const hamMenu = document.querySelector("nav.hamburger");
+//   const locked = document.body;
+//   const logoImg = document.querySelector("#header a img");
+//   const modal = document.querySelector(".modal-bg");
 
-  hamBtn.addEventListener("click", () => {
-    hamMenu.classList.toggle("show");
+//   hamBtn.addEventListener("click", () => {
+//     hamMenu.classList.toggle("show");
 
-    if (hamMenu.classList.contains("show")) {
-      //만약 햄메뉴가 보이면
-      modal.classList.add("active");
-      locked.classList.add("lock");
-      logoImg.classList.add("hide");
-    } else {
-      //햄메뉴가 안보이면
-      modal.classList.remove("active");
-      locked.classList.remove("lock");
-      logoImg.classList.remove("hide");
-    }
-  });
-});
+//     if (hamMenu.classList.contains("show")) {
+//       //만약 햄메뉴가 보이면
+//       modal.classList.add("active");
+//       locked.classList.add("lock");
+//       logoImg.classList.add("hide");
+//     } else {
+//       //햄메뉴가 안보이면
+//       modal.classList.remove("active");
+//       locked.classList.remove("lock");
+//       logoImg.classList.remove("hide");
+//     }
+//   });
+// });
 
-//헤더 내부 버튼 클릭 이벤트
-document.addEventListener("DOMContentLoaded", () => {
-  const subMenus = document.querySelectorAll(".ham-sub-box li");
+// //헤더 내부 버튼 클릭 이벤트
+// document.addEventListener("DOMContentLoaded", () => {
+//   const subMenus = document.querySelectorAll(".ham-sub-box li");
 
-  subMenus.forEach((item) => item.classList.remove("active"));
+//   subMenus.forEach((item) => item.classList.remove("active"));
 
-  subMenus.forEach((sub) => {
-    sub.addEventListener("click", () => {
-      // 이미 활성화된 걸 다시 클릭한 경우, 해제
-      if (sub.classList.contains("active")) {
-        sub.classList.remove("active");
-      } else {
-        // 다른 모든 항목 비활성화 후 현재만 활성화
-        subMenus.forEach((item) => item.classList.remove("active"));
-        sub.classList.add("active");
-      }
-    });
-  });
-});
+//   subMenus.forEach((sub) => {
+//     sub.addEventListener("click", () => {
+//       // 이미 활성화된 걸 다시 클릭한 경우, 해제
+//       if (sub.classList.contains("active")) {
+//         sub.classList.remove("active");
+//       } else {
+//         // 다른 모든 항목 비활성화 후 현재만 활성화
+//         subMenus.forEach((item) => item.classList.remove("active"));
+//         sub.classList.add("active");
+//       }
+//     });
+//   });
+// });
 
 // 하트 버튼 토글
-document.addEventListener("DOMContentLoaded", () => {
-  const greenBtn = "img/heart_49e99c.png";
-  const grayBtn = "img/heart_6f6c76.png";
+// document.addEventListener("DOMContentLoaded", () => {
+//   const greenBtn = "img/heart_49e99c.png";
+//   const grayBtn = "img/heart_6f6c76.png";
 
-  document.querySelectorAll(".likeBtn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const img = btn.querySelector("img");
-      const current = img.getAttribute("src");
-      img.setAttribute("src", current === grayBtn ? greenBtn : grayBtn);
-    });
-  });
-});
+//   document.querySelectorAll(".likeBtn").forEach((btn) => {
+//     btn.addEventListener("click", () => {
+//       const img = btn.querySelector("img");
+//       const current = img.getAttribute("src");
+//       img.setAttribute("src", current === grayBtn ? greenBtn : grayBtn);
+//     });
+//   });
+// });
 
 // 요즘 대세(영화/드라마) 버튼 토글 — 섹션별 독립 동작
 document.addEventListener("DOMContentLoaded", () => {

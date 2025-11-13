@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'login/db_connect.php'; // DB 연결 파일 (login.php랑 동일한 파일)
+include_once 'login/db_connect.php'; // DB 연결 파일
 
 $nickname = $_SESSION['nickname'] ?? null;
 $userid = $_SESSION['userid'] ?? null;
@@ -142,19 +142,20 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     
     <div id="container">
       <!-- 헤더 -->
-      <div class="header-slot"></div>
+      <div id="header-slot"></div>
 
       <!-- 검색창 -->
-      <form class="search-f">
+      <form class="search-f" id="searchForm" method="GET" action="login/search.php">
         <label for="search" class="search skip">검색어 입력</label>
         <div class="search-box">
-          <button>
+          <button type="submit">
             <img src="img/search_3B393C.png" alt="search_btn" />
           </button>
           <input
             class="search-in"
             type="text"
             id="search"
+            name="q"
             placeholder="당신의 마음을 뒤흔들 작품을 검색해보세요"
           />
         </div>
@@ -194,35 +195,50 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
       </div>
     
       <?php if (!empty($favorite_movies)): ?>
-        <div class="favorite-list">
-          <ul class="favorite-list-box">
-            <?php foreach ($favorite_movies as $movie): ?>
-              <?php
-                  $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
-                  // 실제 서버 경로로 파일 존재 여부 확인
-                  if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
-                    $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster" style="max-width:65px; max-height:65px;">';
-                  } else {
-                      $img_tag = '<img src="img/picture_6f6c76.png" alt="noImage"  style="max-width:65px; max-height:65px;">';
-                      // $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
-                  }
-              ?>
+        <div class="favorite-gutter">
+          <div class="favorite-list">
+            <ul class="favorite-list-box">
+              <?php foreach ($favorite_movies as $movie): ?>
+                <?php
+                    $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
+                    // 실제 서버 경로로 파일 존재 여부 확인
+                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
+                      $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster" style="max-width:65px; max-height:65px;">';
+                    } else {
+                        $img_tag = '<img src="img/picture_6f6c76.png" alt="noImage"  style="max-width:65px; max-height:65px;">';
+                        // $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
+                    }
+
+                    // 좋아요 상태 확인
+                    $liked = false;
+                    if ($userid) {
+                        $stmt = mysqli_prepare($connect, "SELECT status FROM Likes WHERE user_id=? AND movie_id=? AND status='like'");
+                        mysqli_stmt_bind_param($stmt, "si", $userid, $movie['id']);
+                        mysqli_stmt_execute($stmt);
+                        $res = mysqli_stmt_get_result($stmt);
+                        if (mysqli_fetch_assoc($res)) $liked = true;
+                        mysqli_stmt_close($stmt);
+                    }
+                
+                    $heart_img = $liked ? 'img/heart_49e99c.png' : 'img/heart_6f6c76.png';
+                ?>
+                <li class="favorite-thing">
+                    <a href="movie_detail.php?id=<?= htmlspecialchars($movie['id']) ?>">
+                        <?= $img_tag ?>
+                    </a>
+                    <button class="likeBtn" data-movie-id="<?= $movie['id'] ?>">
+                        <img src="<?= $heart_img ?>" alt="heart button">
+                    </button>
+                </li>
+              <?php endforeach; ?>
+              <!-- "더보기" 버튼 -->
               <li class="favorite-thing">
-                  <a href="movie_detail.php?id=<?= htmlspecialchars($movie['id']) ?>">
-                      <?= $img_tag ?>
+                  <a href="javascript:void(0);" class="blankbtn" onclick="showComingSoon()">
+                      <img src="img/next_icon_6F6C76.png" alt="moreBtn">
                   </a>
-                  <button class="likeBtn">
-                      <img src="img/heart_6f6c76.png" alt="heart button">
-                  </button>
               </li>
-            <?php endforeach; ?>
-            <!-- "더보기" 버튼 -->
-            <li class="favorite-thing">
-                <a href="javascript:void(0);" class="blankbtn" onclick="showComingSoon()">
-                    <img src="img/next_icon_6F6C76.png" alt="moreBtn">
-                </a>
-            </li>
-          </ul>
+            </ul>
+          </div>
         </div>
       <?php endif; ?>
     </section>
@@ -237,33 +253,35 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
           <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
         </div>
         
-        <div class="hot-wrap">
-          <ul class="hot-nav-box">
-            <li class="all-btn <?= ($platform === 'All') ? 'active' : '' ?>" data-platform="All">
-              <a href="?platform=All"><p>All</p><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
-              <a href="?platform=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
-              <a href="?platform=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
-              <a href="?platform=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
-              <a href="?platform=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
-              <a href="?platform=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
-              <a href="?platform=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform === 'Other') ? 'active' : '' ?>" data-platform="Other">
-              <a href="?platform=Other"><p>Other</p><span class="point"></span></a>
-            </li>
-          </ul>
+        <div class="hot-nav-container">
+          <div class="hot-wrap">
+            <ul class="hot-nav-box">
+              <li class="all-btn <?= ($platform === 'All') ? 'active' : '' ?>" data-platform="All">
+                <a href="?platform=All"><p>All</p><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
+                <a href="?platform=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
+                <a href="?platform=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
+                <a href="?platform=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
+                <a href="?platform=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
+                <a href="?platform=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
+                <a href="?platform=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform === 'Other') ? 'active' : '' ?>" data-platform="Other">
+                <a href="?platform=Other"><p>Other</p><span class="point"></span></a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="poster-wrap">
@@ -324,33 +342,35 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
           <img src="img/next_icon_6F6C76.png" alt="다음 버튼">
         </div>
 
-        <div class="hot-wrap">
-          <ul class="hot-nav-box">
-            <li class="all-btn <?= ($platform2 === 'All') ? 'active' : '' ?>" data-platform="All">
-              <a href="?platform2=All"><p>All</p><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
-              <a href="?platform2=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
-              <a href="?platform2=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
-              <a href="?platform2=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
-              <a href="?platform2=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
-              <a href="?platform2=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
-              <a href="?platform2=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
-            </li>
-            <li class="all-btn <?= ($platform2 === 'Other') ? 'active' : '' ?>" data-platform="Other">
-              <a href="?platform2=Other"><p>Other</p><span class="point"></span></a>
-            </li>
-          </ul>
+        <div class="hot-nav-container">
+          <div class="hot-wrap">
+            <ul class="hot-nav-box">
+              <li class="all-btn <?= ($platform2 === 'All') ? 'active' : '' ?>" data-platform="All">
+                <a href="?platform2=All"><p>All</p><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Netflix') ? 'active' : '' ?>" data-platform="Netflix">
+                <a href="?platform2=Netflix"><img src="img/netflix.png" alt="Netflix"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Watcha') ? 'active' : '' ?>" data-platform="Watcha">
+                <a href="?platform2=Watcha"><img src="img/watcha.png" alt="Watcha"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Wavve') ? 'active' : '' ?>" data-platform="Wavve">
+                <a href="?platform2=Wavve"><img src="img/wavve.png" alt="Wavve"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'TVING') ? 'active' : '' ?>" data-platform="TVING">
+                <a href="?platform2=TVING"><img src="img/TVING.png" alt="TVING"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Disney+') ? 'active' : '' ?>" data-platform="Disney+">
+                <a href="?platform2=Disney%2B"><img src="img/disney.png" alt="Disney+"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Coupang') ? 'active' : '' ?>" data-platform="Coupang">
+                <a href="?platform2=Coupang"><img src="img/coupang.png" alt="Coupang"><span class="point"></span></a>
+              </li>
+              <li class="all-btn <?= ($platform2 === 'Other') ? 'active' : '' ?>" data-platform="Other">
+                <a href="?platform2=Other"><p>Other</p><span class="point"></span></a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- 포스터 영역 -->
@@ -405,7 +425,7 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
     
      <!-- 무브오너들의 감상평 -->
-      <section>
+      <section class="movein-review">
         <div class="review-txt-box">
           <div class="hot-txt-box">
             <h3 class="hot-txt">무브오너들의 감상평</h3>
@@ -580,8 +600,37 @@ function showComingSoon() {
     }, 1000);
 }
 
-  // main-bubbles-init.js
-  // 2025-11-10 정리본 : 중복 제거 및 리사이즈/스크롤 복원 최적화
+  // 좋아요 토글
+  document.addEventListener("DOMContentLoaded", function() {
+      const likeButtons = document.querySelectorAll(".likeBtn");
+
+      likeButtons.forEach(btn => {
+          btn.addEventListener("click", function() {
+              const movieId = this.dataset.movieId;
+              const img = this.querySelector("img");
+              let newStatus = img.src.includes("6f6c76") ? "like" : "hate"; // 빈하트 → like, 채워진 → hate
+
+              fetch("login/like_process.php", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                  body: `movie_id=${movieId}&status=${newStatus}`
+              })
+              .then(res => res.json())
+              .then(data => {
+                  if (data.success) {
+                      if (data.status === "like") {
+                          img.src = "img/heart_49e99c.png";
+                      } else {
+                          img.src = "img/heart_6f6c76.png";
+                      }
+                  } else {
+                      alert(data.message || "오류가 발생했습니다.");
+                  }
+              })
+              .catch(err => console.error(err));
+          });
+      });
+  });
 
   // [A] 페이지 진입 시 버블 초기화
   window.addEventListener("DOMContentLoaded", () => {
