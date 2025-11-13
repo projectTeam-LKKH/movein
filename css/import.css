@@ -10,7 +10,7 @@
   align-items: center;
 }
 .headerbox {
-  padding: 0 5vw;
+  padding: 0 0 0 5vw;
 }
 #header a img {
   display: flex;
