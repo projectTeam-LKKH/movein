@@ -552,6 +552,12 @@ button {
   font-size: var(--fs2);
   color: var(--c-gray2);
 }
+
+.formBtn-link {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .formBtn > img {
   display: flex;
   width: 15px;
