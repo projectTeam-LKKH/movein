@@ -235,11 +235,17 @@ button {
 }
 
 /* 좋아요 버튼 */
-.likeBtn {
+/* 좋아요 버튼 위치 오류로 2025.11.13 김하빈 수정 */
+.favorite-thing > .likeBtn {
   position: absolute;
   z-index: 1;
-  right: 6px;
-  bottom: 3px;
+  right: 15px;
+  bottom: 10px;
+  transition: transform 0.15s ease-out;
+}
+
+.favorite-thing > .likeBtn .active {
+  transform: scale(1.15);
 }
 
 .likeBtn > img {
