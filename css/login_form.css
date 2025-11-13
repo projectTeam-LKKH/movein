@@ -1,0 +1,305 @@
+/* ===== 공통 css 스타일 여러 파일(php)에서 공유 ===== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; 스크롤 가능하게 */
+  background-color: var(--c-bg);
+  font-family: var(--font-main);
+}
+
+input:focus {
+  outline: 1px solid var(--c-main);
+}
+
+/* 레이아웃 공통 */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: var(--c-font);
+}
+/* 상단 문구 공통 속성(위치값 top은 페이지별 override) */
+.header-text {
+  width: 90%;
+  margin: 30% auto 3rem auto;
+  text-align: left;
+  font-size: var(--fs5);
+  font-weight: 700;
+  line-height: 1.5;
+}
+/* 로그인 단계 3, 4단계 전용 */
+/* 추후 테스트 할때 다시 확인해야 합니다=========2025.11.12 */
+.header-text.up {
+  margin: 20% auto 3rem auto; /* 위로 약간 올림 */
+}
+.header-text .highlight {
+  color: var(--c-main);
+  font-weight: 800;
+}
+
+/* 하단 링크(로그인/아이디찾기/비번재설정에서 공통) */
+.bottom-links {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.bottom-links a {
+  text-decoration: none;
+  font-size: var(--fs2);
+}
+.bottom-links a.register {
+  color: var(--c-main);
+  font-weight: 800;
+}
+.bottom-links a:not(.register) {
+  color: var(--c-gray3);
+}
+
+/* 로그인 폼 login.php =======================*/
+.login-form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-form input {
+  border: none;
+  border-radius: 10px;
+  background: var(--c-gray);
+  color: var(--c-font); /* 조금 더 어두운 글씨색 */
+  font-size: var(--fs3);
+}
+.login-form input::placeholder {
+  color: var(--c-gray2);
+}
+.login-form button {
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--c-main);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%; /* 입력창과 동일 길이 */
+}
+
+/* 아이디 찾기 전용 find_id.php=======================*/
+/* 찾기 폼 */
+.findid-form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.findid-form input {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: var(--c-gray);
+  color: var(--c-font); /* 약간 어두운 글씨색 */
+  font-size: var(--fs3);
+}
+.findid-form input::placeholder {
+  color: var(--c-gray2);
+}
+.findid-form button {
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--c-main);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%; /* 입력창과 동일 길이 */
+}
+
+/* 회원가입 전용 register.php=======================*/
+/* 폼 위치 */
+.register-form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 이 파일만 전역 input을 직접 스타일링함(의도라면 유지) */
+input {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: var(--c-gray);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  width: 100%;
+  box-sizing: border-box;
+}
+input::placeholder {
+  color: var(--c-gray2);
+}
+
+#smallText {
+  color: var(--c-gray2);
+  font-size: var(--fs2);
+  margin-left: 1rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.input-group input {
+  flex: 1;
+}
+
+.check-btn {
+  background-color: var(--c-gray2);
+  color: var(--c-gray);
+  border: none;
+  border-radius: 8px;
+  padding: 15px 15px;
+  font-size: var(--fs2);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button.next-btn {
+  align-self: flex-end;
+  background: var(--c-bg);
+  color: var(--c-gray2);
+  border: none;
+  font-size: var(--fs3);
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* 스텝 */
+.step {
+  display: none;
+}
+.step.active {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 토글 */
+.toggle-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.toggle-btn {
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid var(--c-gray2);
+  border-radius: 50px;
+  cursor: pointer;
+  color: var(--c-gray3);
+  font-size: var(--fs3);
+  transition: all 0.2s;
+}
+.toggle-btn.selected {
+  background-color: var(--c-main2);
+  color: var(--c-main);
+  font-weight: 800;
+  border: 1px solid var(--c-main);
+}
+
+/* 제출 버튼 */
+.submit-btn {
+  background-color: var(--c-main);
+  color: var(--c-font);
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: var(--fs3);
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* 완료 화면 */
+.complete-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px);
+  text-align: center;
+  gap: 30px;
+}
+.complete-img {
+  width: 200px;
+  height: auto;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 90%;
+  max-width: 300px;
+}
+.button-group button {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: var(--fs3);
+  cursor: pointer;
+  width: 100%;
+}
+.login-btn {
+  background-color: var(--c-main);
+  color: var(--c-font);
+}
+.home-btn {
+  background-color: var(--c-gray);
+  color: var(--c-gray3);
+}
+
+/* 비밀번호 재설정 전용  reset_password.php=======================*/
+/* 헤더 위치 */
+
+/* 재설정 폼 */
+.reset-form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.reset-form input {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: var(--c-gray);
+  color: var(--c-font); /* 조금 어두운 글씨색 */
+  font-size: var(--fs3);
+}
+.reset-form input::placeholder {
+  color: var(--c-gray2);
+}
+.reset-form button {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--c-main);
+  color: var(--c-font);
+  font-size: var(--fs3);
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%; /* 입력창과 동일한 길이 */
+}

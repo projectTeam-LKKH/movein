@@ -312,7 +312,8 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                   if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
                     $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster" style="max-width:65px; max-height:65px;">';
                   } else {
-                      $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
+                      $img_tag = '<img src="img/picture_6f6c76.png" alt="noImage"  style="max-width:65px; max-height:65px;">';
+                      // $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
                   }
               ?>
               <li class="favorite-thing">
@@ -589,7 +590,7 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                     <button type="button"><img src="img/search_6F6C76.png" alt="search btn"></button>
                   </div>
 
-                  <ul id="search-result" class="search-result"></ul>
+                  <ul id="search-result" class="search-result" style="top:30px;"></ul>
 
                   <!-- 감상평 입력 -->
                   <div class="review-text-box">
@@ -626,33 +627,27 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
       </section>
      </main>
 
-     <div id="footer">
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-      <p>f</p>
-      <p>o</p>
-      <p>o</p>
-      <p>t</p>
-      <p>e</p>
-      <p>r</p>
-     </div>
-    <div id="bottom-nav"></div>
+        <!-- 접근성, 마크업을 위해 이 구조는 숨김처리 합니다. 삭제X -->
+        <footer class="footer visually-hidden">
+          <section class="pf-foot">
+            <p class="foot-one">
+              © 2025 MOVEON Project. Designed & Developed by Team MOVEON.
+            </p>
+            <p class="foot-two">
+              Icons by
+              <a
+                href="https://www.flaticon.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Flaticon</a
+              >.
+            </p>
+            <p>For educational and portfolio purposes only.</p>
+            <p>본 사이트는 포트폴리오 및 학습 목적으로 제작되었습니다.</p>
+          </section>
+        </footer>
+        <!-- 하단 메뉴바 -->
+        <div id="bottom-nav"></div>
 
     <!-- JS -->
     <!-- JS -->
@@ -661,8 +656,12 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
     
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-  <script defer src="js/genre-bubbles.js"></script>
+  <!-- <script defer src="js/genre-bubbles.js"></script> -->
 
+  <script src="js/import.js"></script>
+     <script src="js/genre-bubbles_init.js"></script>
+     <script src="js/genre-bubbles_edit.js"></script>
+    <script src="js/main.js"></script>
   <script>
 
 function showComingSoon() {
@@ -851,10 +850,6 @@ document.addEventListener("DOMContentLoaded", () => {
       resultBox.innerHTML = "<li>검색 결과 없음</li>";
       return;
     }
-    const rect = input.getBoundingClientRect();
-      resultBox.style.top = rect.bottom + "px";
-      resultBox.style.left = rect.left + "px";
-      resultBox.style.width = rect.width + "px";
 
     data.forEach(movie => {
       const li = document.createElement("li");

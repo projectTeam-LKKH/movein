@@ -94,7 +94,12 @@ button {
   font-size: var(--fs5);
   color: var(--c-font);
   line-height: 160%;
-  letter-spacing: -0.03rem;
+  letter-spacing: -0.02rem;
+  font-weight: 800;
+}
+
+.user-txt > span {
+  color: var(--c-main);
 }
 
 /* 카테고리 원 박스 */
@@ -229,14 +234,14 @@ button {
 }
 
 /* 좋아요 버튼 */
-.favorite-thing > button {
+.likeBtn {
   position: absolute;
-  z-index: 5;
-  right: 5px;
-  bottom: 5px;
+  z-index: 1;
+  right: 6px;
+  bottom: 3px;
 }
 
-.favorite-thing > button > img {
+.likeBtn > img {
   width: 15px;
   height: 15px;
   filter: drop-shadow(var(--shadow50));
@@ -274,17 +279,19 @@ button {
 }
 
 /* ott선택 버튼 */
-.hot-wrap {
+.hot-nav-container {
   width: 100%;
-  height: max-content;
+  overflow-x: hidden;
+}
+.hot-wrap {
+  padding: 0 5vw;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .hot-nav-box {
-  width: 100%;
-  padding: 0 5vw;
+  width: max-content;
   height: 60px;
   display: flex;
   gap: 10px;
@@ -293,20 +300,30 @@ button {
 .all-btn {
   position: relative;
   color: var(--c-font);
+  background-color: var(--c-bg);
   flex: 0 0 50px;
   height: 50px;
-  border: 2.5px solid var(--c-gray);
+  border: 3px solid var(--c-gray);
   border-radius: 50px;
   object-fit: cover;
 }
-
+.all-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(var(--c-bg-rgb), 0.5);
+  pointer-events: none;
+  border-radius: inherit;
+}
 .all-btn p {
   font-weight: 800;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  color: var(--c-gray);
+  color: var(--c-gray3);
+  font-size: var(--fs3);
 }
 
 .all-btn img {
@@ -327,22 +344,27 @@ button {
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-top: 10px solid var(--c-gray); /* 삼각형 색상 */
+  border-top: 9px solid var(--c-gray); /* 삼각형 색상 */
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -10px;
+  bottom: -11px;
 }
 
 /* .all-btn에 액티브 붙였을 경우 변화 */
 .all-btn.active {
   color: var(--c-main);
-  border: 2.5px solid var(--c-main);
+  border: 3px solid var(--c-main);
+}
+
+.all-btn.active::after {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .all-btn.active .point::after {
   content: "";
-  border-top: 10px solid var(--c-main); /* 삼각형 색상 */
+  border-top: 9px solid var(--c-main); /* 삼각형 색상 */
 }
 
 .all-btn.active p {
@@ -381,6 +403,7 @@ button {
 .all-poster a img {
   width: 172px;
   height: 252px;
+  border-radius: 10px;
 }
 .detail-box {
   width: 172px;
@@ -502,7 +525,6 @@ button {
   width: 90%;
   margin: 5vw auto;
 }
-
 .review-input-box {
   display: flex;
   justify-content: center;
@@ -554,7 +576,6 @@ button {
   visibility: visible;
   max-height: 125px;
   z-index: 1;
-  display:block;
 }
 
 .input-box.form {
@@ -653,30 +674,15 @@ button {
   margin-bottom: 11rem;
 }
 
-/* 자동완성 결과 리스트 */
-#search-result {
-  position: absolute; /* absolute -> fixed */
-  top:35px;
-  left: 0%;        /* input 위치 맞춤 */
-  width: 90%;      /* input 폭 맞춤 */
-  max-height: 400px;
-  overflow-y: auto;
-  background: var(--c-gray);
-  color: var(--c-font);
-  border-radius: 8px;
-  padding: 5px 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  -webkit-overflow-scrolling: touch;
-}
-
-#search-result li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  color: var(--c-font); /* 글씨 색 다크모드용 */
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-#search-result li:hover {
-  background: rgba(255,255,255,0.1); /* 호버 효과 */
+/* 시각적으로만 숨기고 스크린리더엔 보이게 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
