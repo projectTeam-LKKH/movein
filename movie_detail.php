@@ -381,7 +381,7 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 						<p>
 							<strong
 							><span class="nickname"><?php echo htmlspecialchars($nickname); ?></span>
-							님, 이 작품을 보신 적이 있으세요? <img src="img/i_6f6c76.png" alt="i_icon" />
+							님, 이 작품을 보신 적이 있으세요? <img src="img/i_6f6c76.png" alt="i_icon" id="i_icon" />
 							</strong>
 						</p>
 
