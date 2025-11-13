@@ -659,8 +659,8 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
   <!-- <script defer src="js/genre-bubbles.js"></script> -->
 
   <script src="js/import.js"></script>
-     <script src="js/genre-bubbles_init.js"></script>
-     <script src="js/genre-bubbles_edit.js"></script>
+     <!-- <script src="js/genre-bubbles_init.js"></script> -->
+     <script defer src="js/genre-bubbles_edit.js"></script>
     <script src="js/main.js"></script>
   <script>
 

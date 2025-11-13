@@ -228,6 +228,22 @@ html {
   color: var(--c-gray2);
 }
 
+.review_input2 {
+  width: 90%;
+  height: 70px;
+  border-radius: 10px;
+  background-color: var(--c-gray);
+  color: var(--c-font);
+  padding: 15px;
+  font-size: var(--fs2);
+  resize: none;
+  margin: 0 auto;
+}
+
+.review_input2::placeholder {
+  color: var(--c-gray2);
+}
+
 .register_btn {
   display: flex;
   align-items: center;
@@ -437,7 +453,7 @@ html {
   margin-bottom: 30px;
 }
 
-.edit_btn {
+.edit_btnC{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -454,10 +470,11 @@ html {
   transition: 0.2s;
 }
 
-.edit_btn img {
+.edit_btnC img{
   width: 16px;
   height: 16px;
 }
+
 
 /* 탭3 영상/이미지 영역 */
 #tab_media {
@@ -560,4 +577,12 @@ html {
 
 .tab_content.b_active {
   display: block;
+}
+
+/* 리뷰 없음 */
+.no_review {
+  color: #777;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 0;
 }

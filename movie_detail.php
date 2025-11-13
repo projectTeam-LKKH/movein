@@ -79,6 +79,9 @@ mysqli_stmt_bind_param($stmt, "i", $movie_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
+// 댓글 개수 구하기
+$comment_count = mysqli_num_rows($result);
+$display_count = ($comment_count > 99) ? '99+' : $comment_count;
 
 // 별점 평균 가져오기
 $query_rating = "
@@ -86,11 +89,11 @@ $query_rating = "
 	FROM comments c
 	WHERE c.movie_id = ? AND c.is_deleted = 0
 ";
-$stmt = mysqli_prepare($connect, $query_rating);
-mysqli_stmt_bind_param($stmt, "i", $movie_id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$row = mysqli_fetch_assoc($result);
+$stmt1 = mysqli_prepare($connect, $query_rating);
+mysqli_stmt_bind_param($stmt1, "i", $movie_id);
+mysqli_stmt_execute($stmt1);
+$result1 = mysqli_stmt_get_result($stmt1);
+$row = mysqli_fetch_assoc($result1);
 $avg_rating = $row['avg_rating'] ?? 0;
 
 // 좋아요 비율
@@ -312,7 +315,7 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 				<!-- 탭 메뉴 -->
 				<ul class="tab_menu">
    					<li class="b_active"><button type="button" data-tab="tab_info">콘텐츠 정보</button></li>
-					<li><button type="button" data-tab="tab_review">감상평 99+</button></li>
+					<li><button type="button" data-tab="tab_review">감상평 <?php echo $display_count; ?></button></li>
 					<li><button type="button" data-tab="tab_media">영상/이미지</button></li>
 				</ul>
 
@@ -354,88 +357,90 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 				<!-- 탭2 감상평 영역 -->
 				<section class="tab_content" id="tab_review">
 					<!-- 로그인된 상태 -->
-                <?php if ($nickname): ?>
-					<div class="review_login">
-					<p>
-						<strong
-						><span class="nickname"><?php echo htmlspecialchars($nickname); ?></span>
-						님, 이 작품을 보신 적이 있으세요? <img src="img/i_6f6c76.png" alt="i_icon" />
-						</strong>
-					</p>
-
-					<!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
-					<div class="iicon_popup" id="iicon_popup">
+				<?php if (!$user_review): ?>
+					<?php if ($nickname): ?>
+						<div class="review_login">
 						<p>
-						무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
-						부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
-						없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
-						이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
-						통보 없이 탈퇴 처리될 수 있습니다.
+							<strong
+							><span class="nickname"><?php echo htmlspecialchars($nickname); ?></span>
+							님, 이 작품을 보신 적이 있으세요? <img src="img/i_6f6c76.png" alt="i_icon" />
+							</strong>
 						</p>
-					</div>
 
-					<!-- 별점 -->
-					<div class="star_rating">
-						<img src="img/star_6f6c76.png" alt="1점" data-value="1" class="star" />
-						<img src="img/star_6f6c76.png" alt="2점" data-value="2" class="star" />
-						<img src="img/star_6f6c76.png" alt="3점" data-value="3" class="star" />
-						<img src="img/star_6f6c76.png" alt="4점" data-value="4" class="star" />
-						<img src="img/star_6f6c76.png" alt="5점" data-value="5" class="star" />
-					</div>
+						<!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
+						<div class="iicon_popup" id="iicon_popup">
+							<p>
+							무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
+							부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
+							없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
+							이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
+							통보 없이 탈퇴 처리될 수 있습니다.
+							</p>
+						</div>
 
-					<!-- 텍스트 입력 -->
-					<textarea
-						class="review_input"
-						placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
-					></textarea>
-					
+						<!-- 별점 -->
+						<div class="star_rating">
+							<img src="img/star_6f6c76.png" alt="1점" data-value="1" class="star" />
+							<img src="img/star_6f6c76.png" alt="2점" data-value="2" class="star" />
+							<img src="img/star_6f6c76.png" alt="3점" data-value="3" class="star" />
+							<img src="img/star_6f6c76.png" alt="4점" data-value="4" class="star" />
+							<img src="img/star_6f6c76.png" alt="5점" data-value="5" class="star" />
+						</div>
 
-					<!-- 등록 버튼 -->
-					<button type="button" class="register_btn">
-						등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
-					</button>
-					</div>
-				<?php else: ?>
-					<!-- 로그인하지 않은 상태 (비로그인 시 노출) -->
-					<div class="review_unlogin">
-					<p>
-						<strong
-						>이 작품을 보신 적이 있으세요?
-						<img src="img/i_6f6c76.png" alt="i_icon" id="i_icon"/></strong>
-					</p>
+						<!-- 텍스트 입력 -->
+						<textarea
+							class="review_input"
+							placeholder="지금 바로 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+						></textarea>
+						
 
-					<!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
-					<div class="iicon_popup" id="iicon_popup">
+						<!-- 등록 버튼 -->
+						<button type="button" class="register_btn">
+							등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
+						</button>
+						</div>
+					<?php else: ?>
+						<!-- 로그인하지 않은 상태 (비로그인 시 노출) -->
+						<div class="review_unlogin">
 						<p>
-						무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
-						부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
-						없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
-						이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
-						통보 없이 탈퇴 처리될 수 있습니다.
+							<strong
+							>이 작품을 보신 적이 있으세요?
+							<img src="img/i_6f6c76.png" alt="i_icon" id="i_icon"/></strong>
 						</p>
-					</div>
 
-					<!-- 별점 -->
-					<div class="star_rating">
-						<img src="img/star_6f6c76.png" alt="1점" data-value="1" class="star" />
-						<img src="img/star_6f6c76.png" alt="2점" data-value="2" class="star" />
-						<img src="img/star_6f6c76.png" alt="3점" data-value="3" class="star" />
-						<img src="img/star_6f6c76.png" alt="4점" data-value="4" class="star" />
-						<img src="img/star_6f6c76.png" alt="5점" data-value="5" class="star" />
-					</div>
+						<!-- i아이콘 클릭 시 안내창 (기본은 숨김 상태) -->
+						<div class="iicon_popup" id="iicon_popup">
+							<p>
+							무브인 사용자 리뷰를 작성하기 위한 공간입니다.<br />
+							부적절하거나 불법적인 리뷰 및 내용은 업로드할 수<br />
+							없습니다. 규정을 위반할 경우 즉시 삭제되며 서비스<br />
+							이용이 제한될 수 있습니다. 지속적인 위반 시, 별도의<br />
+							통보 없이 탈퇴 처리될 수 있습니다.
+							</p>
+						</div>
 
-					<!-- 텍스트 입력 -->
-					<a href="login/login.php"><textarea
-						class="review_input"
-						placeholder="지금 바로 로그인 하고 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
-						disabled
-					></textarea></a>
+						<!-- 별점 -->
+						<div class="star_rating">
+							<img src="img/star_6f6c76.png" alt="1점" data-value="1" class="star" />
+							<img src="img/star_6f6c76.png" alt="2점" data-value="2" class="star" />
+							<img src="img/star_6f6c76.png" alt="3점" data-value="3" class="star" />
+							<img src="img/star_6f6c76.png" alt="4점" data-value="4" class="star" />
+							<img src="img/star_6f6c76.png" alt="5점" data-value="5" class="star" />
+						</div>
 
-					<!-- 등록 버튼 -->
-					<a href="login/login.php"><button type="button" class="register_btn" disabled>
-						등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
-					</button></a>
-					</div>
+						<!-- 텍스트 입력 -->
+						<a href="login/login.php"><textarea
+							class="review_input"
+							placeholder="지금 바로 로그인 하고 리뷰를 작성해 또다른 무브오너들의 취향 형성에 기여해주세요!"
+							disabled
+						></textarea></a>
+
+						<!-- 등록 버튼 -->
+						<a href="login/login.php"><button type="button" class="register_btn" disabled>
+							등록하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
+						</button></a>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 
 <!-- 📝 전체 리뷰 리스트 -->	
@@ -528,7 +533,9 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 									?>
 								</span>
 							</div>
-							<p class="review_text"><?= nl2br(htmlspecialchars($user_review['content'])) ?></p>
+
+							<!-- ✅ 수정 가능한 리뷰 입력란 -->
+							<textarea class="review_input2" placeholder="리뷰를 입력하세요." disabled><?= htmlspecialchars($user_review['content']) ?></textarea>
 
 							<button type="button" class="bookmark_btn">
 								+<?= $user_review['likes'] ?>
@@ -536,10 +543,22 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 							</button>
 						</li>
 
-						<button type="button" class="edit_btn">
-						수정하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
-						</button>
-					</div>
+							<!-- ✅ 버튼 영역 -->
+							<div class="review_btns">
+								<button type="button" class="edit_btn edit_btnC">
+									수정하기 <img src="img/pen_6f6c76.png" alt="pen_icon" />
+								</button>
+								<button type="button" class="save_btn edit_btnC" style="display:none;">
+									저장하기 <img src="img/pen_6f6c76.png" alt="check_icon" />
+								</button>
+								<button type="button" class="cancel_btn edit_btnC" style="display:none;">
+									취소 <img src="img/pen_6f6c76.png" alt="cancel_icon" />
+								</button>
+								<button type="button" class="delete_btn edit_btnC">
+									삭제하기 <img src="img/pen_6f6c76.png" alt="trash_icon" />
+								</button>
+							</div>
+						</div>
 					<?php endif; ?>
 				</section>
 
@@ -808,62 +827,159 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 			});
 
 			// 별점,댓글 저장
-			document.addEventListener("DOMContentLoaded", () => {
-			const stars = document.querySelectorAll(".star_rating .star");
-			const textarea = document.querySelector(".review_input");
-			const registerBtn = document.querySelector(".register_btn");
+			<?php if (!$user_review): ?>
+				document.addEventListener("DOMContentLoaded", () => {
+				const stars = document.querySelectorAll(".star_rating .star");
+				const textarea = document.querySelector(".review_input");
+				const registerBtn = document.querySelector(".register_btn");
+				
+				let selectedRating = null;
 
-			let selectedRating = null;
-
-			// ⭐ 별 클릭 시 별점 설정
-			stars.forEach((star, index) => {
-				star.addEventListener("click", () => {
-				selectedRating = star.dataset.value;
-				stars.forEach(s => s.src = "img/star_6f6c76.png");
-				for (let i = 0; i <= index; i++) {
-					stars[i].src = "img/star_49E99C.png"; // 선택된 별까지 활성화 이미지로 변경
-				}
-				});
-			});
-
-			// 💬 등록 버튼 클릭 시 DB에 전송
-			registerBtn.addEventListener("click", async () => {
-				const content = textarea.value.trim();
-
-				if (!content) {
-				alert("댓글 내용을 입력해주세요!");
-				return;
-				}
-
-				// PHP에 전달할 데이터
-				const data = {
-					movie_id: Number(<?= $movie_id ?>),
-					user_id: "<?= $userid ?>",
-					content: content,
-					rating: Number(selectedRating)
-				};
-
-				try {
-				const response = await fetch("login/comment_insert.php", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(data)
+				// ⭐ 별 클릭 시 별점 설정
+				stars.forEach((star, index) => {
+					star.addEventListener("click", () => {
+					selectedRating = star.dataset.value;
+					stars.forEach(s => s.src = "img/star_6f6c76.png");
+					for (let i = 0; i <= index; i++) {
+						stars[i].src = "img/star_49E99C.png"; // 선택된 별까지 활성화 이미지로 변경
+					}
+					});
 				});
 
-				const result = await response.text();
+				// 💬 등록 버튼 클릭 시 DB에 전송
+				registerBtn.addEventListener("click", async () => {
+					const content = textarea.value.trim();
 
-				if (response.ok && result.trim() === "success") {
-					alert("댓글이 등록되었습니다!");
-					location.reload();
-				} else {
-					alert("댓글 등록 실패: " + result);
-				}
-				} catch (error) {
-				console.error(error);
-				alert("서버 요청 중 오류가 발생했습니다.");
-				}
-			});
-			});
+					if (!content) {
+					alert("댓글 내용을 입력해주세요!");
+					return;
+					}
+
+					// PHP에 전달할 데이터
+					const data = {
+						movie_id: Number(<?= $movie_id ?>),
+						user_id: "<?= $userid ?>",
+						content: content,
+						rating: Number(selectedRating)
+					};
+
+					try {
+					const response = await fetch("login/comment_insert.php", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(data)
+					});
+
+					const result = await response.text();
+
+					if (response.ok && result.trim() === "success") {
+						alert("댓글이 등록되었습니다!");
+						location.reload();
+					} else {
+						alert("댓글 등록 실패: " + result);
+					}
+					} catch (error) {
+					console.error(error);
+					alert("서버 요청 중 오류가 발생했습니다.");
+					}
+				});
+				});
+			<?php endif; ?>
+
+
+			<?php if ($user_review): ?>
+				document.addEventListener("DOMContentLoaded", () => {
+					const editBtn = document.querySelector(".edit_btn");
+					const saveBtn = document.querySelector(".save_btn");
+					const cancelBtn = document.querySelector(".cancel_btn");
+					const deleteBtn = document.querySelector(".delete_btn");
+					const textarea = document.querySelector(".review_input2");
+					const stars = document.querySelectorAll(".star");
+
+					let rating = <?= (int)$user_review['rating'] ?>;
+					const originalContent = textarea.value;
+					const commentId = <?= (int)$user_review['id'] ?>;
+					const userId = <?= json_encode($userid) ?>;
+
+					// ⭐ 별 클릭 이벤트 (수정 중일 때만 활성화)
+					stars.forEach(star => {
+						star.addEventListener("click", () => {
+							if (textarea.disabled) return;
+							rating = parseInt(star.dataset.value);
+							stars.forEach(s => {
+								s.src = "img/" + (s.dataset.value <= rating ? "star_49E99C.png" : "star_6f6c76.png");
+							});
+						});
+					});
+
+					// ✏️ 수정 버튼 클릭
+					editBtn.addEventListener("click", () => {
+						textarea.disabled = false;
+						textarea.focus();
+						editBtn.style.display = "none";
+						saveBtn.style.display = "inline-block";
+						cancelBtn.style.display = "inline-block";
+					});
+
+					// ❌ 취소 버튼 클릭
+					cancelBtn.addEventListener("click", () => {
+						textarea.value = originalContent;
+						textarea.disabled = true;
+						editBtn.style.display = "inline-block";
+						saveBtn.style.display = "none";
+						cancelBtn.style.display = "none";
+					});
+
+					// 💾 저장 버튼 클릭
+					saveBtn.addEventListener("click", () => {
+						const content = textarea.value.trim();
+						if (!content) {
+							alert("리뷰 내용을 입력하세요.");
+							return;
+						}
+						fetch("login/comment_update.php", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({
+								comment_id: commentId,
+								user_id: userId,
+								content: content,
+								rating: rating
+							})
+						})
+						.then(res => res.text())
+						.then(msg => {
+							if (msg === "success") {
+								alert("리뷰가 수정되었습니다.");
+								location.reload();
+							} else {
+								alert(msg);
+							}
+						});
+					});
+
+					// 🗑️ 삭제 버튼 클릭
+					deleteBtn.addEventListener("click", () => {
+						if (!confirm("정말 삭제하시겠습니까?")) return;
+
+						fetch("login/comment_delete.php", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ comment_id: commentId, user_id: userId })
+						})
+						.then(res => res.text())
+						.then(msg => {
+							if (msg === "success") {
+								alert("리뷰가 삭제되었습니다.");
+								location.reload();
+							} else {
+								alert(msg);
+							}
+						});
+					});
+				});
+			<?php endif; ?>
+
 
 			// 영화 밸런스 질문
 			const balanceQuestions = [

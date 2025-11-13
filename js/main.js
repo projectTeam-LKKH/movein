@@ -82,16 +82,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //
-const reviewBtn = document.querySelector(".review-input");
-const reviewForm = document.querySelector(".review-form");
+// const reviewBtn = document.querySelector(".review-input");
+// const reviewForm = document.querySelector(".review-form");
 
-reviewForm.style.display = "none";
+// reviewForm.style.display = "none";
 
-reviewBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  reviewForm.style.display =
-    reviewForm.style.display === "none" ? "block" : "none";
-});
+// reviewBtn.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   reviewForm.style.display =
+//     reviewForm.style.display === "none" ? "block" : "none";
+// });
 
 //------------------아직 작업 전입니다.
 // 화면 최상단에서 아래로 스와이프하는 경우 감지

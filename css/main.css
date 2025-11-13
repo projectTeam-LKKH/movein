@@ -674,11 +674,39 @@ button {
   margin-bottom: 11rem;
 }
 
+
+/* 자동완성 결과 리스트 */
+#search-result {
+  position: absolute; /* absolute -> fixed */
+  top:35px;
+  left: 0%;        /* input 위치 맞춤 */
+  width: 90%;      /* input 폭 맞춤 */
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--c-gray);
+  color: var(--c-font);
+  border-radius: 8px;
+  padding: 5px 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  -webkit-overflow-scrolling: touch;
+}
+
+#search-result li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: var(--c-font); /* 글씨 색 다크모드용 */
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#search-result li:hover {
+  background: rgba(255,255,255,0.1); /* 호버 효과 */
+}
 /* 시각적으로만 숨기고 스크린리더엔 보이게 */
 .visually-hidden {
   position: absolute;
   width: 1px;
-  height: 1px;
+  height: 150px; /* 밑에 감상평 입력할 란이 없어서 */
   padding: 0;
   margin: -1px;
   overflow: hidden;
