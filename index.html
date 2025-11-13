@@ -528,6 +528,21 @@
                       </div>
                       <!-- 자동완성 목록 들어가는 곳(나중에 css 잡기)-->
                         <ul id="search-result" class="search-result"></ul>
+
+                      <!-- 2025.11.13 김하빈 추가 (별점) -->
+                      <!-- 별 한개~다섯개까지 별점을 줄 수 있음 -->
+                      <!-- 위 작품 검색해서 작품을 검색하고 지정했을 시에만 별점을 줄 수 있습니다 -->
+                       <!-- img/star_6f6c76.png 에서 선택되면 img/star_49E99C.png로 아이콘 변경 -->
+                      <div class="star-box">
+                        <p class="rating-label">선택한 이 작품, 내 별점은?</p>
+                          <div class="rating-stars" data-rating="0">
+                            <button type="button" class="star" data-value="1" aria-label="star1"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                            <button type="button" class="star" data-value="2" aria-label="star2"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                            <button type="button" class="star" data-value="3" aria-label="star3"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                            <button type="button" class="star" data-value="4" aria-label="star4"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                            <button type="button" class="star" data-value="5" aria-label="star5"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                          </div>
+                      </div>
                       <!-- [2] 감상평 입력 -->
                       <div class="review-text-box">
                         <label for="review-text" class="skip">감상평</label>

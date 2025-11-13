@@ -574,7 +574,7 @@ button {
 
 .review-form.open {
   visibility: visible;
-  max-height: 125px;
+  max-height: max-content;
   z-index: 1;
 }
 
@@ -614,6 +614,33 @@ button {
 .title-search-box button > img {
   width: 15px;
   height: 15px;
+}
+
+/* 2025.11.13 김하빈 자동완성 목록 들어가는 곳. 추후 수정예정 */
+#search-result {
+  width: 100%;
+  height: max-content;
+}
+#search-result > li {
+  color: var(--c-font);
+}
+
+/* 2025.11.13 김하빈 추가 별점 박스 */
+.star-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.rating-label {
+  color: var(--c-main2);
+  font-weight: 700;
+}
+
+.star > img {
+  width: 20px;
 }
 
 .review-text-box {
