@@ -10,6 +10,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // 모든 버블에 공통 적용할 그라데이션 옵션
   const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
+  // 2025.11.13 오후 8시 44분 김하빈 수정
+  const GRAD_OPT_FIRST = { gradient: { inner: "#FF6B6B", outer: "#FFB3B3" } }; // ← 1순위 전용 색상
 
   const allGenres = [
     { name: "애니", color: "#8670FF" },

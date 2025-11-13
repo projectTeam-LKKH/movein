@@ -1,5 +1,4 @@
-// genre-bubbles.js
-// 2025-11-10 정리본 : 전역 테두리, 패딩, 커스텀 렌더 일원화 + 라벨 폰트 고정(rem)
+//<!-- 이 파일은 테스트용 파일입니다. 절대 다른 파일에 덮어쓰지 마세요.
 
 const BUBBLE_PADDING = 20; // 버블 간격(px)
 const OUTLINE_COLOR = "#252426"; // 테두리 색상
@@ -114,6 +113,7 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         gradient: opts.gradient || null,
         fontWeight: opts.fontWeight || LABEL_FONT_WEIGHT_DEFAULT, // ← [강조 데이터용 굵기]
         fontColor: opts.fontColor || LABEL_FONT_COLOR_DEFAULT, // ← [글자색(테마별 변경 가능)]
+        overlayColor: opts.overlayColor || null,
       };
 
       World.add(world, body);
@@ -173,13 +173,23 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         ctx.fillStyle = b.plugin.fontColor || LABEL_FONT_COLOR_DEFAULT;
         ctx.fillText(name, b.position.x, b.position.y);
 
-        /**
-         * 예시:
-         * const score = b.plugin.score || null;
-         * if (score) ctx.fillText(`${name} ${score}%`, b.position.x, b.position.y);
-         *
-         * → [데이터 주입 지점 ④] : 점수·비율·랭크 표시 가능
-         */
+        // ⭐ 1순위 등 overlayColor가 지정된 버블만 반투명 오버레이 추가
+        if (b.plugin.overlayColor) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+          ctx.clip();
+
+          ctx.fillStyle = b.plugin.overlayColor; // 예: rgba(73, 233, 156, 0.5)
+          ctx.fillRect(
+            b.position.x - rDraw,
+            b.position.y - rDraw,
+            rDraw * 2,
+            rDraw * 2
+          );
+
+          ctx.restore();
+        }
       });
     });
 

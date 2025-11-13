@@ -530,12 +530,12 @@ button {
 /* 감상평 남기기 */
 .review-input {
   width: 90%;
-  margin: 5vw auto;
+  margin: 16px auto 5vw auto;
 }
 
 .review-input1 {
   width: 90%;
-  margin: 5vw auto;
+  margin: 16px auto 5vw auto;
 }
 .review-input-box {
   display: flex;
