@@ -32,6 +32,44 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//가로 스크롤
+// index.html의 scroll탭 가로 스크롤
+const boxes = document.querySelectorAll(
+  ".favorite-list, .hot-wrap, .poster-box, .review-wrap"
+);
+
+boxes.forEach((box) => {
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  box.addEventListener("mousedown", (e) => {
+    isDown = true;
+    box.classList.add("active");
+    startX = e.pageX - box.offsetLeft;
+    scrollLeft = box.scrollLeft;
+  });
+
+  box.addEventListener("mouseleave", () => {
+    isDown = false;
+    box.classList.remove("active");
+  });
+
+  box.addEventListener("mouseup", () => {
+    isDown = false;
+    box.classList.remove("active");
+  });
+
+  box.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+
+    e.preventDefault();
+    const x = e.pageX - box.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    box.scrollLeft = scrollLeft - walk;
+  });
+});
+
 // 요즘 대세(영화/드라마) 버튼 토글 — 섹션별 독립 동작
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".hot-container").forEach((section) => {
