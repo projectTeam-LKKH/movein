@@ -2,10 +2,16 @@
 #header {
   position: fixed;
   width: 100%;
-  height: 70px;
   background: var(--c-bg);
   z-index: 50;
+}
+
+/* 헤더 컨테이너 추가하여 레이아웃 정렬 문제 해결 2025.11.14 김하빈 수정 */
+.header-container {
+  padding: 0 5vw;
+  height: 70px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -20,15 +26,19 @@
 
 .header-icon {
   display: flex;
-  padding: 0;
+  justify-content: end;
   height: 18px;
   gap: 14px;
+  padding: 0;
   cursor: pointer;
+  margin: 0;
 }
 
 /* ============= 햄버거 ============= */
 .modal-bg.active {
-  position: relative;
+  /* 포지션 바꿈 */
+  position: fixed;
+  inset: 0;
   z-index: 10;
   width: 100vw;
   height: 100vh;
