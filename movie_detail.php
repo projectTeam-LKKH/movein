@@ -847,38 +847,52 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 			});
 			});
 
+// 좋아요 버튼과 싫어요 버튼을 각각 변수로 지정
+const likeBtn = document.querySelector('.like_btn');
+const hateBtn = document.querySelector('.hate_btn');
 
-			document.addEventListener('DOMContentLoaded', function() {
-				const buttons = document.querySelectorAll('.like_btn, .hate_btn');
+// 버튼의 상태를 변경하는 함수
+function toggleButtonState(btn, isLike) {
+    const isActive = btn.classList.contains('active');
+    const img = btn.querySelector('img');
 
-				buttons.forEach(function(btn) {
-					btn.addEventListener('click', function() {
-						const img = this.querySelector('img');
-						const status = this.dataset.status; // 'like' 또는 'hate'
-						const movieId = this.dataset.movieId;
+    if (!isActive) {
+        // 버튼 활성화
+        btn.classList.add('active');
+        img.src = isLike ? 'img/like_icon_49E99C.png' : 'img/hate_icon_49E99C.png';
+    } else {
+        // 버튼 비활성화
+        btn.classList.remove('active');
+        img.src = isLike ? 'img/like_icon_6F6C76.png' : 'img/hate_icon_6F6C76.png';
+    }
+}
 
-						// active 클래스 토글
-						this.classList.toggle('active');
+// 좋아요 버튼 클릭 시
+likeBtn.addEventListener('click', function() {
+    // 좋아요 버튼 활성화
+    toggleButtonState(likeBtn, true);
+    // 싫어요 버튼 비활성화
+    if (hateBtn.classList.contains('active')) {
+        toggleButtonState(hateBtn, false);
+    }
+});
 
-						// 이미지 변경
-						if (this.classList.contains('active')) {
-							img.src = `img/${status}_icon_49E99C.png`;
-						} else {
-							img.src = `img/${status}_icon_6F6C76.png`;
-						}
+// 싫어요 버튼 클릭 시
+hateBtn.addEventListener('click', function() {
+    // 싫어요 버튼 활성화
+    toggleButtonState(hateBtn, true);
+    // 좋아요 버튼 비활성화
+    if (likeBtn.classList.contains('active')) {
+        toggleButtonState(likeBtn, false);
+    }
+});
 
-						// 추가로, 반대 버튼(active 상태) 제거
-						const oppositeBtn = document.querySelector(`.${status === 'like' ? 'hate_btn' : 'like_btn'}[data-movie-id="${movieId}"]`);
-						if (oppositeBtn && oppositeBtn.classList.contains('active')) {
-							oppositeBtn.classList.remove('active');
-							const oppImg = oppositeBtn.querySelector('img');
-							const oppStatus = oppositeBtn.dataset.status;
-							oppImg.src = `img/${oppStatus}_icon_6F6C76.png`;
-						}
 
-					});
-				});
-			});
+
+
+
+
+
 			//  i아이콘 클릭
 			document.addEventListener("DOMContentLoaded", function() {
 			const infoIcon = document.getElementById("i_icon");
@@ -898,45 +912,44 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 
 
 			// 좋아요 싫어요 여부 서버 저장
-			document.addEventListener("DOMContentLoaded", function() {
-			const likeButtons = document.querySelectorAll(".like_box button");
+			//const likeBtn = document.querySelector('.like_btn');
+			//const hateBtn = document.querySelector('.hate_btn');
 
-			likeButtons.forEach(btn => {
-				btn.addEventListener("click", function() {
-				const movieId = this.dataset.movieId;
-				const status = this.dataset.status;
+function updateLikeUI(status) {
+    // 모든 버튼 active 제거
+    document.querySelectorAll(".like_box button").forEach(btn => btn.classList.remove("active"));
+    
+    // status가 none이 아니면 해당 버튼만 active
+    if (status !== "none") {
+        const btn = document.querySelector(`.like_box button[data-status="${status}"]`);
+        if (btn) btn.classList.add("active");
+    }
+}
 
-				// ✅ 로그인 여부 확인 (PHP 변수로 전달)
-				const isLoggedIn = <?= isset($userid) ? 'true' : 'false' ?>;
+// 버튼 클릭 이벤트
+[likeBtn, hateBtn].forEach(btn => {
+    btn.addEventListener('click', () => {
+        const status = btn.dataset.status;
+        const movieId = btn.dataset.movieId;
 
-				if (!isLoggedIn) {
-					alert("로그인 후 이용해주세요 😊");
-					window.location.href = "login/login.php";
-					return;
-				}
+        fetch("login/like_process.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `movie_id=${movieId}&status=${status}`,
+            credentials: "include"
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateLikeUI(data.status);
+            } else {
+                alert(data.message || "오류가 발생했습니다.");
+            }
+        })
+        .catch(err => console.error(err));
+    });
+});
 
-				// ✅ AJAX 요청
-				fetch("login/like_process.php", {
-					method: "POST",
-					headers: { "Content-Type": "application/x-www-form-urlencoded" },
-					body: `movie_id=${movieId}&status=${status}`,
-					credentials: "include" // ✅ 세션 유지 (쿠키 전송)
-				})
-				.then(res => res.json())
-				.then(data => {
-					if (data.success) {
-						document.querySelectorAll(".like_box button").forEach(btn => btn.classList.remove("active"));
-						if (data.status !== "none") {
-							document.querySelector(`.like_box button[data-status="${data.status}"]`).classList.add("active");
-						}
-					} else {
-					alert(data.message || "오류가 발생했습니다.");
-					}
-				})
-				.catch(err => console.error(err));
-				});
-			});
-			});
 
 			// 별점,댓글 저장
 			<?php if (!$user_review): ?>
