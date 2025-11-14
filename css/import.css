@@ -23,7 +23,7 @@
 
 .header-icon {
   display: flex;
-  padding: 0 5vw;
+  padding: 0 5vw 0 0;
   height: 18px;
   gap: 14px;
   cursor: pointer;
