@@ -127,6 +127,40 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 		<link rel="stylesheet" href="css/a_sub.css" />
 		<link rel="stylesheet" href="css/b_sub.css" />
 		<link rel="stylesheet" href="css/import.css" />
+		<style>
+			.noimage-box {
+				width: 100%;
+				height: 100%;
+				background: var(--c-gray); /* 회색 배경 */
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden; /* 혹시 이미징 튀어나올 경우 방지 */
+				border-radius: 8px; /* 선택 : 보기 좋게 */
+			}
+
+			.noimage-box img {
+				width: 50px;
+				height: 50px;
+				object-fit: contain;
+				opacity: 0.7; /* 선택 : 아이콘 느낌 */
+			}
+			.noimage-box.square {
+				background: var(--c-gray);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+			}
+
+			/* 2번 noImage 이미지 아이콘 */
+			.noimage-box.square img {
+				width: 15%;
+				height: 15%;
+				object-fit: contain;
+				opacity: 0.7;
+			}
+		</style>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="js/import.js"></script>
 		<script src="js/babel.min.js"></script>
@@ -153,7 +187,23 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 					
 				} else {
 					$className = ($i === 1) ? "a_background_still" : "ImgSize" . $i;
-					$st_tags[$i] = '<img src="img/picture_6f6c76.png" alt="noImage" class="' . $className . '">';
+					
+					if ($i === 2) {
+						// 2번용 정사각형 noImage 박스
+						$st_tags[$i] = '
+							<div class="noimage-box square">
+								<img src="img/picture_6f6c76.png" alt="noImage">
+							</div>
+						';
+					} else {
+						// 3,4,5번 기본 noImage 박스
+						$st_tags[$i] = '
+							<div class="noimage-box">
+								<img src="img/picture_6f6c76.png" alt="noImage">
+							</div>
+						';
+					}
+					//$st_tags[$i] = '<img src="img/picture_6f6c76.png" alt="noImage" class="' . $className . '">';
 					// $st_tags[$i] = '<div style="width:100%; height:500px; background:#333; color:#eee; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
 				}
 			}
@@ -597,7 +647,17 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 							</div>
 						</div>
 					<?php endif; ?>
+					<?php
+						$has_real_image = true;
 
+						for ($i = 2; $i <= 5; $i++) {
+							if (strpos($st_tags[$i], 'alt="noImage"') === false) {
+								$has_real_image = true;
+								break;
+							}
+						}
+					?>
+				<?php if ($has_real_image): ?>
 					<!-- 스틸컷 섹션 -->
 					<div class="media_section stillcuts">
 						<h3 class="media_title">이미지</h3>
@@ -623,6 +683,7 @@ $like_percent = $total_count > 0 ? round(($like_count / $total_count) * 100, 1) 
 							</div>
 						</div>
 					</div>
+				<?php endif; ?>
 				</section>
 				</div>
 			</div>

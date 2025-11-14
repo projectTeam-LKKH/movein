@@ -210,9 +210,9 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                     $poster_path = sprintf("img/poster/pt%03d.webp", $movie['id']);
                     // 실제 서버 경로로 파일 존재 여부 확인
                     if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/movein/" . $poster_path)) {
-                      $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster" style="max-width:65px; max-height:65px;">';
+                      $img_tag = '<img src="' . htmlspecialchars($poster_path) . '" alt="poster">';
                     } else {
-                        $img_tag = '<img src="img/picture_6f6c76.png" alt="noImage"  style="max-width:65px; max-height:65px;">';
+                        $img_tag = '<img src="img/picture_6f6c76.png" alt="noImage">';
                         // $img_tag = '<div style="width:65px; height:65px; background:#eee; color:#555; display:flex; align-items:center; justify-content:center; text-align:center;">이미지 없음</div>';
                     }
 
@@ -460,11 +460,24 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                           <?= $img_tag ?>
                         </div>
                         <div class="right-box">
-                          <p class="work-name"><?= htmlspecialchars($review['title']) ?></p>
+                          <?php
+                          $title = htmlspecialchars($review['title']);
+                          if (mb_strlen($title) > 8) {
+                              $title = mb_substr($title, 0, 8) . '…';
+                          }
+                          ?>
+                          <p class="work-name"><?= $title ?></p>
+
                           <p class="user-review"><?= nl2br(htmlspecialchars($review['content'])) ?></p>
                           <div class="user-box">
                             <img src="img/user_6F6C76.png" alt="user icon">
-                            <p class="user-nick"><?= htmlspecialchars($review['username']) ?></p><span>님의 감상</span>
+                            <?php
+                              $nick = htmlspecialchars($review['username']);
+                              if (mb_strlen($nick) > 5) {
+                                  $nick = mb_substr($nick, 0, 5) . '…';
+                              }
+                              ?>
+                              <p class="user-nick"><?= $nick ?></p><span>님의 감상</span>
                           </div>
                         </div>
                       </a>
@@ -509,7 +522,17 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                   </div>
 
                   <ul id="search-result" class="search-result" style="top:30px;"></ul>
-
+                  <div class="star-box">
+                    <p class="rating-label">선택한 이 작품, 내 별점은?</p>
+                      <div class="rating-stars" data-rating="0">
+                        <button type="button" class="star" data-value="1" aria-label="star1"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                        <button type="button" class="star" data-value="2" aria-label="star2"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                        <button type="button" class="star" data-value="3" aria-label="star3"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                        <button type="button" class="star" data-value="4" aria-label="star4"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                        <button type="button" class="star" data-value="5" aria-label="star5"><img src="img/star_6f6c76.png" alt="starBtn"></button>
+                      </div>
+                      <input type="hidden" id="rating" name="rating" value="0">
+                  </div>
                   <!-- 감상평 입력 -->
                   <div class="review-text-box">
                     <label for="review-text" class="skip">감상평</label>
@@ -605,20 +628,21 @@ function showComingSoon() {
           btn.addEventListener("click", function() {
               const movieId = this.dataset.movieId;
               const img = this.querySelector("img");
-              let newStatus = img.src.includes("6f6c76") ? "like" : "hate"; // 빈하트 → like, 채워진 → hate
 
+              // 클릭 시 서버에 요청, 현재 상태 판단은 서버에서 처리
               fetch("login/like_process.php", {
                   method: "POST",
                   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                  body: `movie_id=${movieId}&status=${newStatus}`
+                  body: `movie_id=${movieId}`
               })
               .then(res => res.json())
               .then(data => {
                   if (data.success) {
+                      // 서버 상태에 따라 이미지 변경
                       if (data.status === "like") {
-                          img.src = "img/heart_49e99c.png";
+                          img.src = "img/heart_49e99c.png";  // 채워진 하트
                       } else {
-                          img.src = "img/heart_6f6c76.png";
+                          img.src = "img/heart_6f6c76.png";  // 빈 하트
                       }
                   } else {
                       alert(data.message || "오류가 발생했습니다.");
@@ -628,6 +652,7 @@ function showComingSoon() {
           });
       });
   });
+
 
   const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
   // [A] 페이지 진입 시 버블 초기화
@@ -679,7 +704,7 @@ function showComingSoon() {
     const randVal = pickRandomMovieId() ?? 172;  // 영화 id 없으면 141로 fallback
     if (!isLoggedIn) {
       // ✅ 비로그인도 전부 그라데이션
-      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT, idx, 283));
+      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT, 1, 283));
     } else {
       const base = 40, max = 90, step = 5;
 
@@ -804,8 +829,23 @@ reviewBtn.addEventListener("click", (e) => {
     reviewForm.classList.remove("open");
   });
 });
-}
 
+// 별점 선택
+const stars = document.querySelectorAll(".star-box .star");
+const ratingInput = document.getElementById("rating");
+
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    const value = parseInt(star.dataset.value);
+    ratingInput.value = value; // hidden input에 값 저장
+
+    // UI 반영: 클릭한 별까지 활성화
+    stars.forEach(s => {
+      const sValue = parseInt(s.dataset.value);
+      s.querySelector("img").src = sValue <= value ? "img/star_49E99C.png" : "img/star_6f6c76.png";
+    });
+  });
+});
 // 감상평 입력
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("work-name");
@@ -849,6 +889,11 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       return;
     }
+    if (ratingInput.value < 1 || ratingInput.value > 5) {
+      alert("별점을 선택해주세요.");
+      e.preventDefault();
+      return;
+    }
 
     // 기존 리뷰 존재 여부 체크
     const checkRes = await fetch("login/review_insert.php", {
@@ -870,6 +915,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+}
 
 </script>
   </body>

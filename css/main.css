@@ -89,7 +89,6 @@ button {
   background: transparent;
   padding-left: 0.5rem;
   border-radius: 50px;
-  color: var(--c-font);
 }
 
 /* 닉네임 활성화 칸 */
@@ -183,7 +182,6 @@ button {
 
 .favorite-gutter {
   width: 100%;
-  overflow-x: hidden;
 }
 
 /* 가로 스크롤 세팅 2025.11.14 김하빈 수정*/
@@ -191,7 +189,6 @@ button {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  display: flex;
   cursor: grab;
 }
 
@@ -205,10 +202,6 @@ button {
 .favorite-list.active {
   cursor: grabbing;
 } /* 가로 스크롤 세팅 마무리*/
-
-.favorite-list::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
 
 .favorite-list-box {
   display: flex;
@@ -260,8 +253,8 @@ button {
 .favorite-thing > .likeBtn {
   position: absolute;
   z-index: 1;
-  right: 15px;
-  bottom: 10px;
+  right: 10px;
+  bottom: 5px;
   transition: transform 0.15s ease-out;
 }
 
@@ -663,6 +656,7 @@ button {
   width: 100%;
   display: flex;
   height: 40px;
+  margin-top: 0.5rem;
 }
 
 #work-name {
@@ -670,6 +664,7 @@ button {
   background: var(--c-gray);
   border: 0;
   color: var(--c-font);
+  font-size: var(--fs3);
 }
 
 #work-name::placeholder {
@@ -696,9 +691,14 @@ button {
   width: 100%;
   height: max-content;
   background: var(--c-gray);
+  margin-bottom: 1rem;
 }
 #search-result > li {
-  color: var(--c-font);
+  color: var(--c-gray3);
+  font-size: var(--fs2);
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 8px 0;
 }
 
 /* 2025.11.13 김하빈 추가 별점 박스 */
@@ -707,7 +707,7 @@ button {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
 .rating-label {
@@ -728,7 +728,7 @@ button {
 }
 #review-text {
   width: 100%;
-
+  font-size: var(--fs3);
   background: var(--c-gray);
   border: none;
   color: var(--c-font);

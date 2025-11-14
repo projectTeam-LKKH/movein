@@ -6,15 +6,17 @@ $nickname = $_SESSION['nickname'] ?? null;
 $userid = $_SESSION['userid'] ?? null;
 ?>
 <header id="header">
-	<div class="headerbox">
-		<a href="index.php">
-			<img src="img/logo.png" alt="MOVEINlogo" />
-		</a>
-	</div>
+	<div class="header-container">
+		<div class="headerbox">
+			<a href="index.php">
+				<img src="img/logo.png" alt="MOVEINlogo" />
+			</a>
+		</div>
 
-	<div class="header-icon">
-		<img src="img/alarm_f5f5f5.png" alt="alarm" />
-		<img class="hambtn" src="img/hamburger_f5f5f5.png" alt="hamburger" />
+		<div class="header-icon">
+			<img src="img/alarm_f5f5f5.png" alt="alarm" />
+			<img class="hambtn" src="img/hamburger_f5f5f5.png" alt="hamburger" />
+		</div>
 	</div>
 
 	<nav class="hamburger">

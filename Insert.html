@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/NewMovie.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>신규 영화 업로드</title>
+</head>
+<body>
+    <h2>영화 업로드</h2>
+
+    <form id="movieForm">
+        <label>제목: <input type="text" name="title" required></label><br>
+        <label>장르 선택:</label>
+        <div class="toggle-group" id="genreButtons">
+            <button type="button" data-value="애니">애니</button>
+            <button type="button" data-value="드라마">드라마</button>
+            <button type="button" data-value="액션">액션</button>
+            <button type="button" data-value="SF">SF</button>
+            <button type="button" data-value="코미디">코미디</button>
+            <button type="button" data-value="판타지">판타지</button>
+            <button type="button" data-value="스릴러">스릴러</button>
+            <button type="button" data-value="로맨스">로맨스</button>
+        </div>
+        <label>감독: <input type="text" name="director"></label><br>
+        <label>제작사: <input type="text" name="producer"></label><br>
+        <label>배급사: <input type="text" name="distributor"></label><br>
+        <label>공개일: <input type="date" name="release_date" min="1900-01-01" max="2100-12-31"></label><br>
+        <label>상영시간: <input type="number" name="running_time"></label><br>
+        
+        <label>스트리밍 선택:</label>
+        <div class="toggle-group" id="streamingButtons">
+            <button type="button" data-value="Netflix">Netflix</button>
+            <button type="button" data-value="Watcha">Watcha</button>
+            <button type="button" data-value="Wavve">Wavve</button>
+            <button type="button" data-value="TVING">TVING</button>
+            <button type="button" data-value="Disney+">Disney+</button>
+            <button type="button" data-value="Coupang">Coupang</button>
+            <button type="button" data-value="Other">Other</button>
+        </div>
+        <label>등급: <input type="text" name="rating"></label><br>
+        <label>종류: <input type="text" name="type"></label><br>
+        <label>줄거리: <textarea name="summary"></textarea></label><br>
+        <label>메모: <textarea name="memo"></textarea></label><br>
+        <button type="submit">업로드</button>
+    </form>
+
+    <h3>업로드 완료 후 생성된 버튼</h3>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('movieForm');
+        const resultDiv = document.getElementById('result');
+
+        // 토글 버튼 기능
+        function setupToggleButtons(containerId) {
+            const container = document.getElementById(containerId);
+            const selected = new Set();
+
+            container.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const value = btn.dataset.value;
+                    if (selected.has(value)) {
+                        selected.delete(value);
+                        btn.classList.remove('active');
+                    } else {
+                        selected.add(value);
+                        btn.classList.add('active');
+                    }
+                });
+            });
+
+            return () => Array.from(selected);
+        }
+
+        const getSelectedGenres = setupToggleButtons('genreButtons');
+        const getSelectedStreaming = setupToggleButtons('streamingButtons');
+
+        // 폼 제출
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            // 날짜 안전 처리: YYYY-MM-DD 형식 체크
+            let release_date = formData.get('release_date');
+            if (release_date && !/^\d{4}-\d{2}-\d{2}$/.test(release_date)) {
+                release_date = null;
+            }
+            if (release_date.length === 4) {
+                release_date += "-01-01"; // 기본값으로 1월 1일 추가
+            }
+            const data = {
+                title: formData.get('title'),
+                genre: getSelectedGenres(),
+                director: formData.get('director'),
+                producer: formData.get('producer'),
+                distributor: formData.get('distributor'),
+                release_date: release_date,
+                running_time: formData.get('running_time') ? parseInt(formData.get('running_time')) : null,
+                streaming: getSelectedStreaming(),
+                rating: formData.get('rating'),
+                type: formData.get('type'),
+                summary: formData.get('summary'),
+                memo: formData.get('memo')
+            };
+
+            fetch('login/upload_movie.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.text())
+            .then(html => {
+                resultDiv.innerHTML = html; // PHP에서 반환한 <a> 버튼 삽입
+            })
+            .catch(err => {
+                console.error(err);
+                resultDiv.innerText = '업로드 실패';
+            });
+        });
+    </script>
+</body>
+</html>

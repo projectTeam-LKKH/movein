@@ -480,7 +480,7 @@ html {
 #tab_media {
   width: 90%;
   max-width: 800px; /* PC 화면에서는 가운데 정렬된 넓이 */
-  margin: 100px auto;
+  margin: 50px auto;
   background-color: var(--c-bg);
   color: var(--c-font);
 }
