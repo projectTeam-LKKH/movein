@@ -1,3 +1,10 @@
+<?php
+session_start();
+include_once '../login/db_connect.php'; // DB 연결 파일
+
+$nickname = $_SESSION['nickname'] ?? null;
+$userid = $_SESSION['userid'] ?? null;
+?>
 <header id="header">
 	<div class="headerbox">
 		<a href="index.php">
@@ -94,12 +101,17 @@
 
 			<li class="ham-title">
 				<span>로그인 설정</span>
-				<ul class="ham-sub-box">
-					<li class="ham-sub">로그인</li>
-					<li class="ham-sub">회원가입</li>
-					<li class="ham-sub">닉네임 변경</li>
-					<li class="ham-sub">비밀번호 변경</li>
-				</ul>
+              <ul class="ham-sub-box">
+                <?php if ($nickname): ?>
+                  <!-- ✅ 로그인된 상태 -->
+                  <li class="ham-sub"><a href="login/reset_password.php">비밀번호 변경</a></li>
+                  <li class="ham-sub"><a href="login/logout.php">로그아웃</a></li>
+                <?php else: ?>
+                  <!-- ❌ 로그인 안된 상태 -->
+                  <li class="ham-sub"><a href="login/login.php">로그인</a></li>
+                  <li class="ham-sub"><a href="login/register.php">회원가입</a></li>
+                <?php endif; ?>
+              </ul>
 			</li>
 		</ul>
 		<!-- 실제로 햄버거 메뉴 안에서 표시할 보이는 푸터(푸터로 인식되지 않음) -->

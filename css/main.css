@@ -18,9 +18,16 @@ body.lock {
   overflow: hidden;
 }
 
+/* 이미지 드래그 막아 가로 스크롤 방해 없게 2025.11.14 김하빈 수정 */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
 a,
 span,
 p {
+  -webkit-user-drag: none;
+  user-select: none;
   text-decoration: none;
   color: var(--c-font);
   line-height: 1.6;
@@ -82,7 +89,6 @@ button {
   background: transparent;
   padding-left: 0.5rem;
   border-radius: 50px;
-  color: var(--c-font);
 }
 
 /* 닉네임 활성화 칸 */
@@ -179,12 +185,25 @@ button {
   overflow-x: hidden;
 }
 
+/* 가로 스크롤 세팅 2025.11.14 김하빈 수정*/
 .favorite-list {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   display: flex;
+  cursor: grab;
 }
+
+.favorite-list,
+.favorite-list * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.favorite-list.active {
+  cursor: grabbing;
+} /* 가로 스크롤 세팅 마무리*/
 
 .favorite-list::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
@@ -211,7 +230,8 @@ button {
   aspect-ratio: 1 / 1;
 }
 
-.favorite-thing-one > img {
+/* 2025-11-13 오후 5시 53분 김하빈 수정 */
+.favorite-thing > a > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -235,11 +255,17 @@ button {
 }
 
 /* 좋아요 버튼 */
-.likeBtn {
+/* 좋아요 버튼 위치 오류로 2025.11.13 김하빈 수정 */
+.favorite-thing > .likeBtn {
   position: absolute;
   z-index: 1;
-  right: 6px;
-  bottom: 3px;
+  right: 15px;
+  bottom: 10px;
+  transition: transform 0.15s ease-out;
+}
+
+.favorite-thing > .likeBtn .active {
+  transform: scale(1.15);
 }
 
 .likeBtn > img {
@@ -284,11 +310,23 @@ button {
   width: 100%;
   overflow-x: hidden;
 }
+/* 가로 스크롤 세팅 2025.11.14 김하빈 수정 */
 .hot-wrap {
   padding: 0 5vw;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  cursor: grab;
+}
+
+.hot-wrap,
+.hot-wrap * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.hot-wrap.active {
+  cursor: grabbing;
 }
 
 .hot-nav-box {
@@ -379,12 +417,26 @@ button {
   width: 100%;
   overflow-x: hidden;
 }
+
+/* 가로 스크롤 세팅 2025.11.14 김하빈 수정 */
 .poster-box {
   display: flex;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0 5vw;
+  cursor: grab;
+}
+
+.poster-box,
+.poster-box * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.poster-box.active {
+  cursor: grabbing;
 }
 
 .all-posters {
@@ -443,12 +495,27 @@ button {
 .review-container {
   width: 100%;
 }
+
+/* 가로 스크롤 세팅 2025.11.14 김하빈 수정 */
 .review-wrap {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 0 5vw;
+  cursor: grab;
 }
+
+.review-wrap,
+.review-wrap * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.review-wrap.acrive {
+  cursor: grabbing;
+}
+
 .review-card-box {
   width: max-content;
   display: flex;
@@ -524,7 +591,12 @@ button {
 /* 감상평 남기기 */
 .review-input {
   width: 90%;
-  margin: 5vw auto;
+  margin: 16px auto 5vw auto;
+}
+
+.review-input1 {
+  width: 90%;
+  margin: 16px auto 5vw auto;
 }
 .review-input-box {
   display: flex;
@@ -546,6 +618,7 @@ button {
   font-size: var(--fs2);
   color: var(--c-gray2);
 }
+
 .formBtn > img {
   display: flex;
   width: 15px;
@@ -575,7 +648,7 @@ button {
 
 .review-form.open {
   visibility: visible;
-  max-height: 125px;
+  max-height: max-content;
   z-index: 1;
 }
 
@@ -615,6 +688,34 @@ button {
 .title-search-box button > img {
   width: 15px;
   height: 15px;
+}
+
+/* 2025.11.13 김하빈 자동완성 목록 들어가는 곳. 추후 수정예정 */
+#search-result {
+  width: 100%;
+  height: max-content;
+  background: var(--c-gray);
+}
+#search-result > li {
+  color: var(--c-font);
+}
+
+/* 2025.11.13 김하빈 추가 별점 박스 */
+.star-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.rating-label {
+  color: var(--c-main2);
+  font-weight: 700;
+}
+
+.star > img {
+  width: 20px;
 }
 
 .review-text-box {
@@ -675,39 +776,11 @@ button {
   margin-bottom: 11rem;
 }
 
-
-/* 자동완성 결과 리스트 */
-#search-result {
-  position: absolute; /* absolute -> fixed */
-  top:35px;
-  left: 0%;        /* input 위치 맞춤 */
-  width: 90%;      /* input 폭 맞춤 */
-  max-height: 400px;
-  overflow-y: auto;
-  background: var(--c-gray);
-  color: var(--c-font);
-  border-radius: 8px;
-  padding: 5px 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  -webkit-overflow-scrolling: touch;
-}
-
-#search-result li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  color: var(--c-font); /* 글씨 색 다크모드용 */
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-#search-result li:hover {
-  background: rgba(255,255,255,0.1); /* 호버 효과 */
-}
 /* 시각적으로만 숨기고 스크린리더엔 보이게 */
 .visually-hidden {
   position: absolute;
   width: 1px;
-  height: 150px; /* 밑에 감상평 입력할 란이 없어서 */
+  height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;

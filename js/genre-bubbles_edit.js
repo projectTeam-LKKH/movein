@@ -11,6 +11,13 @@ const LABEL_FONT_REM = 0.9375; // = 15px @ root 16px (고정)
 const LABEL_FONT_WEIGHT_DEFAULT = 400; // 기본 굵기(보통)
 const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
 
+//🔥 1) 이미지 미리 로드
+const posterImg = new Image();
+posterImg.src = "img/poster/pt283.webp";
+let posterLoaded = false;
+posterImg.onload = () => {
+  posterLoaded = true;
+};
 (function () {
   const { Engine, Render, Runner, World, Bodies, Events } = Matter;
 
@@ -56,16 +63,8 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
 
     const bubbles = [];
 
-    /**
-     * [데이터 주입 지점 ①]
-     * createGenreBubble()는 나중에 서버/DB/API에서 불러온
-     * 장르별 데이터(이름, 색상, 크기, 비율, 선호도 등)를
-     * 기반으로 호출될 예정.
-     */
-    function createGenreBubble(name, color, radius, opts = {}) {
-      const lw = Number.isFinite(opts.lineWidth)
-        ? opts.lineWidth
-        : OUTLINE_WIDTH;
+    function createGenreBubble(name, color, radius, opts = {}, idx) {
+      const lw = Number.isFinite(opts.lineWidth) ? opts.lineWidth : OUTLINE_WIDTH;
       const strokeColor = opts.strokeColor || OUTLINE_COLOR;
 
       // 배치(충돌 최소화)
@@ -91,9 +90,7 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         render: { visible: false },
       });
 
-      // [데이터 주입 지점 ②]
-      // labelMap은 "장르명"을 보여주기 위한 표기용 매핑.
-      // 나중에 다국어 데이터나 API 반환값(key:value)을 매핑할 때 수정 가능.
+      // label 매핑
       const labelMap = {
         애니: "애니",
         드라마: "드라마",
@@ -103,17 +100,17 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         판타지: "판타지",
         스릴러: "스릴러",
         로맨스: "로맨스",
-        // 예: "다큐멘터리": "다큐", "범죄": "CRIME"
       };
 
       body.plugin = {
-        label: labelMap[name] || name, // ← [장르명]
-        fill: color, // ← [버블 배경색: 장르별 색상 데이터]
-        stroke: strokeColor, // ← [테두리 색상: 필요 시 장르별 지정 가능]
+        label: labelMap[name] || name,
+        fill: color,
+        stroke: strokeColor,
         lineWidth: lw,
         gradient: opts.gradient || null,
-        fontWeight: opts.fontWeight || LABEL_FONT_WEIGHT_DEFAULT, // ← [강조 데이터용 굵기]
-        fontColor: opts.fontColor || LABEL_FONT_COLOR_DEFAULT, // ← [글자색(테마별 변경 가능)]
+        fontWeight: opts.fontWeight || LABEL_FONT_WEIGHT_DEFAULT,
+        fontColor: opts.fontColor || LABEL_FONT_COLOR_DEFAULT,
+        idx,
       };
 
       World.add(world, body);
@@ -126,9 +123,7 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      // rem → px 환산(루트 폰트 크기 기준)
-      const rootPx =
-        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
       const fixedPx = Math.round(LABEL_FONT_REM * rootPx);
 
       bubbles.forEach((b) => {
@@ -136,8 +131,54 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         const lw = b.plugin.lineWidth || OUTLINE_WIDTH;
         const rDraw = Math.max(0, rOuter - lw / 2);
 
-        // 채우기
-        if (b.plugin.gradient?.inner && b.plugin.gradient?.outer) {
+        // ⭐ idx=0이면 gradient 무시하고 초록색 강제
+        let fillStyle;
+        if (b.plugin.idx === 0) {
+          // 3) 그라데이션 생성
+           ctx.save(); // clip 시작 전에 save
+
+          // 1) 원을 clip 영역으로 지정
+           ctx.beginPath();
+           ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+           ctx.clip();
+
+          // 2) 이미지 그리기
+          if (posterLoaded) {
+            ctx.globalAlpha = 0.7;
+            ctx.drawImage(
+              posterImg,
+              b.position.x - rDraw,
+              b.position.y - rDraw,
+              rDraw * 2,
+              rDraw * 2
+            );
+            ctx.globalAlpha = 1.0;
+          }
+          const inner = "rgba(41, 131, 88, 0.1)";   // #298358 → RGBA
+          const outer = "rgba(73, 233, 156, 0.1)";  // #49e99c → RGBA
+
+          // 3) 그라데이션 fill — clip 안에서 바로 그려야 함
+          const grd = ctx.createRadialGradient(
+            b.position.x,
+            b.position.y,
+            0,
+            b.position.x,
+            b.position.y,
+            rDraw
+          );
+          grd.addColorStop(1, outer); // 투명 outer
+          grd.addColorStop(0, inner); // 투명 inner
+          ctx.globalAlpha = 0.1; 
+          fillStyle = grd;
+
+          ctx.beginPath();
+          ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+          ctx.fill();
+          // ctx.globalAlpha = 1.0; // 버블 투명도 다시 원래대로
+
+           ctx.restore(); // ★ 무조건 끝에서 한 번만 restore
+        }
+         else if (b.plugin.gradient?.inner && b.plugin.gradient?.outer) {
           const grd = ctx.createRadialGradient(
             b.position.x,
             b.position.y,
@@ -148,11 +189,13 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
           );
           grd.addColorStop(0, b.plugin.gradient.inner);
           grd.addColorStop(1, b.plugin.gradient.outer);
-          ctx.fillStyle = grd;
+          fillStyle = grd;
         } else {
-          ctx.fillStyle = b.plugin.fill;
+          fillStyle = b.plugin.fill;
         }
 
+        // 채우기
+        ctx.fillStyle = fillStyle;
         ctx.beginPath();
         ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
         ctx.fill();
@@ -164,22 +207,12 @@ const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
         ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
         ctx.stroke();
 
-        // [데이터 주입 지점 ③]
-        // 여기서 라벨 대신 다른 정보를 함께 표시할 수도 있음.
-        // 예: 장르명 + (%) 비율 or 점수
+        // 라벨
         const name = b.plugin.label;
         const weight = b.plugin.fontWeight || LABEL_FONT_WEIGHT_DEFAULT;
         ctx.font = `${weight} ${fixedPx}px ${LABEL_FONT_FAMILY}`;
         ctx.fillStyle = b.plugin.fontColor || LABEL_FONT_COLOR_DEFAULT;
         ctx.fillText(name, b.position.x, b.position.y);
-
-        /**
-         * 예시:
-         * const score = b.plugin.score || null;
-         * if (score) ctx.fillText(`${name} ${score}%`, b.position.x, b.position.y);
-         *
-         * → [데이터 주입 지점 ④] : 점수·비율·랭크 표시 가능
-         */
       });
     });
 

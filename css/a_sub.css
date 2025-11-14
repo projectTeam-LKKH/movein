@@ -216,6 +216,7 @@ html {
 	color: var(--c-font);
 	font-weight: 800;
 	text-align: left;
+	padding-top: 3rem;
 	/* display: none; */
 }
 
@@ -247,189 +248,6 @@ html {
 }
 
 /* 클릭했을 때 활성화 되는 테두리 제작.... */
-
-/* 카드 본체 활성화: 배경색 포인트색으로 변경 */
-.a_balance_card.active,
-.a_balance_card:active {
-	background-color: var(--c-point);
-	box-shadow: none;
-	filter: none;
-}
-
-/* ::after  카드 본체 위에 덮어씌울 >>검은색<< 영역 */
-.a_balance_card::after {
-	content: "";
-	position: absolute;
-	background-color: var(--c-bg);
-
-	/* 카드 본체보다 얇게 만들어서 테두리(카드 본체요!!) 노출 */
-	top: 4px;
-	/* 테두리 두께 4px */
-	left: 4px;
-	right: 4px;
-	bottom: 4px;
-
-	border-radius: 12px;
-	/* 카드 본체(15px)보다 약간 작게 */
-	z-index: 2;
-	/* 카드 본체(1)와 VS(10) 사이에 위치*/
-	transition: background-color 0.3s;
-}
-
-/* ::after 요소에도 clip-path 적용하여 사다리꼴 모양 유지 */
-.a_balance_card.left::after {
-	clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%);
-}
-
-.a_balance_card.right::after {
-	clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
-
-/* 두 카드 거의 딱 붙이고 VS 위에 띄우기*/
-.a_balance_game_container {
-	position: relative;
-	display: flex;
-	gap: 0;
-	margin-top: 2rem;
-	justify-content: center;
-}
-
-/* vs */
-.a_vs_divider {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	font-weight: 800;
-	color: #fff;
-	display: block;
-	font-size: 3.5rem;
-	z-index: 10;
-}
-
-/* 카드 내부 아이콘 (공통) - 경고 속성 제거 */
-.a_balance_card img.a_like_icon,
-.a_balance_card img.a_hate_icon {
-	position: absolute;
-	height: 24px;
-	z-index: 4;
-}
-
-/* 왼쪽 카드 아이콘 */
-.a_balance_card.left img.a_like_icon {
-	margin-left: 2rem;
-	top: 2rem;
-}
-
-/* 오른쪽 카드 아이콘 */
-.a_balance_card.right img.a_like_icon {
-	right: 30px;
-	bottom: 6rem;
-}
-
-/* 카드 내부 p (텍스트 값) */
-.a_balance_card p {
-	z-index: 4;
-	color: white;
-	font-size: var(--fs3);
-	font-weight: 800;
-}
-
-/* 왼쪽 카드 텍스트 정렬 */
-.a_balance_card.left p {
-	text-align: left;
-	margin-left: 2rem;
-	margin-top: 4.3rem;
-}
-
-/* 오른쪽 카드 텍스트 정렬 */
-.a_balance_card.right p {
-	text-align: right;
-	position: absolute;
-	right: 30px;
-	bottom: 30px;
-}
-
-/* 자.만.추 섹션 */
-.a_recommend_section {
-	width: 90%;
-	margin: 3rem auto 0;
-}
-
-/* 자.만.추 제목 */
-.a_recommend_title {
-	color: var(--c-font);
-	font-size: var(--fs4);
-	font-weight: 800;
-}
-/* 밸런스 게임*/
-.a_gameBox {
-	width: 100%;
-	background: var(--c-gray);
-	padding-bottom: 3rem;
-}
-
-/* 밸런스 게임 틀 */
-.a_balance_game_section {
-	width: 90%;
-	margin: 3rem auto;
-}
-
-/* 밸런스 게임 제목 (로그인) */
-.a_balance_game_title_login h2 {
-	font-size: var(--fs4);
-	color: var(--c-font);
-	font-weight: 800;
-	line-height: 1.4;
-	text-align: left;
-}
-/* 밸런스 게임 닉네임 */
-.a_balance_game_title_login h2 .a_user_nickname {
-	color: var(--c-main);
-}
-
-/* 제목(로그인)*/
-.a_balance_game_title_login {
-	padding-top: 3rem;
-	/* display: none; */
-}
-
-/* 제목 (비로그인) */
-.a_balance_game_title_non_login h2 {
-	font-size: var(--fs4);
-	color: var(--c-font);
-	font-weight: 800;
-	text-align: left;
-	display: none;
-}
-
-/* 밸런스 카드 공통 */
-.a_balance_card {
-	width: 100%;
-	height: 15rem;
-	background-color: var(--c-bg);
-	border-radius: 15px;
-	box-sizing: border-box;
-	display: flex;
-	/* 왼쪽 카드를 위해 flex-start 유지 */
-	justify-content: flex-start;
-	align-items: flex-start;
-	position: relative;
-	z-index: 1;
-	transition: background-color 0.3s;
-}
-
-/* 왼쪽 카드 */
-.a_balance_card.left {
-	clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%);
-	margin-right: -6%;
-}
-/* 오른쪽 카드 */
-.a_balance_card.right {
-	clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
-	margin-left: -6%;
-}
-
-/* 클릭했을 때 활성화 되는 테두리 제작 */
 
 /* 카드 본체 활성화: 배경색 포인트색으로 변경 */
 .a_balance_card.active,
@@ -587,7 +405,6 @@ html {
 	width: 100%;
 	height: auto;
 	display: block;
-	object-fit: cover;
 	border-radius: 20px;
 	box-shadow: 0 0 15px 3px var(--c-main);
 }
@@ -620,7 +437,7 @@ html {
 	white-space: nowrap;
 }
 
-/*  정보 보러 가기 버튼 */
+/* 정보 보러 가기 버튼 */
 .a_result_view_details_btn {
 	text-decoration: none;
 	color: var(--c-gray2);
@@ -635,10 +452,22 @@ html {
 	vertical-align: middle;
 }
 
+/* 다시 하기 */
+.a_balance_restart_btn {
+	background: none;
+	border: none;
+	color: var(--c-point);
+	font: var(--fs2);
+	cursor: pointer;
+	font-weight: 800;
+}
+
 /* 자.만.추 섹션 */
 .a_recommend_section {
 	width: 90%;
 	margin: 3rem auto 0;
+	padding-bottom: 65px;
+	/* 하단 네비게이션 바 높이만큼 내부 여백 추가 */
 }
 
 /* 자.만.추 제목 */
@@ -676,12 +505,14 @@ html {
 	height: 8rem;
 	justify-content: center;
 }
+
 /* 게임 영역 틀 */
 .a_card_icon_wrap {
 	border-radius: 15px;
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	/* 아이콘 틀 크기 고정 및 축소 방지 */
+	/* 60px -> 50px로 축소 (텍스트 깨짐 방지)  */
 	flex: 0 0 auto;
 	display: flex;
 	align-items: center;

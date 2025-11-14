@@ -559,20 +559,10 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
         </footer>
         <!-- 하단 메뉴바 -->
         <div id="bottom-nav"></div>
-
-    <!-- JS -->
-    <!-- JS -->
-     <script src="js/import.js"></script>
-    <script src="js/main.js"></script>
-
-    
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-  <!-- <script defer src="js/genre-bubbles.js"></script> -->
-
   <script src="js/import.js"></script>
-     <!-- <script src="js/genre-bubbles_init.js"></script> -->
-     <script defer src="js/genre-bubbles_edit.js"></script>
-    <script src="js/main.js"></script>
+  <script defer src="js/genre-bubbles_edit.js"></script>
+  <script src="js/main.js"></script>
   <script>
 
 function showComingSoon() {
@@ -632,6 +622,7 @@ function showComingSoon() {
       });
   });
 
+  const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
   // [A] 페이지 진입 시 버블 초기화
   window.addEventListener("DOMContentLoaded", () => {
     const app = window.genreBubbleApp?.init("genre-bubble-container");
@@ -639,7 +630,6 @@ function showComingSoon() {
 
     // PHP → JS
     const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
-    const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
 
     // 모든 버블에 공통 적용할 그라데이션 옵션
     const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
@@ -673,9 +663,9 @@ function showComingSoon() {
 
             const color = (idx === 0) ? "#49e99c" : g.color; // 1순위 색상 변경
 
-            app.createGenreBubble(g.name, color, size, opts);
+            app.createGenreBubble(g.name, color, size, opts, idx);
         } else {
-          app.createGenreBubble(g.name, g.color, base, GRAD_OPT);
+          app.createGenreBubble(g.name, g.color, base, GRAD_OPT, idx);
         }
       });
     }
@@ -757,17 +747,22 @@ document.addEventListener("click", (e) => {
 //   }
 // });
 
-const reviewBtn1 = document.querySelector(".review-input");
-const reviewForm1 = document.querySelector(".review-form");
+if (isLoggedIn) {
+const reviewBtn = document.querySelector(".review-input");
+const reviewForm = document.querySelector(".review-form");
+const prevBtn = document.querySelector(".prev-btn");
 
-// reviewForm1.style.display = "none";
+reviewForm.classList.remove("open");
 
-reviewBtn1.addEventListener("click", (e) => {
+reviewBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  reviewForm1.style.display =
-    // reviewForm1.style.display === "none" ? "block" : "none";
-    reviewForm1.classList.toggle("open");
+  reviewForm.classList.add("open");
+
+  prevBtn.addEventListener("click", () => {
+    reviewForm.classList.remove("open");
+  });
 });
+}
 
 // 감상평 입력
 document.addEventListener("DOMContentLoaded", () => {

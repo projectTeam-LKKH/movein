@@ -9,7 +9,7 @@ $(function () {
   });
 }); 이런 식으로 고쳐주시면 됩니다
   */
-  $("#header-slot").load("import/header.html", () => {
+  $("#header-slot").load("import/header.php", () => {
     const r = document.querySelector("#header-slot");
     const btn = r.querySelector(".hambtn");
     const nav = r.querySelector(".hamburger");
