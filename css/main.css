@@ -182,7 +182,6 @@ button {
 
 .favorite-gutter {
   width: 100%;
-  overflow-x: hidden;
 }
 
 /* 가로 스크롤 세팅 2025.11.14 김하빈 수정*/
@@ -190,7 +189,6 @@ button {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  display: flex;
   cursor: grab;
 }
 
