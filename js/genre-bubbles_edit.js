@@ -12,7 +12,7 @@ const LABEL_FONT_WEIGHT_DEFAULT = 400; // 기본 굵기(보통)
 const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
 
 //🔥 1) 이미지 미리 로드
-const posterImg = new Image();
+let posterImg = new Image();
 posterImg.src = "img/poster/pt283.webp";
 let posterLoaded = false;
 posterImg.onload = () => {
@@ -63,8 +63,16 @@ posterImg.onload = () => {
 
     const bubbles = [];
 
-    function createGenreBubble(name, color, radius, opts = {}, idx) {
-      const lw = Number.isFinite(opts.lineWidth) ? opts.lineWidth : OUTLINE_WIDTH;
+    function createGenreBubble(name, color, radius, opts = {}, idx, stNum) {
+      // idx가 0일 때만 stNum을 사용해 이미지 변경
+      if (idx === 0 && stNum !== undefined) {
+        posterLoaded = false; // 새 이미지 로드 시작
+        posterImg.src = `img/poster/pt${stNum}.webp`;
+        console.log(stNum);
+      }
+      const lw = Number.isFinite(opts.lineWidth)
+        ? opts.lineWidth
+        : OUTLINE_WIDTH;
       const strokeColor = opts.strokeColor || OUTLINE_COLOR;
 
       // 배치(충돌 최소화)
@@ -123,7 +131,8 @@ posterImg.onload = () => {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const rootPx =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
       const fixedPx = Math.round(LABEL_FONT_REM * rootPx);
 
       bubbles.forEach((b) => {
@@ -135,16 +144,20 @@ posterImg.onload = () => {
         let fillStyle;
         if (b.plugin.idx === 0) {
           // 3) 그라데이션 생성
-           ctx.save(); // clip 시작 전에 save
+          ctx.save(); // clip 시작 전에 save
 
           // 1) 원을 clip 영역으로 지정
-           ctx.beginPath();
-           ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
-           ctx.clip();
+          ctx.beginPath();
+          ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+          ctx.clip();
 
           // 2) 이미지 그리기
+          // 2) 이미지 그리기 (블러 추가 버전)
           if (posterLoaded) {
-            ctx.globalAlpha = 0.7;
+            ctx.save(); // 필터/알파 상태 보존
+            ctx.filter = "blur(5px)"; // 🔹 블러 강도: 10px (원하면 숫자만 조절)
+
+            ctx.globalAlpha = 1.0; // 이미지 자체는 불투명하게
             ctx.drawImage(
               posterImg,
               b.position.x - rDraw,
@@ -152,10 +165,13 @@ posterImg.onload = () => {
               rDraw * 2,
               rDraw * 2
             );
-            ctx.globalAlpha = 1.0;
+
+            ctx.filter = "none"; // 필터 원상복구
+            ctx.restore(); // 이 안에서 변경한 상태만 롤백
           }
-          const inner = "rgba(41, 131, 88, 0.1)";   // #298358 → RGBA
-          const outer = "rgba(73, 233, 156, 0.1)";  // #49e99c → RGBA
+
+          const inner = "rgba(41, 131, 88, 0.5)"; // #298358 → RGBA "rgba(41, 131, 88, 0.5)"
+          const outer = "rgba(73, 233, 156, 0.5)"; // #49e99c → RGBA
 
           // 3) 그라데이션 fill — clip 안에서 바로 그려야 함
           const grd = ctx.createRadialGradient(
@@ -168,7 +184,7 @@ posterImg.onload = () => {
           );
           grd.addColorStop(1, outer); // 투명 outer
           grd.addColorStop(0, inner); // 투명 inner
-          ctx.globalAlpha = 0.1; 
+          ctx.globalAlpha = 0.1;
           fillStyle = grd;
 
           ctx.beginPath();
@@ -176,9 +192,8 @@ posterImg.onload = () => {
           ctx.fill();
           // ctx.globalAlpha = 1.0; // 버블 투명도 다시 원래대로
 
-           ctx.restore(); // ★ 무조건 끝에서 한 번만 restore
-        }
-         else if (b.plugin.gradient?.inner && b.plugin.gradient?.outer) {
+          ctx.restore(); // ★ 무조건 끝에서 한 번만 restore
+        } else if (b.plugin.gradient?.inner && b.plugin.gradient?.outer) {
           const grd = ctx.createRadialGradient(
             b.position.x,
             b.position.y,

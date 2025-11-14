@@ -29,15 +29,22 @@ if ($first_favorite) {
   $sql = "
       SELECT id, title
       FROM movies
-      WHERE JSON_CONTAINS(genre, JSON_QUOTE(?))
+      WHERE (
+          JSON_CONTAINS(genre, JSON_QUOTE(?))
+          OR (? = '애니' AND JSON_CONTAINS(genre, JSON_QUOTE('애니메이션')))
+      )
       ORDER BY release_date DESC
       LIMIT 8
   ";
   $stmt = $connect->prepare($sql);
-  $stmt->bind_param('s', $first_favorite);
+  $stmt->bind_param('ss', $first_favorite, $first_favorite);
   $stmt->execute();
   $favorite_movies = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  
 }
+$favorite_movie_ids = array_column($favorite_movies, 'id');
+
+
 // 플랫폼 선택 (GET 파라미터)
 $platform = $_GET['platform'] ?? 'All'; // 기본값은 All
 $platform = trim($platform); // 혹시 공백 제거
@@ -644,15 +651,50 @@ function showComingSoon() {
       { name: "스릴러", color: "#8670FF" },
       { name: "로맨스", color: "#8670FF" },
     ];
+    const favoriteMovieIds = <?= json_encode($favorite_movie_ids) ?>;
 
+    function pickRandomMovieId() {
+      if (!favoriteMovieIds || favoriteMovieIds.length === 0) {
+        return null; // fallback 가능
+      }
+      const i = Math.floor(Math.random() * favoriteMovieIds.length);
+      return favoriteMovieIds[i];
+    }
+    
+    function getStillcutPath(stNum) {
+      const fallback = "img/poster/pt283.webp";
+      if (!stNum) return fallback;
+
+      const path = `img/poster/pt${stNum}.webp`;
+
+      // 이미지 존재 여부 확인 (비동기)
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(path);
+        img.onerror = () => resolve(fallback);
+        img.src = path;
+      });
+    }
+
+    const randVal = pickRandomMovieId() ?? 172;  // 영화 id 없으면 141로 fallback
     if (!isLoggedIn) {
       // ✅ 비로그인도 전부 그라데이션
-      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT));
+      allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT, idx, 283));
     } else {
       const base = 40, max = 90, step = 5;
 
-      allGenres.forEach((g) => {
+      allGenres.forEach(async (g) => {
         const idx = favoriteGenres.indexOf(g.name);
+        // 1) 랜덤 영화 id 가져오기
+        let finalVal = 283;
+        if (idx === 0) {
+          const stNum = pickRandomMovieId();
+          // 2) 이미지 존재 여부 체크 후 최종 값 얻기
+          const imgPath = await getStillcutPath(stNum);
+          const match = imgPath.match(/pt(\d+)/);
+          finalVal = match ? parseInt(match[1]) : 283; // fallback 보호
+        }
+
         if (idx !== -1) {
           const size = Math.max(base, max - idx * step);
 
@@ -663,9 +705,9 @@ function showComingSoon() {
 
             const color = (idx === 0) ? "#49e99c" : g.color; // 1순위 색상 변경
 
-            app.createGenreBubble(g.name, color, size, opts, idx);
+            app.createGenreBubble(g.name, color, size, opts, idx, finalVal);
         } else {
-          app.createGenreBubble(g.name, g.color, base, GRAD_OPT, idx);
+          app.createGenreBubble(g.name, g.color, base, GRAD_OPT, idx, 283);
         }
       });
     }
