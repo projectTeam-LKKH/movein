@@ -175,7 +175,7 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
           <h2 class="user-txt"><span class="user-nick"><?php echo htmlspecialchars($nickname); ?></span>님,
           <br>취향을 탐험할 준비 되셨나요?</h2>
         <?php else: ?>
-          <h2 class="user-txt">나만의 취향 탐험,<br> 로그인으로 시작하세요</h2>
+          <h2 class="user-txt">나만의 취향 탐험,<br> <span class="loginBtn"><a href="login/login.php">로그인</a></span>으로 시작하세요</h2>
         <?php endif; ?>
       </div>
       
@@ -630,7 +630,7 @@ function showComingSoon() {
               const img = this.querySelector("img");
 
               // 클릭 시 서버에 요청, 현재 상태 판단은 서버에서 처리
-              fetch("login/like_process.php", {
+              fetch("login/like_process2.php", {
                   method: "POST",
                   headers: { "Content-Type": "application/x-www-form-urlencoded" },
                   body: `movie_id=${movieId}`

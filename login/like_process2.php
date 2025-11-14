@@ -26,31 +26,30 @@ try {
     mysqli_stmt_close($stmt);
 
     if ($existing) {
-        if ($existing['status'] === $status) {
-            // 이미 같은 상태이면 취소
+        if ($existing['status'] === 'like') {
+            // 이미 like → 취소
             $del = mysqli_prepare($connect, "DELETE FROM Likes WHERE id = ?");
             mysqli_stmt_bind_param($del, "i", $existing['id']);
             mysqli_stmt_execute($del);
             mysqli_stmt_close($del);
-
             echo json_encode(["success" => true, "status" => "none"]);
         } else {
-            // 상태 변경 (like <-> hate)
-            $upd = mysqli_prepare($connect, "UPDATE Likes SET status = ?, updated_at = NOW() WHERE id = ?");
-            mysqli_stmt_bind_param($upd, "si", $status, $existing['id']);
+            // hate → like로 변경
+            $upd = mysqli_prepare($connect, "UPDATE Likes SET status = 'like', updated_at = NOW() WHERE id = ?");
+            mysqli_stmt_bind_param($upd, "i", $existing['id']);
             mysqli_stmt_execute($upd);
             mysqli_stmt_close($upd);
 
-            echo json_encode(["success" => true, "status" => $status]);
+            echo json_encode(["success" => true, "status" => "like"]);
         }
     } else {
         // 새로 추가
-        $ins = mysqli_prepare($connect, "INSERT INTO Likes (user_id, movie_id, status) VALUES (?, ?, ?)");
-        mysqli_stmt_bind_param($ins, "sis", $user_id, $movie_id, $status);  // 'like' 또는 'hate' 값을 삽입
+        $ins = mysqli_prepare($connect, "INSERT INTO Likes (user_id, movie_id, status) VALUES (?, ?, 'like')");
+        mysqli_stmt_bind_param($ins, "si", $user_id, $movie_id);
         mysqli_stmt_execute($ins);
         mysqli_stmt_close($ins);
 
-        echo json_encode(["success" => true, "status" => $status]);
+        echo json_encode(["success" => true, "status" => "like"]);
     }
 
 } catch (Exception $e) {

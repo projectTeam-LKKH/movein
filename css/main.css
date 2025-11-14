@@ -18,6 +18,10 @@ body.lock {
   overflow: hidden;
 }
 
+.loginBtn > a {
+  color: var(--c-point);
+}
+
 /* 이미지 드래그 막아 가로 스크롤 방해 없게 2025.11.14 김하빈 수정 */
 img {
   -webkit-user-drag: none;
