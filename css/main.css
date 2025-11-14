@@ -244,7 +244,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: red;
 }
 
 .favorite-thing:last-child > a > img {
