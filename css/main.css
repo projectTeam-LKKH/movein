@@ -203,10 +203,6 @@ button {
   cursor: grabbing;
 } /* 가로 스크롤 세팅 마무리*/
 
-.favorite-list::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
-
 .favorite-list-box {
   display: flex;
   padding: 0 5vw;
@@ -224,6 +220,7 @@ button {
   cursor: pointer;
   position: relative;
   width: 100%;
+  flex: 0 0 var(--card-w);
   aspect-ratio: 1 / 1;
 }
 
@@ -243,8 +240,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 75px;
 }
 
 .favorite-thing:last-child > a > img {
@@ -257,8 +253,8 @@ button {
 .favorite-thing > .likeBtn {
   position: absolute;
   z-index: 1;
-  right: 15px;
-  bottom: 10px;
+  right: 10px;
+  bottom: 5px;
   transition: transform 0.15s ease-out;
 }
 

@@ -561,7 +561,7 @@ $reviews = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
         <div id="bottom-nav"></div>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="js/import.js"></script>
-  <script defer src="js/genre-bubbles_test.js"></script>
+  <script defer src="js/genre-bubbles_edit.js"></script>
   <script src="js/main.js"></script>
   <script>
 
