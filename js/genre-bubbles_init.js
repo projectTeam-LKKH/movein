@@ -1,49 +1,225 @@
+// genre-bubbles.js
+// 2025-11-10 정리본 : 전역 테두리, 패딩, 커스텀 렌더 일원화 + 라벨 폰트 고정(rem)
 
-// [A] 페이지 진입 시 버블 초기화
-window.addEventListener("DOMContentLoaded", () => {
-  const app = window.genreBubbleApp?.init("genre-bubble-container");
-  if (!app) return;
+const BUBBLE_PADDING = 20; // 버블 간격(px)
+const OUTLINE_COLOR = "#252426"; // 테두리 색상
+const OUTLINE_WIDTH = 4; // 테두리 두께(px)
 
-  // PHP → JS
-  const favoriteGenres = <?php echo json_encode($favorite_genres); ?>;
-  const isLoggedIn = <?php echo $nickname ? 'true' : 'false'; ?>;
+// === 라벨 폰트 설정(고정 크기) ===
+const LABEL_FONT_FAMILY = `"NanumSquare", sans-serif`; // 폰트
+const LABEL_FONT_REM = 0.9375; // = 15px @ root 16px (고정)
+const LABEL_FONT_WEIGHT_DEFAULT = 400; // 기본 굵기(보통)
+const LABEL_FONT_COLOR_DEFAULT = "#faf5f5"; // 기본 글자색
 
-  // 모든 버블에 공통 적용할 그라데이션 옵션
-  const GRAD_OPT = { gradient: { inner: "#504399", outer: "#8670FF" } };
-  // 2025.11.13 오후 8시 44분 김하빈 수정
-  const GRAD_OPT_FIRST = { gradient: { inner: "#FF6B6B", outer: "#FFB3B3" } }; // ← 1순위 전용 색상
+//🔥 1) 이미지 미리 로드
+const posterImg = new Image();
+posterImg.src = "img/poster/pt283.webp";
+let posterLoaded = false;
+posterImg.onload = () => {
+  posterLoaded = true;
+};
+(function () {
+  const { Engine, Render, Runner, World, Bodies, Events } = Matter;
 
-  const allGenres = [
-    { name: "애니", color: "#8670FF" },
-    { name: "드라마", color: "#8670FF" },
-    { name: "액션", color: "#8670FF" },
-    { name: "SF", color: "#8670FF" },
-    { name: "코미디", color: "#8670FF" },
-    { name: "판타지", color: "#8670FF" },
-    { name: "스릴러", color: "#8670FF" },
-    { name: "로맨스", color: "#8670FF" },
-  ];
+  function initGenreBubbleApp(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error(`❌ '${containerId}' 컨테이너를 찾을 수 없습니다.`);
+      return null;
+    }
 
-  if (!isLoggedIn) {
-    // ✅ 비로그인도 전부 그라데이션
-    allGenres.forEach((g) => app.createGenreBubble(g.name, g.color, 40, GRAD_OPT));
-  } else {
-    const base = 40, max = 90, step = 5;
+    const width = container.clientWidth;
+    const height = container.clientHeight; // CSS로 고정 높이 필수
 
-    allGenres.forEach((g) => {
-      const idx = favoriteGenres.indexOf(g.name);
-      if (idx !== -1) {
-        const size = Math.max(base, max - idx * step);
+    const engine = Engine.create();
+    const world = engine.world;
 
-        // ✅ 로그인도 전부 그라데이션 (+ 1순위만 볼드 유지)
-        const opts = (idx === 0)
-          ? { ...GRAD_OPT, fontWeight: 700 } // 1순위 강조(굵기만)
-          : GRAD_OPT;
-
-        app.createGenreBubble(g.name, g.color, size, opts);
-      } else {
-        app.createGenreBubble(g.name, g.color, base, GRAD_OPT);
-      }
+    const render = Render.create({
+      element: container,
+      engine,
+      options: {
+        width,
+        height,
+        wireframes: false,
+        pixelRatio: window.devicePixelRatio || 1,
+        background: "transparent",
+      },
     });
+
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
+
+    // 경계 생성
+    const ground = Bodies.rectangle(width / 2, height + 50, width, 100, {
+      isStatic: true,
+    });
+    const left = Bodies.rectangle(-50, height / 2, 100, height, {
+      isStatic: true,
+    });
+    const right = Bodies.rectangle(width + 50, height / 2, 100, height, {
+      isStatic: true,
+    });
+    World.add(world, [ground, left, right]);
+
+    const bubbles = [];
+
+    function createGenreBubble(name, color, radius, opts = {}, idx) {
+      const lw = Number.isFinite(opts.lineWidth)
+        ? opts.lineWidth
+        : OUTLINE_WIDTH;
+      const strokeColor = opts.strokeColor || OUTLINE_COLOR;
+
+      // 배치(충돌 최소화)
+      let x;
+      let tries = 0;
+      const maxTries = 80;
+      while (tries < maxTries) {
+        x = Math.random() * (width - 2 * radius) + radius;
+        const spawnY = -radius;
+        const ok = bubbles.every((b) => {
+          const dx = b.position.x - x;
+          const dy = b.position.y - spawnY;
+          return Math.hypot(dx, dy) >= b.circleRadius + radius + BUBBLE_PADDING;
+        });
+        if (ok) break;
+        tries++;
+      }
+      if (x === undefined) x = Math.random() * (width - 2 * radius) + radius;
+
+      const body = Bodies.circle(x, -radius, radius, {
+        restitution: 0.6,
+        friction: 0.1,
+        render: { visible: false },
+      });
+
+      // label 매핑
+      const labelMap = {
+        애니: "애니",
+        드라마: "드라마",
+        액션: "액션",
+        SF: "SF",
+        코미디: "코미디",
+        판타지: "판타지",
+        스릴러: "스릴러",
+        로맨스: "로맨스",
+      };
+
+      body.plugin = {
+        label: labelMap[name] || name,
+        fill: color,
+        stroke: strokeColor,
+        lineWidth: lw,
+        gradient: opts.gradient || null,
+        fontWeight: opts.fontWeight || LABEL_FONT_WEIGHT_DEFAULT,
+        fontColor: opts.fontColor || LABEL_FONT_COLOR_DEFAULT,
+        idx,
+      };
+
+      World.add(world, body);
+      bubbles.push(body);
+    }
+
+    // 커스텀 캔버스 렌더링
+    Events.on(render, "afterRender", () => {
+      const ctx = render.context;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const rootPx =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const fixedPx = Math.round(LABEL_FONT_REM * rootPx);
+
+      bubbles.forEach((b) => {
+        const rOuter = b.circleRadius;
+        const lw = b.plugin.lineWidth || OUTLINE_WIDTH;
+        const rDraw = Math.max(0, rOuter - lw / 2);
+
+        // ⭐ idx=0이면 gradient 무시하고 초록색 강제
+        let fillStyle;
+        if (b.plugin.idx === 0) {
+          // 3) 그라데이션 생성
+          ctx.save(); // clip 시작 전에 save
+
+          // 1) 원을 clip 영역으로 지정
+          ctx.beginPath();
+          ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+          ctx.clip();
+
+          // 2) 이미지 그리기
+          if (posterLoaded) {
+            ctx.globalAlpha = 0.7;
+            ctx.drawImage(
+              posterImg,
+              b.position.x - rDraw,
+              b.position.y - rDraw,
+              rDraw * 2,
+              rDraw * 2
+            );
+            ctx.globalAlpha = 1.0;
+          }
+          const inner = "rgba(41, 131, 88, 0.5)"; // #298358 → RGBA
+          const outer = "rgba(73, 233, 156, 0.5)"; // #49e99c → RGBA
+
+          // 3) 그라데이션 fill — clip 안에서 바로 그려야 함
+          const grd = ctx.createRadialGradient(
+            b.position.x,
+            b.position.y,
+            0,
+            b.position.x,
+            b.position.y,
+            rDraw
+          );
+          grd.addColorStop(1, outer); // 투명 outer
+          grd.addColorStop(0, inner); // 투명 inner
+          ctx.globalAlpha = 0.1;
+          fillStyle = grd;
+
+          ctx.beginPath();
+          ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+          ctx.fill();
+          // ctx.globalAlpha = 1.0; // 버블 투명도 다시 원래대로
+
+          ctx.restore(); // ★ 무조건 끝에서 한 번만 restore
+        } else if (b.plugin.gradient?.inner && b.plugin.gradient?.outer) {
+          const grd = ctx.createRadialGradient(
+            b.position.x,
+            b.position.y,
+            0,
+            b.position.x,
+            b.position.y,
+            rDraw
+          );
+          grd.addColorStop(0, b.plugin.gradient.inner);
+          grd.addColorStop(1, b.plugin.gradient.outer);
+          fillStyle = grd;
+        } else {
+          fillStyle = b.plugin.fill;
+        }
+
+        // 채우기
+        ctx.fillStyle = fillStyle;
+        ctx.beginPath();
+        ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 테두리
+        ctx.lineWidth = lw;
+        ctx.strokeStyle = b.plugin.stroke || OUTLINE_COLOR;
+        ctx.beginPath();
+        ctx.arc(b.position.x, b.position.y, rDraw, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // 라벨
+        const name = b.plugin.label;
+        const weight = b.plugin.fontWeight || LABEL_FONT_WEIGHT_DEFAULT;
+        ctx.font = `${weight} ${fixedPx}px ${LABEL_FONT_FAMILY}`;
+        ctx.fillStyle = b.plugin.fontColor || LABEL_FONT_COLOR_DEFAULT;
+        ctx.fillText(name, b.position.x, b.position.y);
+      });
+    });
+
+    return { createGenreBubble };
   }
-});
+
+  window.genreBubbleApp = { init: initGenreBubbleApp };
+})();
